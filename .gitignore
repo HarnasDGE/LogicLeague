@@ -1,0 +1,18 @@
+# WordPress
+*.log
+.htaccess
+
+# Pliki systemowe
+.DS_Store
+Thumbs.db
+
+# Edytory
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node modules (jeśli będą używane w przyszłości)
+node_modules/
+package-lock.json
