@@ -1,0 +1,459 @@
+/**
+ * Sudoku Player
+ * Obsługa interaktywnej planszy Sudoku
+ *
+ * @package LogicLeague
+ */
+
+(function() {
+    'use strict';
+
+    // Stan gry
+    let gameState = {
+        board: null,
+        solution: null,
+        selectedCell: null,
+        mistakes: 0,
+        hintsUsed: 0,
+        maxHints: 0,
+        difficulty: '',
+        timerSeconds: 0,
+        timerInterval: null,
+        isComplete: false
+    };
+
+    // Inicjalizacja
+    document.addEventListener('DOMContentLoaded', function() {
+        initGame();
+    });
+
+    /**
+     * Inicjalizuje grę
+     */
+    function initGame() {
+        const boardElement = document.getElementById('sudoku-board');
+        if (!boardElement) return;
+
+        // Pobierz rozwiązanie i trudność
+        gameState.solution = JSON.parse(boardElement.dataset.solution);
+        gameState.difficulty = boardElement.dataset.difficulty;
+
+        // Pobierz maksymalną liczbę podpowiedzi
+        const hintsElement = document.getElementById('hints');
+        if (hintsElement) {
+            const hintsText = hintsElement.textContent;
+            const match = hintsText.match(/\/\s*(\d+)/);
+            if (match) {
+                gameState.maxHints = parseInt(match[1]);
+            }
+        }
+
+        // Inicjalizuj stan planszy
+        gameState.board = [];
+        for (let i = 0; i < 9; i++) {
+            gameState.board[i] = [];
+            for (let j = 0; j < 9; j++) {
+                gameState.board[i][j] = 0;
+            }
+        }
+
+        // Załaduj wartości początkowe
+        const cells = document.querySelectorAll('.sudoku-cell');
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            const value = parseInt(cell.dataset.value);
+            if (value !== 0) {
+                gameState.board[row][col] = value;
+            }
+        });
+
+        // Dodaj event listenery
+        addEventListeners();
+
+        // Rozpocznij timer
+        startTimer();
+    }
+
+    /**
+     * Dodaje event listenery
+     */
+    function addEventListeners() {
+        // Kliknięcia na komórki
+        const cells = document.querySelectorAll('.sudoku-cell');
+        cells.forEach(cell => {
+            cell.addEventListener('click', function() {
+                if (gameState.isComplete) return;
+                selectCell(this);
+            });
+        });
+
+        // Przyciski numeryczne
+        const numberButtons = document.querySelectorAll('.sudoku-number-button');
+        numberButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                if (gameState.isComplete) return;
+                const number = parseInt(this.dataset.number);
+                inputNumber(number);
+            });
+        });
+
+        // Klawiatura
+        document.addEventListener('keydown', function(e) {
+            if (gameState.isComplete) return;
+
+            // Liczby 1-9
+            if (e.key >= '1' && e.key <= '9') {
+                inputNumber(parseInt(e.key));
+            }
+            // Backspace/Delete - wyczyść
+            else if (e.key === 'Backspace' || e.key === 'Delete') {
+                clearSelectedCell();
+            }
+            // Strzałki - nawigacja
+            else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) {
+                e.preventDefault();
+                navigateWithArrows(e.key);
+            }
+        });
+
+        // Przycisk wyczyść
+        const clearButton = document.getElementById('clear-button');
+        if (clearButton) {
+            clearButton.addEventListener('click', clearSelectedCell);
+        }
+
+        // Przycisk podpowiedź
+        const hintButton = document.getElementById('hint-button');
+        if (hintButton) {
+            hintButton.addEventListener('click', giveHint);
+        }
+
+        // Przycisk sprawdź
+        const checkButton = document.getElementById('check-button');
+        if (checkButton) {
+            checkButton.addEventListener('click', checkSolution);
+        }
+
+        // Przycisk nowa gra
+        const newGameButton = document.getElementById('new-game-button');
+        if (newGameButton) {
+            newGameButton.addEventListener('click', function() {
+                window.location.reload();
+            });
+        }
+
+        // Przycisk pokaż rozwiązanie
+        const solveButton = document.getElementById('solve-button');
+        if (solveButton) {
+            solveButton.addEventListener('click', showSolution);
+        }
+
+        // Zamknięcie modala
+        const modal = document.getElementById('completion-modal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+    }
+
+    /**
+     * Zaznacza komórkę
+     */
+    function selectCell(cellElement) {
+        // Nie zaznaczaj komórek początkowych
+        if (cellElement.dataset.initial === '1') return;
+
+        // Usuń poprzednie zaznaczenie
+        const cells = document.querySelectorAll('.sudoku-cell');
+        cells.forEach(cell => {
+            cell.classList.remove('sudoku-cell-selected');
+            cell.classList.remove('sudoku-cell-highlighted');
+        });
+
+        // Zaznacz nową komórkę
+        cellElement.classList.add('sudoku-cell-selected');
+        gameState.selectedCell = cellElement;
+
+        // Podświetl ten sam wiersz, kolumnę i box
+        const row = parseInt(cellElement.dataset.row);
+        const col = parseInt(cellElement.dataset.col);
+        highlightRelatedCells(row, col);
+    }
+
+    /**
+     * Podświetla powiązane komórki (wiersz, kolumna, box)
+     */
+    function highlightRelatedCells(row, col) {
+        const cells = document.querySelectorAll('.sudoku-cell');
+        const boxRow = Math.floor(row / 3);
+        const boxCol = Math.floor(col / 3);
+
+        cells.forEach(cell => {
+            const cellRow = parseInt(cell.dataset.row);
+            const cellCol = parseInt(cell.dataset.col);
+            const cellBoxRow = Math.floor(cellRow / 3);
+            const cellBoxCol = Math.floor(cellCol / 3);
+
+            if (cellRow === row || cellCol === col ||
+                (cellBoxRow === boxRow && cellBoxCol === boxCol)) {
+                if (!cell.classList.contains('sudoku-cell-selected')) {
+                    cell.classList.add('sudoku-cell-highlighted');
+                }
+            }
+        });
+    }
+
+    /**
+     * Wpisuje liczbę do zaznaczonej komórki
+     */
+    function inputNumber(number) {
+        if (!gameState.selectedCell) return;
+
+        const row = parseInt(gameState.selectedCell.dataset.row);
+        const col = parseInt(gameState.selectedCell.dataset.col);
+
+        // Sprawdź czy poprawna
+        const correctValue = gameState.solution[row][col];
+        const isCorrect = number === correctValue;
+
+        // Usuń poprzednie klasy błędu
+        gameState.selectedCell.classList.remove('sudoku-cell-error');
+
+        // Aktualizuj wartość
+        gameState.board[row][col] = number;
+        gameState.selectedCell.dataset.value = number;
+
+        // Aktualizuj wyświetlanie
+        let valueSpan = gameState.selectedCell.querySelector('.sudoku-cell-value');
+        if (!valueSpan) {
+            valueSpan = document.createElement('span');
+            valueSpan.className = 'sudoku-cell-value';
+            gameState.selectedCell.appendChild(valueSpan);
+        }
+        valueSpan.textContent = number;
+
+        // Jeśli błąd
+        if (!isCorrect) {
+            gameState.selectedCell.classList.add('sudoku-cell-error');
+            gameState.mistakes++;
+            updateMistakes();
+
+            // Usuń błąd po 1 sekundzie
+            setTimeout(() => {
+                gameState.selectedCell.classList.remove('sudoku-cell-error');
+            }, 1000);
+        }
+
+        // Sprawdź czy ukończone
+        if (isBoardComplete()) {
+            completeGame();
+        }
+    }
+
+    /**
+     * Czyści zaznaczoną komórkę
+     */
+    function clearSelectedCell() {
+        if (!gameState.selectedCell) return;
+        if (gameState.selectedCell.dataset.initial === '1') return;
+
+        const row = parseInt(gameState.selectedCell.dataset.row);
+        const col = parseInt(gameState.selectedCell.dataset.col);
+
+        gameState.board[row][col] = 0;
+        gameState.selectedCell.dataset.value = '0';
+
+        const valueSpan = gameState.selectedCell.querySelector('.sudoku-cell-value');
+        if (valueSpan) {
+            valueSpan.remove();
+        }
+
+        gameState.selectedCell.classList.remove('sudoku-cell-error');
+    }
+
+    /**
+     * Nawigacja strzałkami
+     */
+    function navigateWithArrows(key) {
+        if (!gameState.selectedCell) {
+            // Zaznacz pierwszą komórkę
+            const firstCell = document.querySelector('.sudoku-cell:not([data-initial="1"])');
+            if (firstCell) selectCell(firstCell);
+            return;
+        }
+
+        let row = parseInt(gameState.selectedCell.dataset.row);
+        let col = parseInt(gameState.selectedCell.dataset.col);
+
+        switch (key) {
+            case 'ArrowUp':
+                row = row > 0 ? row - 1 : 8;
+                break;
+            case 'ArrowDown':
+                row = row < 8 ? row + 1 : 0;
+                break;
+            case 'ArrowLeft':
+                col = col > 0 ? col - 1 : 8;
+                break;
+            case 'ArrowRight':
+                col = col < 8 ? col + 1 : 0;
+                break;
+        }
+
+        const targetCell = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        if (targetCell) selectCell(targetCell);
+    }
+
+    /**
+     * Daje podpowiedź
+     */
+    function giveHint() {
+        if (gameState.hintsUsed >= gameState.maxHints) {
+            alert('Wykorzystałeś wszystkie podpowiedzi!');
+            return;
+        }
+
+        // Znajdź pustą komórkę
+        let emptyCells = [];
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (gameState.board[row][col] === 0) {
+                    emptyCells.push({ row, col });
+                }
+            }
+        }
+
+        if (emptyCells.length === 0) return;
+
+        // Losowa pusta komórka
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        const cellElement = document.querySelector(
+            `[data-row="${randomCell.row}"][data-col="${randomCell.col}"]`
+        );
+
+        if (cellElement) {
+            selectCell(cellElement);
+            const correctValue = gameState.solution[randomCell.row][randomCell.col];
+            inputNumber(correctValue);
+
+            gameState.hintsUsed++;
+            updateHints();
+        }
+    }
+
+    /**
+     * Sprawdza czy plansza jest ukończona
+     */
+    function isBoardComplete() {
+        for (let row = 0; row < 9; row++) {
+            for (let col = 0; col < 9; col++) {
+                if (gameState.board[row][col] !== gameState.solution[row][col]) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Sprawdza rozwiązanie
+     */
+    function checkSolution() {
+        if (isBoardComplete()) {
+            completeGame();
+        } else {
+            alert('Puzzle nie jest jeszcze ukończone lub zawiera błędy.');
+        }
+    }
+
+    /**
+     * Pokazuje rozwiązanie
+     */
+    function showSolution() {
+        if (!confirm('Czy na pewno chcesz zobaczyć rozwiązanie? Gra zostanie zakończona.')) {
+            return;
+        }
+
+        const cells = document.querySelectorAll('.sudoku-cell');
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            const correctValue = gameState.solution[row][col];
+
+            cell.dataset.value = correctValue;
+            gameState.board[row][col] = correctValue;
+
+            let valueSpan = cell.querySelector('.sudoku-cell-value');
+            if (!valueSpan) {
+                valueSpan = document.createElement('span');
+                valueSpan.className = 'sudoku-cell-value';
+                cell.appendChild(valueSpan);
+            }
+            valueSpan.textContent = correctValue;
+            cell.classList.remove('sudoku-cell-error');
+        });
+
+        stopTimer();
+    }
+
+    /**
+     * Ukończenie gry
+     */
+    function completeGame() {
+        gameState.isComplete = true;
+        stopTimer();
+
+        // Aktualizuj modal
+        document.getElementById('final-time').textContent = document.getElementById('timer').textContent;
+        document.getElementById('final-mistakes').textContent = gameState.mistakes;
+
+        // Pokaż modal
+        const modal = document.getElementById('completion-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+    }
+
+    /**
+     * Timer
+     */
+    function startTimer() {
+        gameState.timerInterval = setInterval(() => {
+            gameState.timerSeconds++;
+            updateTimerDisplay();
+        }, 1000);
+    }
+
+    function stopTimer() {
+        if (gameState.timerInterval) {
+            clearInterval(gameState.timerInterval);
+            gameState.timerInterval = null;
+        }
+    }
+
+    function updateTimerDisplay() {
+        const minutes = Math.floor(gameState.timerSeconds / 60);
+        const seconds = gameState.timerSeconds % 60;
+        const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        document.getElementById('timer').textContent = display;
+    }
+
+    /**
+     * Aktualizuj licznik błędów
+     */
+    function updateMistakes() {
+        document.getElementById('mistakes').textContent = gameState.mistakes;
+    }
+
+    /**
+     * Aktualizuj licznik podpowiedzi
+     */
+    function updateHints() {
+        document.getElementById('hints-used').textContent = gameState.hintsUsed;
+    }
+
+})();

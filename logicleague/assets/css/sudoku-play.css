@@ -1,0 +1,493 @@
+/**
+ * Sudoku Play - Styles
+ * Style dla interaktywnej planszy Sudoku
+ *
+ * @package LogicLeague
+ */
+
+/* Container główny */
+.sudoku-play-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    min-height: calc(100vh - 200px);
+}
+
+/* Header */
+.sudoku-play-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.sudoku-back-button {
+    display: inline-block;
+    padding: 0.75rem 1.5rem;
+    background: #f3f4f6;
+    color: #374151;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    transition: all 0.3s ease;
+}
+
+.sudoku-back-button:hover {
+    background: #e5e7eb;
+    transform: translateX(-4px);
+}
+
+.sudoku-play-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 0;
+}
+
+/* Layout główny - dwie kolumny */
+.sudoku-game-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: 3rem;
+    align-items: start;
+}
+
+/* Sekcja planszy */
+.sudoku-board-section {
+    display: flex;
+    justify-content: center;
+}
+
+/* Plansza 9x9 */
+.sudoku-board {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 0;
+    background: #1f2937;
+    border: 3px solid #1f2937;
+    border-radius: 8px;
+    padding: 0;
+    width: 100%;
+    max-width: 540px;
+    aspect-ratio: 1;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Komórka */
+.sudoku-cell {
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1f2937;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative;
+    border: 1px solid #e5e7eb;
+}
+
+.sudoku-cell:hover:not(.sudoku-cell-initial) {
+    background: #f9fafb;
+}
+
+/* Komórka początkowa (niemodyfikowalna) */
+.sudoku-cell-initial {
+    background: #f3f4f6;
+    color: #111827;
+    font-weight: 700;
+    cursor: default;
+}
+
+.sudoku-cell-initial:hover {
+    background: #f3f4f6;
+}
+
+/* Komórka zaznaczona */
+.sudoku-cell-selected {
+    background: #dbeafe !important;
+    box-shadow: inset 0 0 0 2px #3b82f6;
+}
+
+/* Komórki podświetlone (ten sam wiersz/kolumna/box) */
+.sudoku-cell-highlighted {
+    background: #f0f9ff;
+}
+
+/* Komórka z błędem */
+.sudoku-cell-error {
+    background: #fee2e2 !important;
+    color: #dc2626 !important;
+    animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+}
+
+/* Grubsze granice co 3 komórki */
+.sudoku-cell-border-right {
+    border-right: 2px solid #1f2937;
+}
+
+.sudoku-cell-border-bottom {
+    border-bottom: 2px solid #1f2937;
+}
+
+/* Wartość w komórce */
+.sudoku-cell-value {
+    user-select: none;
+}
+
+/* Sekcja kontrolek */
+.sudoku-controls-section {
+    position: sticky;
+    top: 2rem;
+}
+
+/* Statystyki gry */
+.sudoku-game-stats {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.sudoku-stat {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 0;
+}
+
+.sudoku-stat:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.sudoku-stat-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    text-align: center;
+}
+
+.sudoku-stat-label {
+    font-size: 0.875rem;
+    color: #6b7280;
+    flex: 1;
+}
+
+.sudoku-stat-value {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+/* Number pad */
+.sudoku-number-pad {
+    background: white;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+}
+
+.sudoku-number-pad-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #6b7280;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.sudoku-number-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+}
+
+.sudoku-number-button {
+    background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 1rem;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
+}
+
+.sudoku-number-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+}
+
+.sudoku-number-button:active {
+    transform: translateY(0);
+}
+
+/* Przyciski akcji */
+.sudoku-action-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.sudoku-action-button {
+    background: white;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 0.875rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.sudoku-action-button:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+}
+
+.sudoku-hint-button:hover {
+    background: #fef3c7;
+    border-color: #fbbf24;
+    color: #92400e;
+}
+
+.sudoku-clear-button:hover {
+    background: #fee2e2;
+    border-color: #f87171;
+    color: #991b1b;
+}
+
+.sudoku-check-button:hover {
+    background: #d1fae5;
+    border-color: #34d399;
+    color: #065f46;
+}
+
+/* Przyciski gry */
+.sudoku-game-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sudoku-game-button {
+    background: #f3f4f6;
+    color: #374151;
+    border: none;
+    border-radius: 8px;
+    padding: 0.875rem 1.5rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sudoku-game-button:hover {
+    background: #e5e7eb;
+}
+
+/* Modal ukończenia */
+.sudoku-completion-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.sudoku-completion-content {
+    background: white;
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    max-width: 500px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sudoku-completion-emoji {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.sudoku-completion-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 0.5rem;
+}
+
+.sudoku-completion-message {
+    font-size: 1.125rem;
+    color: #6b7280;
+    margin-bottom: 2rem;
+}
+
+.sudoku-completion-stats {
+    background: #f9fafb;
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.sudoku-completion-stat {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.75rem 0;
+}
+
+.sudoku-completion-stat:not(:last-child) {
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.sudoku-completion-stat-label {
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.sudoku-completion-stat-value {
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.sudoku-completion-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.sudoku-completion-button {
+    flex: 1;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    display: inline-block;
+}
+
+.sudoku-completion-button-primary {
+    background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.sudoku-completion-button-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+}
+
+.sudoku-completion-button-secondary {
+    background: white;
+    color: #374151;
+    border: 2px solid #e5e7eb;
+}
+
+.sudoku-completion-button-secondary:hover {
+    background: #f9fafb;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .sudoku-game-wrapper {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .sudoku-controls-section {
+        position: static;
+    }
+
+    .sudoku-board {
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sudoku-play-container {
+        padding: 1rem 0.5rem;
+    }
+
+    .sudoku-play-title {
+        font-size: 1.5rem;
+    }
+
+    .sudoku-board {
+        max-width: 100%;
+    }
+
+    .sudoku-cell {
+        font-size: 1.25rem;
+    }
+
+    .sudoku-number-buttons {
+        gap: 0.5rem;
+    }
+
+    .sudoku-number-button {
+        padding: 0.75rem;
+        font-size: 1.25rem;
+    }
+
+    .sudoku-game-wrapper {
+        gap: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sudoku-cell {
+        font-size: 1rem;
+    }
+
+    .sudoku-completion-content {
+        padding: 2rem 1.5rem;
+    }
+
+    .sudoku-completion-buttons {
+        flex-direction: column;
+    }
+}

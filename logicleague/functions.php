@@ -67,11 +67,29 @@ function logicleague_enqueue_scripts() {
             filemtime( get_template_directory() . '/assets/css/sudoku-landing.css' )
         );
     }
+
+    // Sudoku Play CSS & JS
+    if ( is_page( 'sudoku-play' ) ) {
+        wp_enqueue_style(
+            'sudoku-play',
+            get_template_directory_uri() . '/assets/css/sudoku-play.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/sudoku-play.css' )
+        );
+
+        wp_enqueue_script(
+            'sudoku-player',
+            get_template_directory_uri() . '/assets/js/sudoku-player.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/sudoku-player.js' ),
+            true
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
 
 /**
- * Auto-assign Sudoku template to page
+ * Auto-assign Sudoku templates to pages
  */
 function logicleague_assign_sudoku_template( $template ) {
     if ( is_page( 'sudoku' ) ) {
@@ -80,6 +98,14 @@ function logicleague_assign_sudoku_template( $template ) {
             return $custom_template;
         }
     }
+
+    if ( is_page( 'sudoku-play' ) ) {
+        $custom_template = get_template_directory() . '/templates/page-sudoku-play.php';
+        if ( file_exists( $custom_template ) ) {
+            return $custom_template;
+        }
+    }
+
     return $template;
 }
 add_filter( 'template_include', 'logicleague_assign_sudoku_template' );
