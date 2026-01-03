@@ -4,6 +4,25 @@
  * @package LogicLeague
  */
 
+/* Prevent horizontal overflow */
+.single-post,
+.blog-archive {
+    overflow-x: hidden;
+}
+
+/* Ensure images don't overflow */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Word wrap for long text */
+.post-content-inner,
+.comment-content {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
 /* ============================================
    BLOG HERO
    ============================================ */
@@ -52,7 +71,7 @@
 
 .posts-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 2.5rem;
     margin-bottom: 4rem;
 }
@@ -1044,7 +1063,7 @@
 
 .games-carousel {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
 }
 
@@ -1110,7 +1129,7 @@
 
 .posts-carousel {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2.5rem;
 }
 
@@ -1254,5 +1273,53 @@
 
     .section-header h2 {
         font-size: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .posts-grid,
+    .games-carousel,
+    .posts-carousel {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .blog-layout,
+    .post-layout {
+        gap: 2rem;
+    }
+
+    .post-hero {
+        padding: 4rem 0 2rem;
+    }
+
+    .post-hero-title {
+        font-size: 1.75rem;
+    }
+
+    .blog-hero-title {
+        font-size: 1.75rem;
+    }
+
+    .section-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .container,
+    .container-narrow {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .newsletter-cta-box h2 {
+        font-size: 1.75rem;
+    }
+
+    .comment-body {
+        padding: 1rem;
+    }
+
+    .children {
+        padding-left: 1rem;
     }
 }
