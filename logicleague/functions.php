@@ -11,6 +11,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Ładowanie klas Sudoku
+ */
+require_once get_template_directory() . '/inc/sudoku/class-sudoku-validator.php';
+require_once get_template_directory() . '/inc/sudoku/class-sudoku-solver.php';
+require_once get_template_directory() . '/inc/sudoku/class-sudoku-generator.php';
+
+/**
  * Konfiguracja motywu
  */
 function logicleague_setup() {
