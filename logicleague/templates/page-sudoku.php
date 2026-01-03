@@ -61,7 +61,7 @@ get_header();
 
         <div class="sudoku-difficulty-grid">
             <!-- Easy -->
-            <a href="<?php echo home_url('/sudoku-play?difficulty=easy'); ?>" class="sudoku-difficulty-card">
+            <a href="<?php echo home_url('/sudoku/easy'); ?>" class="sudoku-difficulty-card">
                 <div class="sudoku-difficulty-emoji">😊</div>
                 <h3 class="sudoku-difficulty-title">Easy</h3>
                 <p class="sudoku-difficulty-description">
@@ -87,7 +87,7 @@ get_header();
             </a>
 
             <!-- Medium -->
-            <a href="<?php echo home_url('/sudoku-play?difficulty=medium'); ?>" class="sudoku-difficulty-card">
+            <a href="<?php echo home_url('/sudoku/medium'); ?>" class="sudoku-difficulty-card">
                 <div class="sudoku-difficulty-emoji">🤔</div>
                 <h3 class="sudoku-difficulty-title">Medium</h3>
                 <p class="sudoku-difficulty-description">
@@ -113,7 +113,7 @@ get_header();
             </a>
 
             <!-- Hard -->
-            <a href="<?php echo home_url('/sudoku-play?difficulty=hard'); ?>" class="sudoku-difficulty-card">
+            <a href="<?php echo home_url('/sudoku/hard'); ?>" class="sudoku-difficulty-card">
                 <div class="sudoku-difficulty-emoji">😤</div>
                 <h3 class="sudoku-difficulty-title">Hard</h3>
                 <p class="sudoku-difficulty-description">
@@ -139,7 +139,7 @@ get_header();
             </a>
 
             <!-- Expert -->
-            <a href="<?php echo home_url('/sudoku-play?difficulty=expert'); ?>" class="sudoku-difficulty-card">
+            <a href="<?php echo home_url('/sudoku/expert'); ?>" class="sudoku-difficulty-card">
                 <div class="sudoku-difficulty-emoji">🔥</div>
                 <h3 class="sudoku-difficulty-title">Expert</h3>
                 <p class="sudoku-difficulty-description">

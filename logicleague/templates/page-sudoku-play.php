@@ -9,11 +9,27 @@
 get_header();
 
 // Pobierz poziom trudności z URL
-$difficulty = isset($_GET['difficulty']) ? sanitize_text_field($_GET['difficulty']) : 'easy';
-$valid_difficulties = ['easy', 'medium', 'hard', 'expert'];
+$difficulty = get_query_var( 'sudoku_level' );
 
+// Fallback dla starych URLi z query parameter
+if ( empty( $difficulty ) && isset( $_GET['difficulty'] ) ) {
+    $difficulty = sanitize_text_field( $_GET['difficulty'] );
+}
+
+// Domyślnie easy
+if ( empty( $difficulty ) ) {
+    $difficulty = 'easy';
+}
+
+$valid_difficulties = ['easy', 'medium', 'hard', 'expert'];
 if (!in_array($difficulty, $valid_difficulties)) {
     $difficulty = 'easy';
+}
+
+// Pobierz typ gry (regular/daily)
+$game_type = get_query_var( 'sudoku_type' );
+if ( empty( $game_type ) ) {
+    $game_type = 'regular';
 }
 
 // Generuj puzzle
@@ -29,6 +45,11 @@ $difficulty_names = [
     'hard' => 'Trudny',
     'expert' => 'Ekspert'
 ];
+
+// Tytuł w zależności od typu gry
+$page_title = $game_type === 'daily'
+    ? 'Daily Sudoku - ' . $difficulty_names[$difficulty]
+    : 'Sudoku - ' . $difficulty_names[$difficulty];
 ?>
 
 <div class="sudoku-play-container">
@@ -37,7 +58,7 @@ $difficulty_names = [
             ← Powrót do wyboru trudności
         </a>
         <h1 class="sudoku-play-title">
-            Sudoku - <?php echo $difficulty_names[$difficulty]; ?>
+            <?php echo $page_title; ?>
         </h1>
     </div>
 
@@ -164,7 +185,7 @@ $difficulty_names = [
         </div>
 
         <div class="sudoku-completion-buttons">
-            <a href="<?php echo home_url('/sudoku-play?difficulty=' . $difficulty); ?>"
+            <a href="<?php echo home_url('/sudoku/' . ( $game_type === 'daily' ? 'daily/' : '' ) . $difficulty); ?>"
                class="sudoku-completion-button sudoku-completion-button-primary">
                 Zagraj ponownie
             </a>
