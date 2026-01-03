@@ -43,8 +43,13 @@ add_action( 'after_setup_theme', 'logicleague_setup' );
  * Załaduj style i skrypty
  */
 function logicleague_enqueue_scripts() {
-    // Załaduj główny arkusz stylów
-    wp_enqueue_style( 'logicleague-style', get_stylesheet_uri(), array(), '1.0.0' );
+    // Załaduj główny arkusz stylów z dynamiczną wersją (cache-busting)
+    wp_enqueue_style(
+        'logicleague-style',
+        get_stylesheet_uri(),
+        array(),
+        filemtime( get_stylesheet_directory() . '/style.css' )
+    );
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
 
