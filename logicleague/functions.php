@@ -57,8 +57,32 @@ function logicleague_enqueue_scripts() {
         array(),
         filemtime( get_stylesheet_directory() . '/style.css' )
     );
+
+    // Sudoku Landing Page CSS
+    if ( is_page( 'sudoku' ) ) {
+        wp_enqueue_style(
+            'sudoku-landing',
+            get_template_directory_uri() . '/assets/css/sudoku-landing.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/sudoku-landing.css' )
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
+
+/**
+ * Auto-assign Sudoku template to page
+ */
+function logicleague_assign_sudoku_template( $template ) {
+    if ( is_page( 'sudoku' ) ) {
+        $custom_template = get_template_directory() . '/templates/page-sudoku.php';
+        if ( file_exists( $custom_template ) ) {
+            return $custom_template;
+        }
+    }
+    return $template;
+}
+add_filter( 'template_include', 'logicleague_assign_sudoku_template' );
 
 /**
  * Rejestracja widget areas
