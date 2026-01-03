@@ -446,6 +446,66 @@ footer {
 }
 
 /* ========================================
+   PAGINACJA
+   ======================================== */
+
+.pagination-wrapper {
+    grid-column: 1 / -1;
+    margin-top: 40px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    list-style: none;
+    padding: 0;
+}
+
+.pagination .page-numbers {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 45px;
+    height: 45px;
+    padding: 0 15px;
+    background: #fff;
+    color: #667eea;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.pagination .page-numbers:hover {
+    background: #667eea;
+    color: white;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.pagination .page-numbers.current {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.pagination .page-numbers.dots {
+    border: none;
+    background: transparent;
+    color: #999;
+}
+
+.pagination .page-numbers.dots:hover {
+    background: transparent;
+    transform: none;
+    box-shadow: none;
+}
+
+/* ========================================
    RESPONSYWNOŚĆ
    ======================================== */
 
