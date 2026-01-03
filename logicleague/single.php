@@ -13,44 +13,55 @@ get_header();
 <article id="post-<?php the_ID(); ?>" <?php post_class('single-post'); ?>>
 
     <!-- Post Hero -->
-    <section class="post-hero">
+    <section class="post-hero" <?php if (has_post_thumbnail()): ?>style="background-image: url('<?php echo esc_url(get_the_post_thumbnail_url(get_the_ID(), 'full')); ?>');"<?php endif; ?>>
+        <div class="post-hero-overlay"></div>
         <div class="container-narrow">
-            <div class="post-hero-meta">
-                <span class="post-hero-date">
-                    <?php echo get_the_date(); ?>
-                </span>
-                <?php
-                $categories = get_the_category();
-                if (!empty($categories)): ?>
-                <a href="<?php echo esc_url(get_category_link($categories[0]->term_id)); ?>"
-                   class="post-hero-category">
-                    <?php echo esc_html($categories[0]->name); ?>
-                </a>
-                <?php endif; ?>
-            </div>
+            <div class="post-hero-content">
+                <div class="post-hero-meta">
+                    <?php
+                    $categories = get_the_category();
+                    if (!empty($categories)): ?>
+                    <a href="<?php echo esc_url(get_category_link($categories[0]->term_id)); ?>"
+                       class="post-hero-category">
+                        <?php echo esc_html($categories[0]->name); ?>
+                    </a>
+                    <?php endif; ?>
+                </div>
 
-            <h1 class="post-hero-title"><?php the_title(); ?></h1>
+                <h1 class="post-hero-title"><?php the_title(); ?></h1>
 
-            <div class="post-hero-author">
-                <?php echo get_avatar(get_the_author_meta('ID'), 40); ?>
-                <div class="post-hero-author-info">
-                    <span class="post-hero-author-name">By <?php the_author(); ?></span>
-                    <span class="post-hero-reading-time">
-                        <?php
-                        $content = get_post_field('post_content', get_the_ID());
-                        $word_count = str_word_count(strip_tags($content));
-                        $reading_time = ceil($word_count / 200);
-                        echo $reading_time . ' min read';
-                        ?>
-                    </span>
+                <div class="post-hero-info">
+                    <div class="post-hero-author">
+                        <?php echo get_avatar(get_the_author_meta('ID'), 48); ?>
+                        <div class="post-hero-author-details">
+                            <span class="post-hero-author-name">
+                                By <strong><?php the_author(); ?></strong>
+                            </span>
+                            <div class="post-hero-dates">
+                                <span class="post-hero-date">
+                                    Published: <?php echo get_the_date(); ?>
+                                </span>
+                                <?php
+                                $published_date = get_the_date('Y-m-d');
+                                $modified_date = get_the_modified_date('Y-m-d');
+                                if ($published_date !== $modified_date): ?>
+                                <span class="post-hero-modified">
+                                    Updated: <?php echo get_the_modified_date(); ?>
+                                </span>
+                                <?php endif; ?>
+                                <span class="post-hero-reading-time">
+                                    <?php
+                                    $content = get_post_field('post_content', get_the_ID());
+                                    $word_count = str_word_count(strip_tags($content));
+                                    $reading_time = ceil($word_count / 200);
+                                    echo $reading_time . ' min read';
+                                    ?>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
-            <?php if (has_post_thumbnail()): ?>
-            <div class="post-hero-image">
-                <?php the_post_thumbnail('full'); ?>
-            </div>
-            <?php endif; ?>
         </div>
     </section>
 
@@ -105,6 +116,12 @@ get_header();
 </article>
 
 <?php endwhile; ?>
+
+<!-- Related Posts Carousel -->
+<?php get_template_part('template-parts/blog/posts-carousel'); ?>
+
+<!-- Games Carousel -->
+<?php get_template_part('template-parts/blog/games-carousel'); ?>
 
 <!-- Newsletter CTA -->
 <section class="newsletter-cta-section">
