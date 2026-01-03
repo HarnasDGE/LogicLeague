@@ -36,17 +36,35 @@
                         <li class="nav-item">
                             <a href="<?php echo home_url('/'); ?>" class="nav-link">Home</a>
                         </li>
+
+                        <!-- Games Dropdown -->
+                        <li class="nav-item nav-item-dropdown">
+                            <a href="#" class="nav-link">
+                                Games <span class="dropdown-arrow">▼</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo home_url('/sudoku'); ?>">Sudoku</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Quiz Dropdown -->
+                        <li class="nav-item nav-item-dropdown">
+                            <a href="#" class="nav-link">
+                                Quiz <span class="dropdown-arrow">▼</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Quizy Osobowościowe</a></li>
+                                <li><a href="#">Quizy Tematyczne</a></li>
+                                <li><a href="#">Quizy Naukowe</a></li>
+                                <li><a href="#">Quizy Ogólne</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
-                            <a href="<?php echo home_url('/sudoku'); ?>" class="nav-link">Sudoku</a>
+                            <a href="<?php echo home_url('/blog'); ?>" class="nav-link">Blog</a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">FAQ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">About</a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">Community</a>
+                            <a href="#" class="nav-link">About Us</a>
                         </li>
                     </ul>
 

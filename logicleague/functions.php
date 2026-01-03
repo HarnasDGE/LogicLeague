@@ -68,6 +68,16 @@ function logicleague_enqueue_scripts() {
         );
     }
 
+    // Blog CSS
+    if ( is_singular('post') || is_archive() || is_home() ) {
+        wp_enqueue_style(
+            'blog',
+            get_template_directory_uri() . '/assets/css/blog.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/blog.css' )
+        );
+    }
+
     // Sudoku Landing Page CSS
     if ( get_query_var( 'sudoku_landing' ) || is_page( 'sudoku' ) ) {
         wp_enqueue_style(

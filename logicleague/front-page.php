@@ -13,58 +13,71 @@ get_header();
 <section class="hero-section">
     <div class="hero-background">
         <div class="hero-shapes">
-            <div class="floating-emoji" style="top: 15%; right: 20%;">🧠</div>
-            <div class="floating-emoji" style="top: 30%; right: 15%;">💡</div>
-            <div class="floating-emoji" style="top: 45%; right: 25%;">❓</div>
-            <div class="floating-shape circle" style="top: 20%; right: 10%;"></div>
-            <div class="floating-shape square" style="top: 60%; right: 18%;"></div>
-            <div class="floating-shape triangle" style="top: 75%; right: 12%;"></div>
+            <div class="floating-emoji" style="top: 15%; right: 30%;">💡</div>
+            <div class="floating-emoji" style="top: 45%; right: 35%;">❓</div>
+            <div class="floating-shape circle" style="top: 20%; right: 25%;"></div>
+            <div class="floating-shape square" style="top: 60%; right: 28%;"></div>
+            <div class="floating-shape triangle" style="top: 75%; right: 32%;"></div>
         </div>
     </div>
 
     <div class="container">
-        <div class="hero-content">
-            <h1 class="hero-title">Exercise Your Grey Matter!</h1>
-            <p class="hero-subtitle">
-                Welcome to LogicLeague - the best platform for developing<br>
-                your logical thinking skills. Practice daily and watch your<br>
-                brain power grow with our carefully crafted puzzles!
-            </p>
+        <div class="hero-wrapper">
+            <div class="hero-content">
+                <h1 class="hero-title">Exercise Your Grey Matter!</h1>
+                <p class="hero-subtitle">
+                    Welcome to LogicLeague - the best platform for developing<br>
+                    your logical thinking skills. Practice daily and watch your<br>
+                    brain power grow with our carefully crafted puzzles!
+                </p>
 
-            <div class="hero-features">
-                <div class="hero-feature">
-                    <div class="hero-feature-icon">🔒</div>
-                    <span>100% Secure Platform</span>
+                <div class="hero-features">
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🔒</div>
+                        <span>100% Secure Platform</span>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🔑</div>
+                        <span>Unlimited Access</span>
+                    </div>
+                    <div class="hero-feature">
+                        <div class="hero-feature-icon">🏆</div>
+                        <span>Track Your Progress</span>
+                    </div>
                 </div>
-                <div class="hero-feature">
-                    <div class="hero-feature-icon">🔑</div>
-                    <span>Unlimited Access</span>
+
+                <div class="hero-cta">
+                    <a href="#categories" class="btn btn-yellow">Join now for free!</a>
                 </div>
-                <div class="hero-feature">
-                    <div class="hero-feature-icon">🏆</div>
-                    <span>Track Your Progress</span>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="stars">⭐⭐⭐⭐⭐</div>
+                        <span>5.0 Rating</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong>100K+</strong>
+                        <span>Active Users</span>
+                    </div>
+                    <div class="hero-stat">
+                        <strong>50K+</strong>
+                        <span>Puzzles Solved</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="hero-cta">
-                <a href="#categories" class="btn btn-yellow">Join now for free!</a>
-            </div>
-
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="stars">⭐⭐⭐⭐⭐</div>
-                    <span>5.0 Rating</span>
-                </div>
-                <div class="hero-stat">
-                    <strong>100K+</strong>
-                    <span>Active Users</span>
-                </div>
-                <div class="hero-stat">
-                    <strong>50K+</strong>
-                    <span>Puzzles Solved</span>
-                </div>
+            <!-- Large Brain Emoji -->
+            <div class="hero-brain">
+                🧠
             </div>
         </div>
+    </div>
+
+    <!-- Wave Divider -->
+    <div class="hero-wave">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+        </svg>
     </div>
 </section>
 
