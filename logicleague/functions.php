@@ -195,3 +195,47 @@ function logicleague_widgets_init() {
 }
 add_action( 'widgets_init', 'logicleague_widgets_init' );
 
+/**
+ * Custom comment callback
+ */
+function logicleague_comment_callback($comment, $args, $depth) {
+    $tag = ('div' === $args['style']) ? 'div' : 'li';
+    ?>
+    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class('comment'); ?>>
+        <div class="comment-body">
+            <div class="comment-author vcard">
+                <?php echo get_avatar($comment, 50); ?>
+            </div>
+
+            <div class="comment-content-wrap">
+                <div class="comment-meta">
+                    <span class="comment-author-name">
+                        <?php echo get_comment_author_link(); ?>
+                    </span>
+                    <span class="comment-date">
+                        <?php echo get_comment_date() . ' at ' . get_comment_time(); ?>
+                    </span>
+                </div>
+
+                <div class="comment-content">
+                    <?php comment_text(); ?>
+                </div>
+
+                <div class="reply">
+                    <?php
+                    comment_reply_link(array_merge($args, array(
+                        'depth' => $depth,
+                        'max_depth' => $args['max_depth'],
+                        'reply_text' => '↩ Reply'
+                    )));
+                    ?>
+                    <?php if (current_user_can('edit_comment', $comment->comment_ID)): ?>
+                        <span class="comment-separator"> | </span>
+                        <?php edit_comment_link('✎ Edit', '', ''); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        </div>
+    <?php
+}
+
