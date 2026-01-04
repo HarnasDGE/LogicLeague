@@ -76,6 +76,15 @@ function logicleague_enqueue_scripts() {
             array(),
             filemtime( get_template_directory() . '/assets/css/blog.css' )
         );
+
+        // Blog JS (for ToC generation)
+        wp_enqueue_script(
+            'blog',
+            get_template_directory_uri() . '/assets/js/blog.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/blog.js' ),
+            true
+        );
     }
 
     // Sudoku Landing Page CSS

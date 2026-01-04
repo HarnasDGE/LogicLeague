@@ -404,6 +404,60 @@ img {
 }
 
 /* ============================================
+   TABLE OF CONTENTS
+   ============================================ */
+
+/* Mobile ToC - Hidden by default, shown on mobile */
+.mobile-toc {
+    display: none;
+    background: #f9fafb;
+    border-left: 4px solid #8B5CF6;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    border-radius: 8px;
+}
+
+.mobile-toc-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #1f2937;
+}
+
+/* ToC Content Styles (shared for both mobile and sidebar) */
+.toc-content {
+    font-size: 0.9375rem;
+}
+
+.toc-content ul {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.toc-content ul ul {
+    padding-left: 1.25rem;
+    margin-top: 0.5rem;
+}
+
+.toc-content li {
+    margin-bottom: 0.5rem;
+}
+
+.toc-content a {
+    color: #6b7280;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: block;
+    padding: 0.25rem 0;
+}
+
+.toc-content a:hover {
+    color: #8B5CF6;
+    padding-left: 0.5rem;
+}
+
+/* ============================================
    SINGLE POST
    ============================================ */
 
@@ -1267,6 +1321,15 @@ img {
 
     .posts-grid {
         grid-template-columns: 1fr;
+    }
+
+    /* Show mobile ToC, hide sidebar ToC */
+    .mobile-toc {
+        display: block;
+    }
+
+    .sidebar-toc {
+        display: none;
     }
 }
 
