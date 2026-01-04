@@ -88,10 +88,6 @@ while (have_posts()): the_post();
                     </div>
                     <?php endif; ?>
                 </div>
-
-                <button class="btn btn-start-quiz" id="startQuizBtn">
-                    Start Quiz Now
-                </button>
             </div>
         </div>
     </section>
@@ -102,14 +98,8 @@ while (have_posts()): the_post();
             <div class="quiz-layout">
                 <!-- Main Quiz Area -->
                 <main class="quiz-main">
-                    <!-- AdSense Placement -->
-                    <div class="ad-placement ad-top">
-                        <!-- Google AdSense code here -->
-                        <div class="ad-placeholder">Advertisement</div>
-                    </div>
-
                     <!-- Quiz Player Container -->
-                    <div class="quiz-player" id="quizPlayer" style="display: none;">
+                    <div class="quiz-player" id="quizPlayer">
                         <!-- Progress Bar -->
                         <div class="quiz-progress-container">
                             <div class="quiz-progress-bar">
@@ -157,38 +147,25 @@ while (have_posts()): the_post();
 
                         <!-- Navigation Buttons -->
                         <div class="quiz-navigation">
-                            <button class="btn btn-secondary" id="prevBtn" disabled>
-                                ← Previous
-                            </button>
-                            <button class="btn btn-primary" id="nextBtn">
+                            <button class="btn btn-primary" id="nextBtn" disabled>
                                 Next →
                             </button>
-                            <button class="btn btn-success" id="submitBtn" style="display: none;">
-                                Submit Quiz
-                            </button>
                         </div>
                     </div>
 
-                    <!-- Quiz Intro (before start) -->
-                    <div class="quiz-intro" id="quizIntro">
-                        <div class="quiz-intro-content">
-                            <?php the_content(); ?>
-
-                            <?php if (empty($questions_data) && current_user_can('edit_posts')): ?>
-                            <div class="quiz-warning" style="background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-                                <h4 style="color: #c00; margin-top: 0;">⚠️ Admin Notice: No Questions Found</h4>
-                                <p><strong>How to fix:</strong></p>
-                                <ol>
-                                    <li>Edit this quiz</li>
-                                    <li>In the "Questions" field, select the questions you want to include</li>
-                                    <li>Make sure each Question post has all answer fields filled (answer_a, answer_b, answer_c, answer_d, correct_answer)</li>
-                                    <li>Save/Update the quiz</li>
-                                </ol>
-                                <p><em>This message is only visible to editors.</em></p>
-                            </div>
-                            <?php endif; ?>
-                        </div>
+                    <?php if (empty($questions_data) && current_user_can('edit_posts')): ?>
+                    <div class="quiz-warning" style="background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+                        <h4 style="color: #c00; margin-top: 0;">⚠️ Admin Notice: No Questions Found</h4>
+                        <p><strong>How to fix:</strong></p>
+                        <ol>
+                            <li>Edit this quiz</li>
+                            <li>In the "Questions" field, select the questions you want to include</li>
+                            <li>Make sure each Question post has all answer fields filled (answer_a, answer_b, answer_c, answer_d, correct_answer)</li>
+                            <li>Save/Update the quiz</li>
+                        </ol>
+                        <p><em>This message is only visible to editors.</em></p>
                     </div>
+                    <?php endif; ?>
 
                     <!-- AdSense Placement -->
                     <div class="ad-placement ad-middle">

@@ -49,38 +49,21 @@ class QuizPlayer {
 
         // Bind events
         this.bindEvents();
+
+        // Start quiz immediately
+        this.startQuiz();
     }
 
     showNoQuestionsMessage() {
-        const startBtn = document.getElementById('startQuizBtn');
-        if (startBtn) {
-            startBtn.disabled = true;
-            startBtn.textContent = 'No Questions Available';
-            startBtn.style.opacity = '0.5';
-            startBtn.style.cursor = 'not-allowed';
-        }
-
-        const intro = document.getElementById('quizIntro');
-        if (intro) {
-            const warning = document.createElement('div');
-            warning.className = 'quiz-error-message';
-            warning.style.cssText = 'background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;';
-            warning.innerHTML = '<h4 style="color: #c00; margin-top: 0;">⚠️ No Questions Available</h4><p>This quiz currently has no questions. Please check back later!</p>';
-            intro.querySelector('.quiz-intro-content').appendChild(warning);
+        const player = document.getElementById('quizPlayer');
+        if (player) {
+            player.innerHTML = '<div class="quiz-error-message" style="background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;"><h4 style="color: #c00; margin-top: 0;">⚠️ No Questions Available</h4><p>This quiz currently has no questions. Please check back later!</p></div>';
         }
     }
 
     bindEvents() {
-        // Start quiz button
-        const startBtn = document.getElementById('startQuizBtn');
-        if (startBtn) {
-            startBtn.addEventListener('click', () => this.startQuiz());
-        }
-
         // Navigation buttons
-        document.getElementById('prevBtn')?.addEventListener('click', () => this.previousQuestion());
         document.getElementById('nextBtn')?.addEventListener('click', () => this.nextQuestion());
-        document.getElementById('submitBtn')?.addEventListener('click', () => this.submitQuiz());
 
         // Results modal buttons
         document.getElementById('retryBtn')?.addEventListener('click', () => this.retryQuiz());
@@ -94,19 +77,15 @@ class QuizPlayer {
     }
 
     startQuiz() {
-        // Hide intro, show quiz player
-        document.getElementById('quizIntro').style.display = 'none';
-        document.getElementById('quizPlayer').style.display = 'block';
-
-        // Start timer
-        this.startTime = Date.now();
-        this.startTimer();
-
         // Load first question
         this.loadQuestion(0);
 
-        // Smooth scroll to quiz
-        document.getElementById('quizPlayer').scrollIntoView({ behavior: 'smooth' });
+        // Start timer after animation completes (all answers are displayed)
+        // Wait for the longest animation delay (0.2s) + animation duration (0.3s) + small buffer
+        setTimeout(() => {
+            this.startTime = Date.now();
+            this.startTimer();
+        }, 600);
     }
 
     startTimer() {
@@ -192,13 +171,10 @@ class QuizPlayer {
         const container = document.getElementById('questionContainer');
         container.innerHTML = questionHTML;
 
-        // If question was already answered, show feedback and disable options
+        // If question was already answered, disable options
         if (this.answers[index] !== null) {
             const questionCard = container.querySelector('.question-card');
             questionCard.classList.add('answered');
-
-            const isCorrect = this.answers[index] === question.correct_answer;
-            this.showFeedback(isCorrect);
 
             container.querySelectorAll('.answer-option').forEach(option => {
                 option.style.pointerEvents = 'none';
@@ -257,10 +233,9 @@ class QuizPlayer {
         // Check if answer is correct
         const isCorrect = answer === correctAnswer;
 
-        // Show immediate feedback
+        // Show immediate visual feedback
         if (isCorrect) {
             option.classList.add('correct');
-            this.showFeedback(true);
         } else {
             option.classList.add('incorrect');
             // Also highlight the correct answer
@@ -268,7 +243,6 @@ class QuizPlayer {
             if (correctOption) {
                 correctOption.classList.add('correct');
             }
-            this.showFeedback(false);
         }
 
         // Disable all answer options
@@ -277,52 +251,18 @@ class QuizPlayer {
             opt.style.pointerEvents = 'none';
         });
 
-        // Enable next button
-        const nextBtn = document.getElementById('nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
-
-        if (this.currentQuestionIndex < this.questions.length - 1) {
+        // Check if this is the last question
+        if (this.currentQuestionIndex === this.questions.length - 1) {
+            // Auto-submit after 2 seconds
+            setTimeout(() => {
+                this.submitQuiz();
+            }, 2000);
+        } else {
+            // Enable next button
+            const nextBtn = document.getElementById('nextBtn');
             nextBtn.disabled = false;
             nextBtn.classList.add('pulse');
-        } else {
-            submitBtn.style.display = 'inline-block';
-            submitBtn.classList.add('pulse');
         }
-    }
-
-    showFeedback(isCorrect) {
-        // Remove existing feedback
-        const existingFeedback = document.querySelector('.answer-feedback');
-        if (existingFeedback) {
-            existingFeedback.remove();
-        }
-
-        // Create feedback element
-        const feedback = document.createElement('div');
-        feedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
-
-        if (isCorrect) {
-            feedback.innerHTML = `
-                <div class="feedback-icon">✓</div>
-                <div class="feedback-text">
-                    <strong>Correct!</strong>
-                    <p>Great job! That's the right answer.</p>
-                </div>
-            `;
-        } else {
-            feedback.innerHTML = `
-                <div class="feedback-icon">✗</div>
-                <div class="feedback-text">
-                    <strong>Incorrect</strong>
-                    <p>The correct answer is highlighted in green.</p>
-                </div>
-            `;
-        }
-
-        // Insert feedback after question text
-        const questionCard = document.querySelector('.question-card');
-        const answerOptions = questionCard.querySelector('.answer-options');
-        questionCard.insertBefore(feedback, answerOptions);
     }
 
     updateProgress() {
@@ -346,40 +286,16 @@ class QuizPlayer {
     }
 
     updateNavigationButtons() {
-        const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
-        const submitBtn = document.getElementById('submitBtn');
-
-        // Previous button
-        if (prevBtn) {
-            prevBtn.disabled = this.currentQuestionIndex === 0;
-        }
 
         // Check if current question is answered
         const isAnswered = this.answers[this.currentQuestionIndex] !== null;
 
-        // Next/Submit button logic
-        const isLastQuestion = this.currentQuestionIndex === this.questions.length - 1;
-
-        if (isLastQuestion) {
-            nextBtn.style.display = 'none';
-            submitBtn.style.display = isAnswered ? 'inline-block' : 'none';
-            submitBtn.disabled = !isAnswered;
-        } else {
-            nextBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'none';
-            nextBtn.disabled = !isAnswered;
-        }
+        // Next button logic
+        nextBtn.disabled = !isAnswered;
 
         // Remove pulse animation
         nextBtn.classList.remove('pulse');
-        submitBtn.classList.remove('pulse');
-    }
-
-    previousQuestion() {
-        if (this.currentQuestionIndex > 0) {
-            this.loadQuestion(this.currentQuestionIndex - 1);
-        }
     }
 
     nextQuestion() {
