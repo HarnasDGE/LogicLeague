@@ -22,10 +22,26 @@ class QuizPlayer {
         if (questionsData) {
             try {
                 this.questions = JSON.parse(questionsData.textContent);
+                console.log('Quiz loaded:', this.questions.length, 'questions');
+
+                // Validate questions
+                if (this.questions.length === 0) {
+                    console.warn('No questions found in quiz data');
+                    this.showNoQuestionsMessage();
+                    return;
+                }
+
+                // Log first question for debugging
+                console.log('First question:', this.questions[0]);
+
             } catch (e) {
                 console.error('Failed to parse questions:', e);
+                console.log('Raw data:', questionsData.textContent);
                 return;
             }
+        } else {
+            console.error('Question data element not found');
+            return;
         }
 
         // Initialize answers array
@@ -33,6 +49,25 @@ class QuizPlayer {
 
         // Bind events
         this.bindEvents();
+    }
+
+    showNoQuestionsMessage() {
+        const startBtn = document.getElementById('startQuizBtn');
+        if (startBtn) {
+            startBtn.disabled = true;
+            startBtn.textContent = 'No Questions Available';
+            startBtn.style.opacity = '0.5';
+            startBtn.style.cursor = 'not-allowed';
+        }
+
+        const intro = document.getElementById('quizIntro');
+        if (intro) {
+            const warning = document.createElement('div');
+            warning.className = 'quiz-error-message';
+            warning.style.cssText = 'background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;';
+            warning.innerHTML = '<h4 style="color: #c00; margin-top: 0;">⚠️ No Questions Available</h4><p>This quiz currently has no questions. Please check back later!</p>';
+            intro.querySelector('.quiz-intro-content').appendChild(warning);
+        }
     }
 
     bindEvents() {

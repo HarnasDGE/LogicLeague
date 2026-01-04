@@ -11,12 +11,30 @@ while (have_posts()): the_post();
     $quiz_id = get_the_ID();
     $quiz_difficulty = get_post_meta($quiz_id, 'quiz_difficulty', true);
     $quiz_time_limit = get_post_meta($quiz_id, 'quiz_time_limit', true);
+
+    // Try different meta field names for question IDs
     $question_ids = get_post_meta($quiz_id, 'quiz_question_ids', true);
+
+    // If empty, try alternative field names
+    if (empty($question_ids)) {
+        $question_ids = get_post_meta($quiz_id, 'questions', true);
+    }
+    if (empty($question_ids)) {
+        $question_ids = get_post_meta($quiz_id, 'quiz_questions', true);
+    }
+
+    // Ensure it's an array
+    if (!is_array($question_ids) && !empty($question_ids)) {
+        $question_ids = array($question_ids);
+    }
 
     // Get questions data
     $questions_data = array();
     if ($question_ids && is_array($question_ids)) {
         foreach ($question_ids as $q_id) {
+            // Skip if not a valid post ID
+            if (!$q_id || !is_numeric($q_id)) continue;
+
             $questions_data[] = array(
                 'id' => $q_id,
                 'question' => get_the_title($q_id),
@@ -29,6 +47,14 @@ while (have_posts()): the_post();
                 'images' => get_post_meta($q_id, 'question_images', true),
             );
         }
+    }
+
+    // Debug info (remove after testing)
+    if (current_user_can('edit_posts')) {
+        echo '<!-- Debug Info:';
+        echo ' Question IDs: ' . print_r($question_ids, true);
+        echo ' Questions Data Count: ' . count($questions_data);
+        echo ' -->';
     }
 ?>
 
@@ -126,6 +152,32 @@ while (have_posts()): the_post();
                     <div class="quiz-intro" id="quizIntro">
                         <div class="quiz-intro-content">
                             <?php the_content(); ?>
+
+                            <?php if (empty($questions_data) && current_user_can('edit_posts')): ?>
+                            <div class="quiz-warning" style="background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+                                <h4 style="color: #c00; margin-top: 0;">⚠️ Admin Notice: No Questions Found</h4>
+                                <p><strong>Possible reasons:</strong></p>
+                                <ul>
+                                    <li>No questions are connected to this quiz</li>
+                                    <li>The meta field name might be incorrect</li>
+                                    <li>Questions meta data is not properly set</li>
+                                </ul>
+                                <p><strong>How to fix:</strong></p>
+                                <ol>
+                                    <li>Create Question posts in "Questions" menu</li>
+                                    <li>Add meta fields: answer_a, answer_b, answer_c, answer_d, correct_answer</li>
+                                    <li>Connect questions to this quiz using one of these meta field names:
+                                        <ul>
+                                            <li><code>quiz_question_ids</code></li>
+                                            <li><code>questions</code></li>
+                                            <li><code>quiz_questions</code></li>
+                                        </ul>
+                                    </li>
+                                    <li>The meta value should be an array of question post IDs</li>
+                                </ol>
+                                <p><em>This message is only visible to editors.</em></p>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 
