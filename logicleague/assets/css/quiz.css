@@ -192,37 +192,41 @@
     outline: none;
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    touch-action: pan-y; /* Allow only vertical scrolling, prevent other touch gestures */
+    -webkit-touch-callout: none; /* Prevent callout on long press */
 }
 
 .answer-option:focus,
 .answer-option:focus-visible,
 .answer-option:focus-within {
     outline: none;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
 }
 
 .answer-option:active {
     outline: none;
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
 }
 
-.answer-option:hover:not(.answered) {
+.answer-option:hover:not(.answered):not(.correct):not(.incorrect) {
     background: #f3f4f6;
     border-color: #8B5CF6;
     transform: translateX(5px);
 }
 
+/* Remove all visual styling from .selected - only .correct and .incorrect should have visual feedback */
 .answer-option.selected {
-    background: linear-gradient(90deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
-    border-color: #8B5CF6;
-    border-width: 3px;
-    padding: calc(1.25rem - 1px) calc(1.5rem - 1px);
+    /* No visual changes - selected state is managed by .correct and .incorrect classes */
 }
 
-/* Prevent selected state from persisting */
+/* Ensure no selected styling persists */
 .answer-option:not(.correct):not(.incorrect).selected {
-    background: #f9fafb;
-    border: 2px solid #e5e7eb;
-    border-width: 2px;
-    padding: 1.25rem 1.5rem;
+    background: #f9fafb !important;
+    border: 2px solid #e5e7eb !important;
+    border-width: 2px !important;
+    padding: 1.25rem 1.5rem !important;
 }
 
 /* Correct and Incorrect States */
