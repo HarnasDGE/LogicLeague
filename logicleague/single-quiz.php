@@ -121,6 +121,35 @@ while (have_posts()): the_post();
                             </div>
                         </div>
 
+                        <!-- Ad Space (rotates every 3 questions) -->
+                        <div class="quiz-ad-space" id="quizAdSpace">
+                            <!-- AdSense code will be inserted here -->
+                            <div class="ad-placeholder" data-ad="1">
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-XXXXXXXXXX"
+                                     data-ad-slot="XXXXXXXXXX"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                            </div>
+                            <div class="ad-placeholder" data-ad="2" style="display: none;">
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-XXXXXXXXXX"
+                                     data-ad-slot="XXXXXXXXXX"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                            </div>
+                            <div class="ad-placeholder" data-ad="3" style="display: none;">
+                                <ins class="adsbygoogle"
+                                     style="display:block"
+                                     data-ad-client="ca-pub-XXXXXXXXXX"
+                                     data-ad-slot="XXXXXXXXXX"
+                                     data-ad-format="auto"
+                                     data-full-width-responsive="true"></ins>
+                            </div>
+                        </div>
+
                         <!-- Question Container -->
                         <div class="quiz-question-container" id="questionContainer">
                             <!-- Questions will be loaded by JavaScript -->

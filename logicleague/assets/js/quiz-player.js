@@ -138,6 +138,9 @@ class QuizPlayer {
         // Update progress
         this.updateProgress();
 
+        // Update ad rotation (every 3 questions)
+        this.updateAdRotation(index);
+
         // Build question HTML
         let questionHTML = `
             <div class="question-card">
@@ -162,8 +165,20 @@ class QuizPlayer {
             const answerKey = `answer_${option}`;
             if (question[answerKey]) {
                 const isSelected = this.answers[index] === option;
+                const correctAnswer = question.correct_answer;
+
+                // If question was already answered, show the feedback
+                let optionClass = isSelected ? 'selected' : '';
+                if (this.answers[index] !== null) {
+                    if (option === correctAnswer) {
+                        optionClass += ' correct';
+                    } else if (option === this.answers[index]) {
+                        optionClass += ' incorrect';
+                    }
+                }
+
                 questionHTML += `
-                    <div class="answer-option ${isSelected ? 'selected' : ''}" data-answer="${option}">
+                    <div class="answer-option ${optionClass}" data-answer="${option}">
                         <span class="answer-letter">${option.toUpperCase()}</span>
                         <span class="answer-text">${question[answerKey]}</span>
                     </div>
@@ -177,30 +192,137 @@ class QuizPlayer {
         const container = document.getElementById('questionContainer');
         container.innerHTML = questionHTML;
 
-        // Add click events to answers
-        container.querySelectorAll('.answer-option').forEach(option => {
-            option.addEventListener('click', () => this.selectAnswer(option));
-        });
+        // If question was already answered, show feedback and disable options
+        if (this.answers[index] !== null) {
+            const questionCard = container.querySelector('.question-card');
+            questionCard.classList.add('answered');
+
+            const isCorrect = this.answers[index] === question.correct_answer;
+            this.showFeedback(isCorrect);
+
+            container.querySelectorAll('.answer-option').forEach(option => {
+                option.style.pointerEvents = 'none';
+            });
+        } else {
+            // Add click events to answers for new questions
+            container.querySelectorAll('.answer-option').forEach(option => {
+                option.addEventListener('click', () => this.selectAnswer(option));
+            });
+        }
 
         // Update navigation buttons
         this.updateNavigationButtons();
     }
 
-    selectAnswer(optionElement) {
-        // Remove previous selection
-        document.querySelectorAll('.answer-option').forEach(opt => {
-            opt.classList.remove('selected');
+    updateAdRotation(questionIndex) {
+        // Calculate which ad to show (changes every 3 questions)
+        // Questions 0-2: ad 1, Questions 3-5: ad 2, Questions 6-8: ad 3
+        const adNumber = Math.floor(questionIndex / 3) + 1;
+
+        const adSpace = document.getElementById('quizAdSpace');
+        if (!adSpace) return;
+
+        // Hide all ads
+        const allAds = adSpace.querySelectorAll('.ad-placeholder');
+        allAds.forEach(ad => {
+            ad.style.display = 'none';
         });
 
-        // Mark as selected
-        optionElement.classList.add('selected');
+        // Show current ad
+        const currentAd = adSpace.querySelector(`[data-ad="${adNumber}"]`);
+        if (currentAd) {
+            currentAd.style.display = 'block';
+        }
+    }
 
-        // Store answer
-        const answer = optionElement.dataset.answer;
+    selectAnswer(option) {
+        // Check if already answered this question
+        if (option.closest('.question-card').classList.contains('answered')) {
+            return;
+        }
+
+        // Mark question as answered
+        option.closest('.question-card').classList.add('answered');
+
+        // Get the selected answer
+        const answer = option.dataset.answer;
         this.answers[this.currentQuestionIndex] = answer;
 
-        // Update navigation
-        this.updateNavigationButtons();
+        // Get correct answer
+        const correctAnswer = this.questions[this.currentQuestionIndex].correct_answer;
+
+        // Mark selected option
+        option.classList.add('selected');
+
+        // Check if answer is correct
+        const isCorrect = answer === correctAnswer;
+
+        // Show immediate feedback
+        if (isCorrect) {
+            option.classList.add('correct');
+            this.showFeedback(true);
+        } else {
+            option.classList.add('incorrect');
+            // Also highlight the correct answer
+            const correctOption = document.querySelector(`.answer-option[data-answer="${correctAnswer}"]`);
+            if (correctOption) {
+                correctOption.classList.add('correct');
+            }
+            this.showFeedback(false);
+        }
+
+        // Disable all answer options
+        const options = document.querySelectorAll('.answer-option');
+        options.forEach(opt => {
+            opt.style.pointerEvents = 'none';
+        });
+
+        // Enable next button
+        const nextBtn = document.getElementById('nextBtn');
+        const submitBtn = document.getElementById('submitBtn');
+
+        if (this.currentQuestionIndex < this.questions.length - 1) {
+            nextBtn.disabled = false;
+            nextBtn.classList.add('pulse');
+        } else {
+            submitBtn.style.display = 'inline-block';
+            submitBtn.classList.add('pulse');
+        }
+    }
+
+    showFeedback(isCorrect) {
+        // Remove existing feedback
+        const existingFeedback = document.querySelector('.answer-feedback');
+        if (existingFeedback) {
+            existingFeedback.remove();
+        }
+
+        // Create feedback element
+        const feedback = document.createElement('div');
+        feedback.className = `answer-feedback ${isCorrect ? 'correct' : 'incorrect'}`;
+
+        if (isCorrect) {
+            feedback.innerHTML = `
+                <div class="feedback-icon">✓</div>
+                <div class="feedback-text">
+                    <strong>Correct!</strong>
+                    <p>Great job! That's the right answer.</p>
+                </div>
+            `;
+        } else {
+            feedback.innerHTML = `
+                <div class="feedback-icon">✗</div>
+                <div class="feedback-text">
+                    <strong>Incorrect</strong>
+                    <p>The correct answer is highlighted in green.</p>
+                </div>
+            `;
+        }
+
+        // Insert feedback after question text
+        const questionCard = document.querySelector('.question-card');
+        const answerOptions = questionCard.querySelector('.answer-options');
+        questionCard.insertBefore(feedback, answerOptions);
     }
 
     updateProgress() {
@@ -233,16 +355,25 @@ class QuizPlayer {
             prevBtn.disabled = this.currentQuestionIndex === 0;
         }
 
+        // Check if current question is answered
+        const isAnswered = this.answers[this.currentQuestionIndex] !== null;
+
         // Next/Submit button logic
         const isLastQuestion = this.currentQuestionIndex === this.questions.length - 1;
 
         if (isLastQuestion) {
             nextBtn.style.display = 'none';
-            submitBtn.style.display = 'inline-block';
+            submitBtn.style.display = isAnswered ? 'inline-block' : 'none';
+            submitBtn.disabled = !isAnswered;
         } else {
             nextBtn.style.display = 'inline-block';
             submitBtn.style.display = 'none';
+            nextBtn.disabled = !isAnswered;
         }
+
+        // Remove pulse animation
+        nextBtn.classList.remove('pulse');
+        submitBtn.classList.remove('pulse');
     }
 
     previousQuestion() {
