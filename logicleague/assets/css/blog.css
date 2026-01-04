@@ -4,10 +4,23 @@
  * @package LogicLeague
  */
 
-/* Prevent horizontal overflow */
-.single-post,
-.blog-archive {
+/* Box sizing and overflow prevention */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Ensure blog sections don't overflow */
+.blog-archive,
+.single-post {
+    max-width: 100vw;
     overflow-x: hidden;
+}
+
+.blog-archive > *,
+.single-post > * {
+    max-width: 100%;
 }
 
 /* Ensure images don't overflow */
@@ -21,6 +34,36 @@ img {
 .comment-content {
     word-wrap: break-word;
     overflow-wrap: break-word;
+}
+
+/* Prevent text overflow */
+.post-nav-title,
+.post-card-title,
+.comment-author-name,
+.post-hero-title {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
+}
+
+/* ============================================
+   CONTAINER CONSTRAINTS
+   ============================================ */
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.container-narrow {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    box-sizing: border-box;
 }
 
 /* ============================================
@@ -382,12 +425,6 @@ img {
     bottom: 0;
     background: linear-gradient(135deg, rgba(139, 92, 246, 0.9) 0%, rgba(236, 72, 153, 0.85) 100%);
     z-index: 1;
-}
-
-.container-narrow {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 0 1rem;
 }
 
 .post-hero-content {
@@ -1280,12 +1317,13 @@ img {
     .posts-grid,
     .games-carousel,
     .posts-carousel {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
         gap: 1.5rem;
     }
 
     .blog-layout,
     .post-layout {
+        grid-template-columns: 1fr !important;
         gap: 2rem;
     }
 
@@ -1309,17 +1347,44 @@ img {
     .container-narrow {
         padding-left: 1rem;
         padding-right: 1rem;
+        max-width: 100%;
     }
 
     .newsletter-cta-box h2 {
         font-size: 1.75rem;
     }
 
+    .newsletter-cta-form {
+        gap: 0.75rem;
+    }
+
+    .newsletter-cta-input,
+    .btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
     .comment-body {
         padding: 1rem;
+        gap: 1rem;
     }
 
     .children {
         padding-left: 1rem;
+    }
+
+    .social-share-buttons {
+        gap: 0.75rem;
+    }
+
+    .share-btn {
+        flex: 1 1 100%;
+        justify-content: center;
+    }
+
+    .post-card-content,
+    .game-carousel-card,
+    .post-carousel-content {
+        padding: 1.5rem;
     }
 }
