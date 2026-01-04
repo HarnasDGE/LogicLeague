@@ -9,42 +9,31 @@ get_header();
 
 while (have_posts()): the_post();
     $quiz_id = get_the_ID();
-    $quiz_difficulty = get_post_meta($quiz_id, 'quiz_difficulty', true);
-    $quiz_time_limit = get_post_meta($quiz_id, 'quiz_time_limit', true);
+    $quiz_difficulty = get_field('quiz_difficulty');
+    $quiz_time_limit = get_field('quiz_time_limit');
 
-    // Try different meta field names for question IDs
-    $question_ids = get_post_meta($quiz_id, 'quiz_question_ids', true);
-
-    // If empty, try alternative field names
-    if (empty($question_ids)) {
-        $question_ids = get_post_meta($quiz_id, 'questions', true);
-    }
-    if (empty($question_ids)) {
-        $question_ids = get_post_meta($quiz_id, 'quiz_questions', true);
-    }
-
-    // Ensure it's an array
-    if (!is_array($question_ids) && !empty($question_ids)) {
-        $question_ids = array($question_ids);
-    }
+    // Get questions using ACF relationship field
+    $questions = get_field('questions'); // Returns array of post objects
 
     // Get questions data
     $questions_data = array();
-    if ($question_ids && is_array($question_ids)) {
-        foreach ($question_ids as $q_id) {
-            // Skip if not a valid post ID
-            if (!$q_id || !is_numeric($q_id)) continue;
+    if ($questions && is_array($questions)) {
+        foreach ($questions as $question_post) {
+            // Get question data using ACF
+            $correct_answer_raw = get_field('correct_answer', $question_post->ID);
+            // Convert 'answer_a' to 'a', 'answer_b' to 'b', etc.
+            $correct_answer = str_replace('answer_', '', $correct_answer_raw);
 
             $questions_data[] = array(
-                'id' => $q_id,
-                'question' => get_the_title($q_id),
-                'answer_a' => get_post_meta($q_id, 'answer_a', true),
-                'answer_b' => get_post_meta($q_id, 'answer_b', true),
-                'answer_c' => get_post_meta($q_id, 'answer_c', true),
-                'answer_d' => get_post_meta($q_id, 'answer_d', true),
-                'correct_answer' => get_post_meta($q_id, 'correct_answer', true),
-                'image' => get_the_post_thumbnail_url($q_id, 'large'),
-                'images' => get_post_meta($q_id, 'question_images', true),
+                'id' => $question_post->ID,
+                'question' => $question_post->post_title,
+                'answer_a' => get_field('answer_a', $question_post->ID),
+                'answer_b' => get_field('answer_b', $question_post->ID),
+                'answer_c' => get_field('answer_c', $question_post->ID),
+                'answer_d' => get_field('answer_d', $question_post->ID),
+                'correct_answer' => $correct_answer,
+                'image' => get_the_post_thumbnail_url($question_post->ID, 'large'),
+                'images' => get_field('images', $question_post->ID),
             );
         }
     }
@@ -52,8 +41,11 @@ while (have_posts()): the_post();
     // Debug info (remove after testing)
     if (current_user_can('edit_posts')) {
         echo '<!-- Debug Info:';
-        echo ' Question IDs: ' . print_r($question_ids, true);
+        echo ' Questions from ACF: ' . print_r($questions, true);
         echo ' Questions Data Count: ' . count($questions_data);
+        if (!empty($questions_data)) {
+            echo ' First Question Data: ' . print_r($questions_data[0], true);
+        }
         echo ' -->';
     }
 ?>
@@ -156,24 +148,12 @@ while (have_posts()): the_post();
                             <?php if (empty($questions_data) && current_user_can('edit_posts')): ?>
                             <div class="quiz-warning" style="background: #fee; border: 2px solid #f00; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
                                 <h4 style="color: #c00; margin-top: 0;">⚠️ Admin Notice: No Questions Found</h4>
-                                <p><strong>Possible reasons:</strong></p>
-                                <ul>
-                                    <li>No questions are connected to this quiz</li>
-                                    <li>The meta field name might be incorrect</li>
-                                    <li>Questions meta data is not properly set</li>
-                                </ul>
                                 <p><strong>How to fix:</strong></p>
                                 <ol>
-                                    <li>Create Question posts in "Questions" menu</li>
-                                    <li>Add meta fields: answer_a, answer_b, answer_c, answer_d, correct_answer</li>
-                                    <li>Connect questions to this quiz using one of these meta field names:
-                                        <ul>
-                                            <li><code>quiz_question_ids</code></li>
-                                            <li><code>questions</code></li>
-                                            <li><code>quiz_questions</code></li>
-                                        </ul>
-                                    </li>
-                                    <li>The meta value should be an array of question post IDs</li>
+                                    <li>Edit this quiz</li>
+                                    <li>In the "Questions" field, select the questions you want to include</li>
+                                    <li>Make sure each Question post has all answer fields filled (answer_a, answer_b, answer_c, answer_d, correct_answer)</li>
+                                    <li>Save/Update the quiz</li>
                                 </ol>
                                 <p><em>This message is only visible to editors.</em></p>
                             </div>

@@ -66,7 +66,8 @@
 
             if ($related_quizzes->have_posts()):
                 while ($related_quizzes->have_posts()): $related_quizzes->the_post();
-                    $q_count = count(get_post_meta(get_the_ID(), 'quiz_question_ids', true) ?: array());
+                    $questions = get_field('questions') ?: array();
+                    $q_count = is_array($questions) ? count($questions) : 0;
             ?>
             <a href="<?php the_permalink(); ?>" class="sidebar-quiz-item">
                 <?php if (has_post_thumbnail()): ?>

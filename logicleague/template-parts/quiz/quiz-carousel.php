@@ -17,8 +17,9 @@
 
             if ($quizzes->have_posts()):
                 while ($quizzes->have_posts()): $quizzes->the_post();
-                    $question_count = count(get_post_meta(get_the_ID(), 'quiz_question_ids', true) ?: array());
-                    $difficulty = get_post_meta(get_the_ID(), 'quiz_difficulty', true);
+                    $questions = get_field('questions') ?: array();
+                    $question_count = is_array($questions) ? count($questions) : 0;
+                    $difficulty = get_field('quiz_difficulty');
                     $terms = get_the_terms(get_the_ID(), 'quiz_category');
             ?>
             <div class="quiz-card">
