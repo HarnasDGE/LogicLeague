@@ -875,6 +875,8 @@ img {
 
 .comment-content-wrap {
     flex: 1;
+    min-width: 0;
+    overflow-wrap: break-word;
 }
 
 .comment-meta {
@@ -882,12 +884,15 @@ img {
     align-items: center;
     gap: 1rem;
     margin-bottom: 0.75rem;
+    flex-wrap: wrap;
 }
 
 .comment-author-name {
     font-weight: 700;
     color: #1f2937;
     text-decoration: none;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 }
 
 .comment-author-name a {
@@ -1031,12 +1036,15 @@ img {
 .comment-form input[type="email"],
 .comment-form input[type="url"],
 .comment-form textarea {
+    width: 100%;
+    max-width: 100%;
     padding: 0.75rem 1rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
     font-size: 1rem;
     font-family: inherit;
     transition: all 0.3s ease;
+    box-sizing: border-box;
 }
 
 .comment-form input:focus,
@@ -1386,5 +1394,16 @@ img {
     .game-carousel-card,
     .post-carousel-content {
         padding: 1.5rem;
+    }
+
+    .comment-respond {
+        padding: 1rem;
+    }
+
+    .comment-form input[type="text"],
+    .comment-form input[type="email"],
+    .comment-form input[type="url"],
+    .comment-form textarea {
+        font-size: 0.9375rem;
     }
 }
