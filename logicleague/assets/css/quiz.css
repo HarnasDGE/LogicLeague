@@ -190,13 +190,21 @@
     cursor: pointer;
     transition: all 0.3s ease;
     outline: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.answer-option:focus {
+.answer-option:focus,
+.answer-option:focus-visible,
+.answer-option:focus-within {
     outline: none;
 }
 
-.answer-option:hover {
+.answer-option:active {
+    outline: none;
+}
+
+.answer-option:hover:not(.answered) {
     background: #f3f4f6;
     border-color: #8B5CF6;
     transform: translateX(5px);

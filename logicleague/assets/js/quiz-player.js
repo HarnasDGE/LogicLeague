@@ -150,7 +150,7 @@ class QuizPlayer {
                 }
 
                 questionHTML += `
-                    <div class="answer-option ${optionClass}" data-answer="${option}">
+                    <div class="answer-option ${optionClass}" data-answer="${option}" tabindex="-1">
                         <span class="answer-letter">${option.toUpperCase()}</span>
                         <span class="answer-text">${question[answerKey]}</span>
                     </div>
@@ -164,6 +164,11 @@ class QuizPlayer {
         const container = document.getElementById('questionContainer');
         container.innerHTML = questionHTML;
 
+        // Clear any lingering focus
+        if (document.activeElement && document.activeElement !== document.body) {
+            document.activeElement.blur();
+        }
+
         // If question was already answered, disable options
         if (this.answers[index] !== null) {
             const questionCard = container.querySelector('.question-card');
@@ -171,11 +176,16 @@ class QuizPlayer {
 
             container.querySelectorAll('.answer-option').forEach(option => {
                 option.style.pointerEvents = 'none';
+                option.blur();
             });
         } else {
             // Add click events to answers for new questions
             container.querySelectorAll('.answer-option').forEach(option => {
                 option.addEventListener('click', () => this.selectAnswer(option));
+                // Prevent any default focus behavior
+                option.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                });
             });
 
             // Start timer when all answers are visible (only on first question)
