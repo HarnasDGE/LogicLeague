@@ -12,6 +12,7 @@ class QuizPlayer {
         this.startTime = null;
         this.timerInterval = null;
         this.score = 0;
+        this.timerStarted = false;
 
         this.init();
     }
@@ -74,12 +75,10 @@ class QuizPlayer {
     }
 
     startQuiz() {
-        // Start timer immediately
-        this.startTime = Date.now();
-        this.startTimer();
-
         // Load first question
         this.loadQuestion(0);
+
+        // Timer will be started by observeAnswersVisibility() when all answers are visible
     }
 
     startTimer() {
@@ -178,8 +177,38 @@ class QuizPlayer {
             container.querySelectorAll('.answer-option').forEach(option => {
                 option.addEventListener('click', () => this.selectAnswer(option));
             });
+
+            // Start timer when all answers are visible (only on first question)
+            if (!this.timerStarted) {
+                this.observeAnswersVisibility(container);
+            }
         }
 
+    }
+
+    observeAnswersVisibility(container) {
+        // Find the last answer option (4th one)
+        const answerOptions = container.querySelectorAll('.answer-option');
+        const lastAnswer = answerOptions[answerOptions.length - 1];
+
+        if (!lastAnswer) return;
+
+        // Create intersection observer to detect when 50% of last answer is visible
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // Start timer when at least 50% of the last answer is visible
+                if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !this.timerStarted) {
+                    this.timerStarted = true;
+                    this.startTime = Date.now();
+                    this.startTimer();
+                    observer.disconnect(); // Stop observing after timer starts
+                }
+            });
+        }, {
+            threshold: 0.5 // Trigger when 50% visible
+        });
+
+        observer.observe(lastAnswer);
     }
 
     updateAdRotation(questionIndex) {
@@ -237,11 +266,15 @@ class QuizPlayer {
             }
         }
 
-        // Disable all answer options
+        // Disable all answer options and remove focus
         const options = document.querySelectorAll('.answer-option');
         options.forEach(opt => {
             opt.style.pointerEvents = 'none';
+            opt.blur(); // Remove focus from all options
         });
+
+        // Remove focus from the selected option
+        option.blur();
 
         // Check if this is the last question
         if (this.currentQuestionIndex === this.questions.length - 1) {
