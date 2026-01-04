@@ -114,6 +114,33 @@ function logicleague_enqueue_scripts() {
             true
         );
     }
+
+    // Quiz CSS & JS
+    if ( is_singular('quiz') ) {
+        wp_enqueue_style(
+            'quiz',
+            get_template_directory_uri() . '/assets/css/quiz.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/quiz.css' )
+        );
+
+        wp_enqueue_script(
+            'quiz-player',
+            get_template_directory_uri() . '/assets/js/quiz-player.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/quiz-player.js' ),
+            true
+        );
+
+        // Pass quiz data to JavaScript
+        $questions = get_post_meta(get_the_ID(), 'quiz_questions', true);
+        wp_localize_script('quiz-player', 'quizData', array(
+            'quizId' => get_the_ID(),
+            'quizTitle' => get_the_title(),
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'shareUrl' => get_permalink(),
+        ));
+    }
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
 
@@ -203,6 +230,77 @@ function logicleague_widgets_init() {
     ) );
 }
 add_action( 'widgets_init', 'logicleague_widgets_init' );
+
+/**
+ * Register Quiz and Question Custom Post Types
+ */
+function logicleague_register_quiz_cpts() {
+    // Register Quiz CPT
+    register_post_type('quiz', array(
+        'labels' => array(
+            'name' => 'Quizzes',
+            'singular_name' => 'Quiz',
+            'add_new' => 'Add New Quiz',
+            'add_new_item' => 'Add New Quiz',
+            'edit_item' => 'Edit Quiz',
+            'new_item' => 'New Quiz',
+            'view_item' => 'View Quiz',
+            'search_items' => 'Search Quizzes',
+            'not_found' => 'No quizzes found',
+            'not_found_in_trash' => 'No quizzes found in trash'
+        ),
+        'public' => true,
+        'has_archive' => true,
+        'show_in_rest' => true,
+        'supports' => array('title', 'editor', 'thumbnail', 'excerpt', 'custom-fields'),
+        'rewrite' => array('slug' => 'quiz'),
+        'menu_icon' => 'dashicons-forms',
+        'taxonomies' => array('quiz_category')
+    ));
+
+    // Register Question CPT
+    register_post_type('question', array(
+        'labels' => array(
+            'name' => 'Questions',
+            'singular_name' => 'Question',
+            'add_new' => 'Add New Question',
+            'add_new_item' => 'Add New Question',
+            'edit_item' => 'Edit Question',
+            'new_item' => 'New Question',
+            'view_item' => 'View Question',
+            'search_items' => 'Search Questions',
+            'not_found' => 'No questions found',
+            'not_found_in_trash' => 'No questions found in trash'
+        ),
+        'public' => true,
+        'show_in_rest' => true,
+        'supports' => array('title', 'custom-fields', 'thumbnail'),
+        'menu_icon' => 'dashicons-editor-help',
+        'show_in_menu' => 'edit.php?post_type=quiz'
+    ));
+
+    // Register Quiz Category Taxonomy
+    register_taxonomy('quiz_category', 'quiz', array(
+        'labels' => array(
+            'name' => 'Quiz Categories',
+            'singular_name' => 'Quiz Category',
+            'search_items' => 'Search Quiz Categories',
+            'all_items' => 'All Quiz Categories',
+            'parent_item' => 'Parent Quiz Category',
+            'parent_item_colon' => 'Parent Quiz Category:',
+            'edit_item' => 'Edit Quiz Category',
+            'update_item' => 'Update Quiz Category',
+            'add_new_item' => 'Add New Quiz Category',
+            'new_item_name' => 'New Quiz Category Name',
+            'menu_name' => 'Categories',
+        ),
+        'hierarchical' => true,
+        'show_in_rest' => true,
+        'show_admin_column' => true,
+        'rewrite' => array('slug' => 'quiz-category'),
+    ));
+}
+add_action('init', 'logicleague_register_quiz_cpts');
 
 /**
  * Custom comment callback
