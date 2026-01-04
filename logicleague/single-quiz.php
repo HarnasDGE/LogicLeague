@@ -144,13 +144,6 @@ while (have_posts()): the_post();
                         <div class="quiz-question-container" id="questionContainer">
                             <!-- Questions will be loaded by JavaScript -->
                         </div>
-
-                        <!-- Navigation Buttons -->
-                        <div class="quiz-navigation">
-                            <button class="btn btn-primary" id="nextBtn" disabled>
-                                Next →
-                            </button>
-                        </div>
                     </div>
 
                     <?php if (empty($questions_data) && current_user_can('edit_posts')): ?>

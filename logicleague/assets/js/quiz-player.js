@@ -62,9 +62,6 @@ class QuizPlayer {
     }
 
     bindEvents() {
-        // Navigation buttons
-        document.getElementById('nextBtn')?.addEventListener('click', () => this.nextQuestion());
-
         // Results modal buttons
         document.getElementById('retryBtn')?.addEventListener('click', () => this.retryQuiz());
         document.getElementById('copyLinkBtn')?.addEventListener('click', () => this.copyLink());
@@ -77,15 +74,12 @@ class QuizPlayer {
     }
 
     startQuiz() {
+        // Start timer immediately
+        this.startTime = Date.now();
+        this.startTimer();
+
         // Load first question
         this.loadQuestion(0);
-
-        // Start timer after animation completes (all answers are displayed)
-        // Wait for the longest animation delay (0.2s) + animation duration (0.3s) + small buffer
-        setTimeout(() => {
-            this.startTime = Date.now();
-            this.startTimer();
-        }, 600);
     }
 
     startTimer() {
@@ -186,8 +180,6 @@ class QuizPlayer {
             });
         }
 
-        // Update navigation buttons
-        this.updateNavigationButtons();
     }
 
     updateAdRotation(questionIndex) {
@@ -258,10 +250,10 @@ class QuizPlayer {
                 this.submitQuiz();
             }, 2000);
         } else {
-            // Enable next button
-            const nextBtn = document.getElementById('nextBtn');
-            nextBtn.disabled = false;
-            nextBtn.classList.add('pulse');
+            // Auto-advance to next question after 1 second
+            setTimeout(() => {
+                this.nextQuestion();
+            }, 1000);
         }
     }
 
@@ -283,19 +275,6 @@ class QuizPlayer {
         if (totalQ) {
             totalQ.textContent = this.questions.length;
         }
-    }
-
-    updateNavigationButtons() {
-        const nextBtn = document.getElementById('nextBtn');
-
-        // Check if current question is answered
-        const isAnswered = this.answers[this.currentQuestionIndex] !== null;
-
-        // Next button logic
-        nextBtn.disabled = !isAnswered;
-
-        // Remove pulse animation
-        nextBtn.classList.remove('pulse');
     }
 
     nextQuestion() {
