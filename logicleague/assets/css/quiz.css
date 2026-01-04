@@ -217,6 +217,14 @@
     padding: calc(1.25rem - 1px) calc(1.5rem - 1px);
 }
 
+/* Prevent selected state from persisting */
+.answer-option:not(.correct):not(.incorrect).selected {
+    background: #f9fafb;
+    border: 2px solid #e5e7eb;
+    border-width: 2px;
+    padding: 1.25rem 1.5rem;
+}
+
 /* Correct and Incorrect States */
 .answer-option {
     position: relative;

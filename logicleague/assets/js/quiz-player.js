@@ -107,6 +107,13 @@ class QuizPlayer {
 
         if (!question) return;
 
+        // Force clear any existing selections/focus before loading new question
+        const existingOptions = document.querySelectorAll('.answer-option');
+        existingOptions.forEach(opt => {
+            opt.classList.remove('selected', 'correct', 'incorrect');
+            opt.blur();
+        });
+
         // Update progress
         this.updateProgress();
 
