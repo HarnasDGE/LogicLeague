@@ -15,48 +15,49 @@ get_header();
     <div class="container">
         <div class="hero-wrapper-new">
             <div class="hero-content-new">
-                <h1 class="hero-title-new">Challenge Your Mind,<br>Level Up Your Skills!</h1>
+                <h1 class="hero-title-new">Test Your Knowledge,<br>Master Every Quiz!</h1>
                 <p class="hero-description-new">
-                    Welcome to LogicLeague - the ultimate platform for brain training and knowledge expansion.
-                    Join thousands of learners who are sharpening their minds with our expertly crafted quizzes,
-                    puzzles, and challenges across multiple categories. Whether you're a beginner or a master,
-                    we have the perfect challenge waiting for you.
+                    Join LogicLeague - the ultimate destination for trivia lovers and puzzle enthusiasts!
+                    Challenge yourself with thousands of engaging quizzes across Movies, Geography, History,
+                    Science, Sports and more. Compete with players worldwide, earn points, level up, and prove
+                    you're the ultimate quiz master. From Sudoku puzzles to brain-teasing trivia - your next
+                    challenge awaits!
                 </p>
 
                 <!-- Colorful CTAs -->
                 <div class="hero-cta-group">
-                    <a href="#categories" class="btn btn-primary-hero">
-                        <span>Start Learning Free</span>
+                    <a href="#featured" class="btn btn-primary-hero">
+                        <span>Play Quiz Now</span>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
                     </a>
-                    <a href="#featured" class="btn btn-secondary-hero">
-                        <span>Explore Challenges</span>
+                    <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-secondary-hero">
+                        <span>Try Sudoku</span>
                     </a>
                 </div>
 
                 <!-- Social Proof -->
                 <div class="hero-proof">
                     <div class="proof-item">
-                        <div class="proof-icon">👥</div>
+                        <div class="proof-icon">🎮</div>
                         <div class="proof-content">
-                            <strong>50,000+</strong>
-                            <span>Active Learners</span>
+                            <strong>1,000+</strong>
+                            <span>Quiz Games</span>
                         </div>
                     </div>
                     <div class="proof-item">
-                        <div class="proof-icon">⭐</div>
+                        <div class="proof-icon">👥</div>
                         <div class="proof-content">
-                            <strong>4.9/5</strong>
-                            <span>Average Rating</span>
+                            <strong>50K+</strong>
+                            <span>Active Players</span>
                         </div>
                     </div>
                     <div class="proof-item">
                         <div class="proof-icon">🏆</div>
                         <div class="proof-content">
                             <strong>1M+</strong>
-                            <span>Challenges Completed</span>
+                            <span>Quizzes Completed</span>
                         </div>
                     </div>
                 </div>

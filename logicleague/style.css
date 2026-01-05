@@ -540,31 +540,29 @@ footer {
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: rgba(139, 92, 246, 0.1);
-    border: 2px solid #8B5CF6;
-    border-radius: 8px;
+    background: transparent;
+    border: none;
     cursor: pointer;
     padding: 8px;
     position: relative;
-    z-index: 1150;
+    z-index: 10000;
 }
 
 .mobile-menu-toggle span {
     width: 28px;
     height: 3px;
-    background: #8B5CF6;
+    background: #1f2937;
     border-radius: 3px;
     transition: all 0.3s ease;
     display: block;
 }
 
 .mobile-menu-toggle.active {
-    background: #8B5CF6;
-    border-color: #8B5CF6;
+    background: transparent;
 }
 
 .mobile-menu-toggle.active span {
-    background: white;
+    background: #1f2937;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -813,7 +811,7 @@ footer {
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         transition: left 0.3s ease;
         gap: 1.5rem;
-        z-index: 1120;
+        z-index: 9999;
         overflow-y: auto;
     }
 
@@ -850,7 +848,7 @@ footer {
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1110;
+        z-index: 9998;
     }
 
     .navbar-nav {
