@@ -10,304 +10,429 @@ get_header();
 ?>
 
 <!-- Hero Section -->
-<section class="hero-section">
-    <div class="hero-background">
-        <div class="hero-shapes">
-            <div class="floating-emoji" style="top: 15%; right: 30%;">💡</div>
-            <div class="floating-emoji" style="top: 45%; right: 35%;">❓</div>
-            <div class="floating-shape circle" style="top: 20%; right: 25%;"></div>
-            <div class="floating-shape square" style="top: 60%; right: 28%;"></div>
-            <div class="floating-shape triangle" style="top: 75%; right: 32%;"></div>
-        </div>
-    </div>
-
+<section class="hero-section-new">
+    <div class="hero-gradient-bg"></div>
     <div class="container">
-        <div class="hero-wrapper">
-            <div class="hero-content">
-                <h1 class="hero-title">Exercise Your Grey Matter!</h1>
-                <p class="hero-subtitle">
-                    Welcome to LogicLeague - the best platform for developing<br>
-                    your logical thinking skills. Practice daily and watch your<br>
-                    brain power grow with our carefully crafted puzzles!
-                </p>
-
-                <div class="hero-features">
-                    <div class="hero-feature">
-                        <div class="hero-feature-icon">🔒</div>
-                        <span>100% Secure Platform</span>
-                    </div>
-                    <div class="hero-feature">
-                        <div class="hero-feature-icon">🔑</div>
-                        <span>Unlimited Access</span>
-                    </div>
-                    <div class="hero-feature">
-                        <div class="hero-feature-icon">🏆</div>
-                        <span>Track Your Progress</span>
-                    </div>
-                </div>
-
-                <div class="hero-cta">
-                    <a href="#categories" class="btn btn-yellow">Join now for free!</a>
-                </div>
-
-                <div class="hero-stats">
-                    <div class="hero-stat">
-                        <div class="stars">⭐⭐⭐⭐⭐</div>
-                        <span>5.0 Rating</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>100K+</strong>
-                        <span>Active Users</span>
-                    </div>
-                    <div class="hero-stat">
-                        <strong>50K+</strong>
-                        <span>Puzzles Solved</span>
-                    </div>
-                </div>
+        <div class="hero-wrapper-new">
+            <div class="hero-content-new">
+                <h1 class="hero-title-new">Rozruszaj Swoje<br>Szare Komórki!</h1>
+                <p class="hero-subtitle-new">Witaj w LogicLeague.</p>
+                <a href="#categories" class="btn btn-yellow-large">
+                    Zacznij Szybki Quiz Teraz! →
+                </a>
             </div>
 
-            <!-- Large Brain Emoji -->
-            <div class="hero-brain">
-                🧠
+            <div class="hero-illustration">
+                <div class="brain-character">
+                    🧠
+                    <div class="floating-element" style="top: -10%; left: -15%;">💡</div>
+                    <div class="floating-element" style="top: -5%; right: -20%;">❓</div>
+                    <div class="floating-element" style="bottom: 20%; left: -20%;">⚙️</div>
+                    <div class="floating-element" style="bottom: 10%; right: -15%;">⭐</div>
+                    <div class="floating-element" style="top: 50%; right: -25%;">🏅</div>
+                    <div class="floating-element" style="bottom: -5%; left: 10%;">🎯</div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Wave Divider -->
-    <div class="hero-wave">
+    <div class="hero-wave-new">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" preserveAspectRatio="none">
             <path fill="#ffffff" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
         </svg>
     </div>
 </section>
 
-<!-- Stats Section -->
-<section class="stats-section">
+<!-- CTA Banner -->
+<section class="cta-banner-ranking">
     <div class="container">
-        <div class="stats-header">
-            <div class="stats-emoji">💡</div>
-            <h2 class="stats-title">Don't Play Alone!</h2>
-            <p class="stats-description">Join our vibrant community and discover new ways of thinking</p>
+        <div class="cta-banner-content">
+            <div class="cta-banner-icon">
+                <div class="trophy-illustration">
+                    🏆
+                    <div class="confetti-piece" style="top: -20%; left: -10%;">🎉</div>
+                    <div class="confetti-piece" style="top: -15%; right: -5%;">✨</div>
+                    <div class="confetti-piece" style="bottom: 10%; left: -15%;">🎊</div>
+                </div>
+            </div>
+            <div class="cta-banner-text">
+                <h2>Nie graj sam!</h2>
+                <p>Zbieraj punkty, zdobywaj odznaki i wspinaj się w Ligowym Rankingu.</p>
+            </div>
+            <div class="cta-banner-action">
+                <a href="#" class="btn btn-purple-gradient">Zobacz Ranking Ligi</a>
+            </div>
+        </div>
+    </div>
+    <div class="cta-banner-waves"></div>
+</section>
+
+<!-- Featured Quizzes Carousel -->
+<section class="featured-quizzes-section">
+    <div class="container">
+        <div class="section-header-featured">
+            <h2 class="section-title-featured">
+                <span class="fire-icon">🔥</span> Polecane Wyzwania Tygodnia
+            </h2>
         </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-icon stat-icon-purple">🧩</div>
-                <div class="stat-number">500K+</div>
-                <div class="stat-label">Brain Puzzles</div>
+        <div class="quizzes-carousel-wrapper">
+            <button class="carousel-nav carousel-nav-prev" aria-label="Previous">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M15 18l-6-6 6-6"/>
+                </svg>
+            </button>
+
+            <div class="quizzes-carousel">
+                <div class="quizzes-carousel-track">
+                    <!-- Quiz Card 1 -->
+                    <div class="quiz-card-featured">
+                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-bg quiz-card-bg-purple"></div>
+                        <div class="quiz-card-content">
+                            <div class="quiz-card-icon">
+                                ❓
+                                <div class="quiz-icon-decoration">💡</div>
+                                <div class="quiz-icon-decoration">🧩</div>
+                            </div>
+                            <h3 class="quiz-card-title">Super Aoxrerely Quiz</h3>
+                            <div class="quiz-card-difficulty">
+                                <span>Difficulty</span>
+                                <div class="difficulty-bar">
+                                    <div class="difficulty-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-meta">
+                                <span>👥 356 players</span>
+                                <span>🔍 Hover zoom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Card 2 -->
+                    <div class="quiz-card-featured">
+                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-bg quiz-card-bg-blue"></div>
+                        <div class="quiz-card-content">
+                            <div class="quiz-card-icon">
+                                ❓
+                                <div class="quiz-icon-decoration">🏔️</div>
+                                <div class="quiz-icon-decoration">☀️</div>
+                            </div>
+                            <h3 class="quiz-card-title">Supurr Shandard Quiz</h3>
+                            <div class="quiz-card-difficulty">
+                                <span>Difficulty</span>
+                                <div class="difficulty-bar">
+                                    <div class="difficulty-fill" style="width: 45%;"></div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-meta">
+                                <span>👥 325 players</span>
+                                <span>🔍 Hover zoom</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quiz Card 3 -->
+                    <div class="quiz-card-featured">
+                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-bg quiz-card-bg-yellow"></div>
+                        <div class="quiz-card-content">
+                            <div class="quiz-card-icon">
+                                ❓
+                                <div class="quiz-icon-decoration">🏆</div>
+                                <div class="quiz-icon-decoration">🧠</div>
+                            </div>
+                            <h3 class="quiz-card-title">Super Brain German Quiz</h3>
+                            <div class="quiz-card-difficulty">
+                                <span>Difficulty</span>
+                                <div class="difficulty-bar">
+                                    <div class="difficulty-fill" style="width: 75%;"></div>
+                                </div>
+                            </div>
+                            <div class="quiz-card-meta">
+                                <span>👥 326 players</span>
+                                <span>🔍 Hover zoom</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-icon stat-icon-blue">👥</div>
-                <div class="stat-number">10K+</div>
-                <div class="stat-label">Active Players</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon stat-icon-yellow">🏅</div>
-                <div class="stat-number">20K+</div>
-                <div class="stat-label">Daily Challenges</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-icon stat-icon-orange">📊</div>
-                <div class="stat-number">13K+</div>
-                <div class="stat-label">Success Stories</div>
-            </div>
+
+            <button class="carousel-nav carousel-nav-next" aria-label="Next">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 18l6-6-6-6"/>
+                </svg>
+            </button>
+        </div>
+
+        <div class="carousel-dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
         </div>
     </div>
 </section>
 
 <!-- Categories Section -->
-<section id="categories" class="categories-section">
+<section id="categories" class="categories-section-new">
     <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">Discover Your Knowledge Category</h2>
-            <p class="section-description">Choose a topic that interests you and test your knowledge</p>
+        <div class="section-header-center">
+            <h2 class="section-title-main">Odkryj Swoją Kategorię Wiedzy</h2>
         </div>
 
-        <div class="categories-grid">
-            <!-- Sudoku -->
-            <a href="<?php echo home_url('/sudoku'); ?>" class="category-card">
-                <div class="category-icon">🎲</div>
-                <h3 class="category-title">Sudoku</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">4 levels</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
-                </div>
-                <div class="category-button">Practice</div>
-            </a>
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <button class="category-tab" data-category="filmy">
+                <span class="tab-icon">🎬</span> Filmy
+            </button>
+            <button class="category-tab active" data-category="geografia">
+                <span class="tab-icon">🌍</span> Geografia
+            </button>
+            <button class="category-tab" data-category="historia">
+                <span class="tab-icon">📜</span> Historia
+            </button>
+            <button class="category-tab" data-category="science">
+                <span class="tab-icon">🧪</span> Science
+            </button>
+            <button class="category-tab" data-category="sport">
+                <span class="tab-icon">⚽</span> Sport
+            </button>
+        </div>
 
-            <!-- Geography -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">🌍</div>
-                <h3 class="category-title">Geography</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+        <!-- Category Cards Grid -->
+        <div class="category-cards-grid">
+            <!-- Row 1 -->
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #FF6B9D 0%, #FFC837 100%);">
+                        🎬
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Filmy and Rethinkr</h3>
+                <p class="category-card-subtitle">Kategoria</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 18 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- History & Science -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">📚</div>
-                <h3 class="category-title">History & Science</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #4A90E2 0%, #7FB3D5 100%);">
+                        🌍
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Geografia</h3>
+                <p class="category-card-subtitle">Historia</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 18 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- Sports -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">⚽</div>
-                <h3 class="category-title">Sports</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);">
+                        👥
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Histori'ond Science</h3>
+                <p class="category-card-subtitle">Kategory</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 15 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- Arts & Crafts -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">🎨</div>
-                <h3 class="category-title">Arts & Crafts</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #FFD26F 0%, #3677FF 100%);">
+                        ⚽
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Sport</h3>
+                <p class="category-card-subtitle">Sport</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 18 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- Food & Drink -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">🍔</div>
-                <h3 class="category-title">Food & Drink</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <!-- Row 2 -->
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #FA709A 0%, #FEE140 100%);">
+                        🎨
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Geogr ofr oshart</h3>
+                <p class="category-card-subtitle">Kategoria</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 15 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- Logic Puzzles -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">🧠</div>
-                <h3 class="category-title">Logic Puzzles</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);">
+                        📄
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Wute Practions</h3>
+                <p class="category-card-subtitle">Kategoria</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 15 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
 
-            <!-- Math Challenges -->
-            <div class="category-card category-card-disabled">
-                <div class="category-icon">🔢</div>
-                <h3 class="category-title">Math Challenges</h3>
-                <div class="category-stats">
-                    <span class="category-quizzes">Coming Soon</span>
-                    <div class="category-rating">⭐⭐⭐⭐⭐</div>
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #F5AF19 0%, #F12711 100%);">
+                        🏆
+                    </div>
                 </div>
-                <div class="category-button category-button-disabled">Soon</div>
+                <h3 class="category-card-title">Wirld Zaczetaru</h3>
+                <p class="category-card-subtitle">Kategoria</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 15 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
+            </div>
+
+            <div class="category-card-new">
+                <button class="category-bookmark" aria-label="Bookmark">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </button>
+                <div class="category-card-illustration">
+                    <div class="illustration-placeholder" style="background: linear-gradient(135deg, #3EECAC 0%, #EE74E1 100%);">
+                        🏔️
+                    </div>
+                </div>
+                <h3 class="category-card-title">Super lire doat to</h3>
+                <p class="category-card-subtitle">Historia</p>
+                <div class="category-card-footer">
+                    <span class="category-duration">⏱️ 18 min</span>
+                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA Section -->
-<section class="cta-section-blue">
+<!-- Community CTA Section -->
+<section class="community-cta-section">
     <div class="container">
-        <div class="cta-content">
-            <h2 class="cta-title">Test Your Knowledge<br>Right Now!</h2>
-            <p class="cta-description">
-                Join thousands of players and challenge yourself with our<br>
-                brain-teasing puzzles. Start your journey today!
-            </p>
-
-            <div class="cta-buttons">
-                <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-yellow">Start Playing</a>
-                <a href="#categories" class="btn btn-outline-white">Browse Categories</a>
-                <a href="#" class="btn btn-outline-white">Learn More</a>
+        <div class="community-cta-wrapper">
+            <div class="community-illustration">
+                <div class="campfire-scene">
+                    <div class="campfire-people">👥👥👥</div>
+                    <div class="campfire">🔥</div>
+                </div>
+                <div class="confetti-float" style="top: 10%; left: 10%;">🎉</div>
+                <div class="confetti-float" style="top: 20%; right: 15%;">✨</div>
+                <div class="confetti-float" style="bottom: 30%; left: 20%;">🎊</div>
+                <div class="confetti-float" style="bottom: 15%; right: 10%;">⭐</div>
             </div>
 
-            <div class="cta-features">
-                <div class="cta-feature">✓ No credit card required</div>
-                <div class="cta-feature">✓ Instant access</div>
-                <div class="cta-feature">✓ Cancel anytime</div>
+            <div class="community-cta-content">
+                <h2 class="community-title">Community CTA</h2>
+                <p class="community-subtitle">Signez mnie to ronus un to our newsletter!</p>
+                <form class="community-newsletter-form">
+                    <input type="email" class="community-email-input" placeholder="Spisz your email" required>
+                    <button type="submit" class="btn btn-purple-cta">Zapisz mnie!</button>
+                </form>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Latest Sudoku Section -->
-<section class="puzzles-section">
+<!-- Knowledge Base Section -->
+<section class="knowledge-base-section">
     <div class="container">
-        <div class="section-header-with-link">
-            <h2 class="section-title">Latest Sudoku Puzzles</h2>
-            <a href="<?php echo home_url('/sudoku'); ?>" class="view-all-link">View All →</a>
+        <div class="section-header-center">
+            <h2 class="section-title-main">Baza Wiedzy i Ciekawostki</h2>
         </div>
 
-        <div class="puzzles-grid">
-            <div class="puzzle-card">
-                <div class="puzzle-icon">🎲</div>
-                <h3 class="puzzle-title">Easy Sudoku</h3>
-                <p class="puzzle-description">Perfect for beginners. Practice your logical thinking with gentle puzzles.</p>
-                <div class="puzzle-meta">
-                    <span>⏱️ 5-10 min</span>
-                    <span>👥 10K+ players</span>
+        <div class="knowledge-grid">
+            <!-- Article 1 -->
+            <article class="knowledge-card">
+                <div class="knowledge-card-image">
+                    <div class="knowledge-illustration" style="background: linear-gradient(135deg, #84FAB0 0%, #8FD3F4 100%);">
+                        📚
+                    </div>
                 </div>
-                <a href="<?php echo home_url('/sudoku/easy'); ?>" class="btn btn-purple-full">Start</a>
-            </div>
-
-            <div class="puzzle-card">
-                <div class="puzzle-icon">🎯</div>
-                <h3 class="puzzle-title">Medium Sudoku</h3>
-                <p class="puzzle-description">Challenge yourself with more complex patterns and logical deductions.</p>
-                <div class="puzzle-meta">
-                    <span>⏱️ 10-15 min</span>
-                    <span>👥 8K+ players</span>
+                <div class="knowledge-card-content">
+                    <h3 class="knowledge-card-title">Besta baza wiedzy i Ciekawostki</h3>
+                    <p class="knowledge-card-label">Blog article</p>
                 </div>
-                <a href="<?php echo home_url('/sudoku/medium'); ?>" class="btn btn-purple-full">Start</a>
-            </div>
+            </article>
 
-            <div class="puzzle-card">
-                <div class="puzzle-icon">🔥</div>
-                <h3 class="puzzle-title">Expert Sudoku</h3>
-                <p class="puzzle-description">For masters only. The ultimate test of your Sudoku solving skills.</p>
-                <div class="puzzle-meta">
-                    <span>⏱️ 25-40 min</span>
-                    <span>👥 5K+ players</span>
+            <!-- Article 2 -->
+            <article class="knowledge-card">
+                <div class="knowledge-card-image">
+                    <div class="knowledge-illustration" style="background: linear-gradient(135deg, #FFD89B 0%, #19547B 100%);">
+                        👥
+                    </div>
                 </div>
-                <a href="<?php echo home_url('/sudoku/expert'); ?>" class="btn btn-purple-full">Start</a>
-            </div>
-        </div>
-    </div>
-</section>
+                <div class="knowledge-card-content">
+                    <h3 class="knowledge-card-title">Top 10 larns to poderwow which brothes?</h3>
+                    <p class="knowledge-card-label">Blog article</p>
+                </div>
+            </article>
 
-<!-- Newsletter Section -->
-<section class="newsletter-section">
-    <div class="newsletter-background">
-        <div class="newsletter-shapes">
-            <div class="floating-emoji" style="top: 20%; left: 10%;">🎯</div>
-            <div class="floating-emoji" style="top: 40%; left: 15%;">🧩</div>
-            <div class="floating-emoji" style="top: 60%; left: 8%;">🏆</div>
-            <div class="floating-emoji" style="top: 30%; right: 10%;">💡</div>
-            <div class="floating-emoji" style="top: 70%; right: 15%;">⭐</div>
-        </div>
-    </div>
-
-    <div class="container">
-        <div class="newsletter-content">
-            <h2 class="newsletter-title">Join Our Community</h2>
-            <p class="newsletter-description">
-                Get weekly challenges and stay updated with new puzzles
-            </p>
-
-            <form class="newsletter-form">
-                <input type="email" class="newsletter-input" placeholder="Enter your email" required>
-                <button type="submit" class="btn btn-purple">Subscribe</button>
-            </form>
+            <!-- Article 3 -->
+            <article class="knowledge-card">
+                <div class="knowledge-card-image">
+                    <div class="knowledge-illustration" style="background: linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%);">
+                        ❓❓
+                    </div>
+                </div>
+                <div class="knowledge-card-content">
+                    <h3 class="knowledge-card-title">What is lingenast for everyday woars like sun?</h3>
+                    <p class="knowledge-card-label">Blog article</p>
+                </div>
+            </article>
         </div>
     </div>
 </section>

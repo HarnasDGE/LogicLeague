@@ -18,7 +18,9 @@
                 <!-- Logo -->
                 <div class="navbar-brand">
                     <a href="<?php echo esc_url( home_url( '/' ) ); ?>" class="logo">
-                        <span class="logo-icon">🧠</span>
+                        <div class="logo-icon-shield">
+                            <span class="logo-icon">🧠</span>
+                        </div>
                         <span class="logo-text">LogicLeague</span>
                     </a>
                 </div>
@@ -33,44 +35,48 @@
                 <!-- Navigation Menu -->
                 <div class="navbar-menu" id="navbarMenu">
                     <ul class="navbar-nav">
+                        <!-- Kategorie Dropdown -->
+                        <li class="nav-item nav-item-dropdown">
+                            <a href="#" class="nav-link">
+                                Kategorie <span class="dropdown-arrow">▼</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">🎬 Filmy</a></li>
+                                <li><a href="#">🌍 Geografia</a></li>
+                                <li><a href="#">📜 Historia</a></li>
+                                <li><a href="#">🧪 Science</a></li>
+                                <li><a href="#">⚽ Sport</a></li>
+                                <li><a href="<?php echo home_url('/sudoku'); ?>">🎲 Sudoku</a></li>
+                            </ul>
+                        </li>
+
                         <li class="nav-item">
-                            <a href="<?php echo home_url('/'); ?>" class="nav-link">Home</a>
+                            <a href="#" class="nav-link">Ranking</a>
                         </li>
 
-                        <!-- Games Dropdown -->
-                        <li class="nav-item nav-item-dropdown">
-                            <a href="#" class="nav-link">
-                                Games <span class="dropdown-arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo home_url('/sudoku'); ?>">Sudoku</a></li>
-                            </ul>
-                        </li>
-
-                        <!-- Quiz Dropdown -->
-                        <li class="nav-item nav-item-dropdown">
-                            <a href="#" class="nav-link">
-                                Quiz <span class="dropdown-arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="#">Quizy Osobowościowe</a></li>
-                                <li><a href="#">Quizy Tematyczne</a></li>
-                                <li><a href="#">Quizy Naukowe</a></li>
-                                <li><a href="#">Quizy Ogólne</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">Wyzwania</a>
                         </li>
 
                         <li class="nav-item">
                             <a href="<?php echo home_url('/blog'); ?>" class="nav-link">Blog</a>
                         </li>
+
                         <li class="nav-item">
-                            <a href="#" class="nav-link">About Us</a>
+                            <a href="#" class="nav-link">O nas</a>
                         </li>
                     </ul>
 
-                    <!-- Login Button -->
+                    <!-- Actions -->
                     <div class="navbar-actions">
-                        <a href="#" class="btn btn-login">Login</a>
+                        <button class="btn-search" aria-label="Search">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.35-4.35"></path>
+                            </svg>
+                        </button>
+                        <a href="#" class="btn btn-outline-purple">Zaloguj się</a>
+                        <a href="#" class="btn btn-yellow">Dołącz do Ligi!</a>
                     </div>
                 </div>
             </div>
