@@ -35,27 +35,27 @@
                 <!-- Navigation Menu -->
                 <div class="navbar-menu" id="navbarMenu">
                     <ul class="navbar-nav">
-                        <!-- Kategorie Dropdown -->
+                        <!-- Categories Dropdown -->
                         <li class="nav-item nav-item-dropdown">
                             <a href="#" class="nav-link">
-                                Kategorie <span class="dropdown-arrow">▼</span>
+                                Categories <span class="dropdown-arrow">▼</span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">🎬 Filmy</a></li>
-                                <li><a href="#">🌍 Geografia</a></li>
-                                <li><a href="#">📜 Historia</a></li>
+                                <li><a href="#">🎬 Movies</a></li>
+                                <li><a href="#">🌍 Geography</a></li>
+                                <li><a href="#">📜 History</a></li>
                                 <li><a href="#">🧪 Science</a></li>
-                                <li><a href="#">⚽ Sport</a></li>
+                                <li><a href="#">⚽ Sports</a></li>
                                 <li><a href="<?php echo home_url('/sudoku'); ?>">🎲 Sudoku</a></li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Ranking</a>
+                            <a href="#" class="nav-link">Rankings</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Wyzwania</a>
+                            <a href="#" class="nav-link">Challenges</a>
                         </li>
 
                         <li class="nav-item">
@@ -63,7 +63,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">O nas</a>
+                            <a href="#" class="nav-link">About Us</a>
                         </li>
                     </ul>
 
@@ -75,8 +75,8 @@
                                 <path d="m21 21-4.35-4.35"></path>
                             </svg>
                         </button>
-                        <a href="#" class="btn btn-outline-purple">Zaloguj się</a>
-                        <a href="#" class="btn btn-yellow">Dołącz do Ligi!</a>
+                        <a href="#" class="btn btn-outline-purple">Sign In</a>
+                        <a href="#" class="btn btn-yellow">Join Now!</a>
                     </div>
                 </div>
             </div>

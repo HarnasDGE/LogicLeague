@@ -15,11 +15,51 @@ get_header();
     <div class="container">
         <div class="hero-wrapper-new">
             <div class="hero-content-new">
-                <h1 class="hero-title-new">Rozruszaj Swoje<br>Szare Komórki!</h1>
-                <p class="hero-subtitle-new">Witaj w LogicLeague.</p>
-                <a href="#categories" class="btn btn-yellow-large">
-                    Zacznij Szybki Quiz Teraz! →
-                </a>
+                <h1 class="hero-title-new">Challenge Your Mind,<br>Level Up Your Skills!</h1>
+                <p class="hero-description-new">
+                    Welcome to LogicLeague - the ultimate platform for brain training and knowledge expansion.
+                    Join thousands of learners who are sharpening their minds with our expertly crafted quizzes,
+                    puzzles, and challenges across multiple categories. Whether you're a beginner or a master,
+                    we have the perfect challenge waiting for you.
+                </p>
+
+                <!-- Colorful CTAs -->
+                <div class="hero-cta-group">
+                    <a href="#categories" class="btn btn-primary-hero">
+                        <span>Start Learning Free</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </a>
+                    <a href="#featured" class="btn btn-secondary-hero">
+                        <span>Explore Challenges</span>
+                    </a>
+                </div>
+
+                <!-- Social Proof -->
+                <div class="hero-proof">
+                    <div class="proof-item">
+                        <div class="proof-icon">👥</div>
+                        <div class="proof-content">
+                            <strong>50,000+</strong>
+                            <span>Active Learners</span>
+                        </div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-icon">⭐</div>
+                        <div class="proof-content">
+                            <strong>4.9/5</strong>
+                            <span>Average Rating</span>
+                        </div>
+                    </div>
+                    <div class="proof-item">
+                        <div class="proof-icon">🏆</div>
+                        <div class="proof-content">
+                            <strong>1M+</strong>
+                            <span>Challenges Completed</span>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div class="hero-illustration">
@@ -57,11 +97,11 @@ get_header();
                 </div>
             </div>
             <div class="cta-banner-text">
-                <h2>Nie graj sam!</h2>
-                <p>Zbieraj punkty, zdobywaj odznaki i wspinaj się w Ligowym Rankingu.</p>
+                <h2>Don't Play Alone!</h2>
+                <p>Collect points, earn badges, and climb the League Rankings. Compete with thousands of players worldwide.</p>
             </div>
             <div class="cta-banner-action">
-                <a href="#" class="btn btn-purple-gradient">Zobacz Ranking Ligi</a>
+                <a href="#" class="btn btn-purple-gradient">View League Rankings</a>
             </div>
         </div>
     </div>
@@ -72,8 +112,8 @@ get_header();
 <section class="featured-quizzes-section">
     <div class="container">
         <div class="section-header-featured">
-            <h2 class="section-title-featured">
-                <span class="fire-icon">🔥</span> Polecane Wyzwania Tygodnia
+            <h2 class="section-title-featured" id="featured">
+                <span class="fire-icon">🔥</span> Featured Weekly Challenges
             </h2>
         </div>
 
@@ -88,7 +128,7 @@ get_header();
                 <div class="quizzes-carousel-track">
                     <!-- Quiz Card 1 -->
                     <div class="quiz-card-featured">
-                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-badge">🏆 TOP PICK</div>
                         <div class="quiz-card-bg quiz-card-bg-purple"></div>
                         <div class="quiz-card-content">
                             <div class="quiz-card-icon">
@@ -96,7 +136,7 @@ get_header();
                                 <div class="quiz-icon-decoration">💡</div>
                                 <div class="quiz-icon-decoration">🧩</div>
                             </div>
-                            <h3 class="quiz-card-title">Super Aoxrerely Quiz</h3>
+                            <h3 class="quiz-card-title">Brain Teaser Challenge</h3>
                             <div class="quiz-card-difficulty">
                                 <span>Difficulty</span>
                                 <div class="difficulty-bar">
@@ -112,7 +152,7 @@ get_header();
 
                     <!-- Quiz Card 2 -->
                     <div class="quiz-card-featured">
-                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-badge">🏆 TOP PICK</div>
                         <div class="quiz-card-bg quiz-card-bg-blue"></div>
                         <div class="quiz-card-content">
                             <div class="quiz-card-icon">
@@ -120,7 +160,7 @@ get_header();
                                 <div class="quiz-icon-decoration">🏔️</div>
                                 <div class="quiz-icon-decoration">☀️</div>
                             </div>
-                            <h3 class="quiz-card-title">Supurr Shandard Quiz</h3>
+                            <h3 class="quiz-card-title">Geography Master Quiz</h3>
                             <div class="quiz-card-difficulty">
                                 <span>Difficulty</span>
                                 <div class="difficulty-bar">
@@ -136,7 +176,7 @@ get_header();
 
                     <!-- Quiz Card 3 -->
                     <div class="quiz-card-featured">
-                        <div class="quiz-card-badge">🏆 TOP WYRÓB</div>
+                        <div class="quiz-card-badge">🏆 TOP PICK</div>
                         <div class="quiz-card-bg quiz-card-bg-yellow"></div>
                         <div class="quiz-card-content">
                             <div class="quiz-card-icon">
@@ -144,7 +184,7 @@ get_header();
                                 <div class="quiz-icon-decoration">🏆</div>
                                 <div class="quiz-icon-decoration">🧠</div>
                             </div>
-                            <h3 class="quiz-card-title">Super Brain German Quiz</h3>
+                            <h3 class="quiz-card-title">Science & Logic Quiz</h3>
                             <div class="quiz-card-difficulty">
                                 <span>Difficulty</span>
                                 <div class="difficulty-bar">
@@ -179,7 +219,7 @@ get_header();
 <section id="categories" class="categories-section-new">
     <div class="container">
         <div class="section-header-center">
-            <h2 class="section-title-main">Odkryj Swoją Kategorię Wiedzy</h2>
+            <h2 class="section-title-main">Discover Your Knowledge Category</h2>
         </div>
 
         <!-- Category Tabs -->
@@ -216,10 +256,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Filmy and Rethinkr</h3>
-                <p class="category-card-subtitle">Kategoria</p>
+                <p class="category-card-subtitle">Category</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 18 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -235,10 +275,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Geografia</h3>
-                <p class="category-card-subtitle">Historia</p>
+                <p class="category-card-subtitle">History</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 18 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -257,7 +297,7 @@ get_header();
                 <p class="category-card-subtitle">Kategory</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 15 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -276,7 +316,7 @@ get_header();
                 <p class="category-card-subtitle">Sport</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 18 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -293,10 +333,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Geogr ofr oshart</h3>
-                <p class="category-card-subtitle">Kategoria</p>
+                <p class="category-card-subtitle">Category</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 15 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -312,10 +352,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Wute Practions</h3>
-                <p class="category-card-subtitle">Kategoria</p>
+                <p class="category-card-subtitle">Category</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 15 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -331,10 +371,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Wirld Zaczetaru</h3>
-                <p class="category-card-subtitle">Kategoria</p>
+                <p class="category-card-subtitle">Category</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 15 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
 
@@ -350,10 +390,10 @@ get_header();
                     </div>
                 </div>
                 <h3 class="category-card-title">Super lire doat to</h3>
-                <p class="category-card-subtitle">Historia</p>
+                <p class="category-card-subtitle">History</p>
                 <div class="category-card-footer">
                     <span class="category-duration">⏱️ 18 min</span>
-                    <a href="#" class="btn btn-purple-small">Zagraj</a>
+                    <a href="#" class="btn btn-purple-small">Play Now</a>
                 </div>
             </div>
         </div>
@@ -376,11 +416,11 @@ get_header();
             </div>
 
             <div class="community-cta-content">
-                <h2 class="community-title">Community CTA</h2>
-                <p class="community-subtitle">Signez mnie to ronus un to our newsletter!</p>
+                <h2 class="community-title">Join Our Community</h2>
+                <p class="community-subtitle">Sign up for our newsletter and get weekly challenges, tips, and exclusive content!</p>
                 <form class="community-newsletter-form">
-                    <input type="email" class="community-email-input" placeholder="Spisz your email" required>
-                    <button type="submit" class="btn btn-purple-cta">Zapisz mnie!</button>
+                    <input type="email" class="community-email-input" placeholder="Enter your email" required>
+                    <button type="submit" class="btn btn-purple-cta">Subscribe Now!</button>
                 </form>
             </div>
         </div>
@@ -391,7 +431,7 @@ get_header();
 <section class="knowledge-base-section">
     <div class="container">
         <div class="section-header-center">
-            <h2 class="section-title-main">Baza Wiedzy i Ciekawostki</h2>
+            <h2 class="section-title-main">Knowledge Base & Fun Facts</h2>
         </div>
 
         <div class="knowledge-grid">
@@ -403,8 +443,8 @@ get_header();
                     </div>
                 </div>
                 <div class="knowledge-card-content">
-                    <h3 class="knowledge-card-title">Besta baza wiedzy i Ciekawostki</h3>
-                    <p class="knowledge-card-label">Blog article</p>
+                    <h3 class="knowledge-card-title">10 Brain Training Tips for Daily Success</h3>
+                    <p class="knowledge-card-label">Blog Article</p>
                 </div>
             </article>
 
@@ -416,8 +456,8 @@ get_header();
                     </div>
                 </div>
                 <div class="knowledge-card-content">
-                    <h3 class="knowledge-card-title">Top 10 larns to poderwow which brothes?</h3>
-                    <p class="knowledge-card-label">Blog article</p>
+                    <h3 class="knowledge-card-title">How to Improve Your Memory: Science-Backed Methods</h3>
+                    <p class="knowledge-card-label">Blog Article</p>
                 </div>
             </article>
 
@@ -429,8 +469,8 @@ get_header();
                     </div>
                 </div>
                 <div class="knowledge-card-content">
-                    <h3 class="knowledge-card-title">What is lingenast for everyday woars like sun?</h3>
-                    <p class="knowledge-card-label">Blog article</p>
+                    <h3 class="knowledge-card-title">The Psychology Behind Puzzle Solving</h3>
+                    <p class="knowledge-card-label">Blog Article</p>
                 </div>
             </article>
         </div>

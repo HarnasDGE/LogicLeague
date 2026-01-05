@@ -12,37 +12,37 @@
                     <span class="logo-text">LogicLeague</span>
                 </div>
                 <p class="footer-mission">
-                    Witaj w LogicLeague is a otescioni<br>
-                    misiue community decricatni<br>
-                    enhancing otecry| swoje Szare<br>
-                    Komórki
+                    Welcome to LogicLeague - a passionate<br>
+                    community dedicated to enhancing<br>
+                    your cognitive skills through fun<br>
+                    and engaging challenges.
                 </p>
             </div>
 
-            <!-- Column 2: Misja -->
+            <!-- Column 2: Quick Links -->
             <div class="footer-column-links">
-                <h3 class="footer-heading">Misja</h3>
+                <h3 class="footer-heading">Quick Links</h3>
                 <ul class="footer-menu">
-                    <li><a href="#">Ranking</a></li>
-                    <li><a href="#">Wyzwania</a></li>
+                    <li><a href="#">Rankings</a></li>
+                    <li><a href="#">Challenges</a></li>
                     <li><a href="<?php echo home_url('/blog'); ?>">Blog</a></li>
-                    <li><a href="#">O nas</a></li>
+                    <li><a href="#">About Us</a></li>
                 </ul>
             </div>
 
-            <!-- Column 3: Links -->
+            <!-- Column 3: Account -->
             <div class="footer-column-links">
-                <h3 class="footer-heading">Links</h3>
+                <h3 class="footer-heading">Account</h3>
                 <ul class="footer-menu">
-                    <li><a href="#">Zaloguj się</a></li>
+                    <li><a href="#">Sign In</a></li>
                     <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Candinson</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
                 </ul>
             </div>
 
             <!-- Column 4: Social Media -->
             <div class="footer-column-social">
-                <h3 class="footer-heading">Social media</h3>
+                <h3 class="footer-heading">Follow Us</h3>
                 <div class="footer-social-icons">
                     <a href="#" class="social-icon" aria-label="Facebook">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
@@ -71,8 +71,7 @@
         <!-- Footer Bottom -->
         <div class="footer-bottom-new">
             <p class="footer-credits">
-                Stworzono z ❤️
-                <span class="footer-flag">🇵🇱</span>
+                Made with ❤️ by the LogicLeague Team
                 <span class="footer-icon-extra">🧠</span>
             </p>
         </div>
