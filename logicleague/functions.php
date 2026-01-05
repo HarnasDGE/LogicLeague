@@ -58,6 +58,15 @@ function logicleague_enqueue_scripts() {
         filemtime( get_stylesheet_directory() . '/style.css' )
     );
 
+    // Navigation JS - loaded on all pages
+    wp_enqueue_script(
+        'navigation',
+        get_template_directory_uri() . '/assets/js/navigation.js',
+        array(),
+        filemtime( get_template_directory() . '/assets/js/navigation.js' ),
+        true
+    );
+
     // Front Page CSS & JS
     if ( is_front_page() ) {
         wp_enqueue_style(
