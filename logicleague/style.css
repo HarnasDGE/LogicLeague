@@ -370,7 +370,7 @@ footer {
     padding: 0;
     position: sticky;
     top: 0;
-    z-index: 99999 !important;
+    z-index: 999999 !important;
 }
 
 .navbar-content {
@@ -540,31 +540,30 @@ footer {
     display: none;
     flex-direction: column;
     gap: 6px;
-    background: #1f2937 !important;
+    background: transparent !important;
     border: none !important;
-    border-radius: 8px;
+    border-radius: 0;
     cursor: pointer;
-    padding: 12px;
+    padding: 8px;
     position: relative;
-    z-index: 99999 !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 999999 !important;
 }
 
 .mobile-menu-toggle span {
     width: 30px;
     height: 3px;
-    background: white !important;
-    border-radius: 3px;
+    background: #1f2937 !important;
+    border-radius: 2px;
     transition: all 0.3s ease;
     display: block;
 }
 
 .mobile-menu-toggle.active {
-    background: #1f2937 !important;
+    background: transparent !important;
 }
 
 .mobile-menu-toggle.active span {
-    background: white !important;
+    background: #1f2937 !important;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -809,7 +808,7 @@ footer {
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1000 !important;
+        z-index: 100 !important;
         pointer-events: auto;
     }
 
@@ -826,7 +825,7 @@ footer {
         box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
         transition: left 0.3s ease;
         gap: 1.5rem;
-        z-index: 99998 !important;
+        z-index: 999998 !important;
         overflow-y: auto;
     }
 
