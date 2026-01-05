@@ -34,11 +34,19 @@
 
                 <!-- Navigation Menu -->
                 <div class="navbar-menu" id="navbarMenu">
+                    <!-- Mobile Menu Logo -->
+                    <div class="mobile-menu-logo">
+                        <div class="logo-icon-shield">
+                            <span class="logo-icon">🧠</span>
+                        </div>
+                        <span class="logo-text">LogicLeague</span>
+                    </div>
+
                     <ul class="navbar-nav">
                         <!-- Categories Dropdown -->
                         <li class="nav-item nav-item-dropdown">
                             <a href="#" class="nav-link">
-                                Categories <span class="dropdown-arrow">▼</span>
+                                📚 Categories <span class="dropdown-arrow">▼</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="#">🎬 Movies</a></li>
@@ -46,24 +54,33 @@
                                 <li><a href="#">📜 History</a></li>
                                 <li><a href="#">🧪 Science</a></li>
                                 <li><a href="#">⚽ Sports</a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Games Dropdown -->
+                        <li class="nav-item nav-item-dropdown">
+                            <a href="#" class="nav-link">
+                                🎮 Games <span class="dropdown-arrow">▼</span>
+                            </a>
+                            <ul class="dropdown-menu">
                                 <li><a href="<?php echo home_url('/sudoku'); ?>">🎲 Sudoku</a></li>
                             </ul>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Rankings</a>
+                            <a href="#" class="nav-link">🏆 Rankings</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">Challenges</a>
+                            <a href="#" class="nav-link">⚡ Challenges</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="<?php echo home_url('/blog'); ?>" class="nav-link">Blog</a>
+                            <a href="<?php echo home_url('/blog'); ?>" class="nav-link">📝 Blog</a>
                         </li>
 
                         <li class="nav-item">
-                            <a href="#" class="nav-link">About Us</a>
+                            <a href="#" class="nav-link">ℹ️ About Us</a>
                         </li>
                     </ul>
 
