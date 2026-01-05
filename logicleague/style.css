@@ -540,8 +540,9 @@ footer {
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: transparent;
-    border: none;
+    background: rgba(139, 92, 246, 0.1);
+    border: 2px solid #8B5CF6;
+    border-radius: 8px;
     cursor: pointer;
     padding: 8px;
     position: relative;
@@ -551,10 +552,19 @@ footer {
 .mobile-menu-toggle span {
     width: 28px;
     height: 3px;
-    background: #1f2937;
+    background: #8B5CF6;
     border-radius: 3px;
     transition: all 0.3s ease;
     display: block;
+}
+
+.mobile-menu-toggle.active {
+    background: #8B5CF6;
+    border-color: #8B5CF6;
+}
+
+.mobile-menu-toggle.active span {
+    background: white;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
