@@ -10,21 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const navbarMenu = document.querySelector('.navbar-menu');
 
     if (mobileMenuToggle && navbarMenu) {
+        // Toggle mobile menu
         mobileMenuToggle.addEventListener('click', function(e) {
             e.stopPropagation();
             this.classList.toggle('active');
             navbarMenu.classList.toggle('active');
             document.body.classList.toggle('menu-open');
-        });
-
-        // Close menu when clicking on overlay (outside menu)
-        document.addEventListener('click', function(e) {
-            // Check if click is outside both menu and toggle button
-            if (!navbarMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
-                mobileMenuToggle.classList.remove('active');
-                navbarMenu.classList.remove('active');
-                document.body.classList.remove('menu-open');
-            }
         });
 
         // Dropdown menu toggle for mobile
@@ -35,40 +26,62 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.addEventListener('click', function(e) {
                     if (window.innerWidth <= 768) {
                         e.preventDefault();
-                        e.stopPropagation(); // Prevent closing menu
+                        e.stopPropagation();
+
+                        // Close other dropdowns
+                        dropdownItems.forEach(otherItem => {
+                            if (otherItem !== item) {
+                                otherItem.classList.remove('active');
+                            }
+                        });
+
+                        // Toggle this dropdown
                         item.classList.toggle('active');
                     }
                 });
             }
         });
 
-        // Close menu only when clicking on NON-dropdown links
-        const navLinks = navbarMenu.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            // Check if this link is NOT inside a dropdown
-            const isDropdownLink = link.closest('.nav-item-dropdown');
+        // Close menu when clicking on overlay (outside menu and NOT on dropdown toggle)
+        document.addEventListener('click', function(e) {
+            // Don't close if clicking on dropdown toggle
+            const isDropdownToggle = e.target.closest('.nav-item-dropdown > .nav-link');
 
-            if (!isDropdownLink) {
-                link.addEventListener('click', function() {
-                    if (window.innerWidth <= 768) {
-                        mobileMenuToggle.classList.remove('active');
-                        navbarMenu.classList.remove('active');
-                        document.body.classList.remove('menu-open');
-                    }
-                });
+            // Close menu only if clicking outside AND not on dropdown toggle
+            if (!navbarMenu.contains(e.target) && !mobileMenuToggle.contains(e.target)) {
+                mobileMenuToggle.classList.remove('active');
+                navbarMenu.classList.remove('active');
+                document.body.classList.remove('menu-open');
             }
         });
 
         // Close menu when clicking on dropdown menu items (actual links inside dropdown)
         const dropdownLinks = navbarMenu.querySelectorAll('.dropdown-menu a');
         dropdownLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
                 if (window.innerWidth <= 768) {
+                    e.stopPropagation();
                     mobileMenuToggle.classList.remove('active');
                     navbarMenu.classList.remove('active');
                     document.body.classList.remove('menu-open');
                 }
             });
+        });
+
+        // Close menu when clicking on regular (non-dropdown) nav links
+        const navItems = navbarMenu.querySelectorAll('.nav-item:not(.nav-item-dropdown)');
+        navItems.forEach(item => {
+            const link = item.querySelector('.nav-link');
+            if (link) {
+                link.addEventListener('click', function(e) {
+                    if (window.innerWidth <= 768) {
+                        e.stopPropagation();
+                        mobileMenuToggle.classList.remove('active');
+                        navbarMenu.classList.remove('active');
+                        document.body.classList.remove('menu-open');
+                    }
+                });
+            }
         });
     }
 });
