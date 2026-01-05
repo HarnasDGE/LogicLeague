@@ -370,7 +370,7 @@ footer {
     padding: 0;
     position: sticky;
     top: 0;
-    z-index: 1000;
+    z-index: 1100;
 }
 
 .navbar-content {
@@ -545,7 +545,7 @@ footer {
     cursor: pointer;
     padding: 8px;
     position: relative;
-    z-index: 1002;
+    z-index: 1150;
 }
 
 .mobile-menu-toggle span {
@@ -803,7 +803,7 @@ footer {
         box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
         transition: left 0.3s ease;
         gap: 1.5rem;
-        z-index: 1001;
+        z-index: 1120;
         overflow-y: auto;
     }
 
@@ -840,7 +840,7 @@ footer {
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 1000;
+        z-index: 1110;
     }
 
     .navbar-nav {
