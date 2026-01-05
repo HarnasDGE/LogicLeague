@@ -370,7 +370,7 @@ footer {
     padding: 0;
     position: sticky;
     top: 0;
-    z-index: 1100;
+    z-index: 10001;
 }
 
 .navbar-content {
@@ -540,12 +540,13 @@ footer {
     display: none;
     flex-direction: column;
     gap: 5px;
-    background: transparent;
-    border: none;
+    background: #f3f4f6;
+    border: 2px solid #e5e7eb;
+    border-radius: 6px;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px;
     position: relative;
-    z-index: 10000;
+    z-index: 10002;
 }
 
 .mobile-menu-toggle span {
@@ -558,11 +559,12 @@ footer {
 }
 
 .mobile-menu-toggle.active {
-    background: transparent;
+    background: #1f2937;
+    border-color: #1f2937;
 }
 
 .mobile-menu-toggle.active span {
-    background: #1f2937;
+    background: white;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -798,6 +800,19 @@ footer {
         display: flex;
     }
 
+    /* Mobile Menu Overlay - MUST be before .navbar-menu in CSS */
+    body.menu-open::after {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 9000;
+        pointer-events: all;
+    }
+
     .navbar-menu {
         position: fixed;
         top: 0;
@@ -808,10 +823,10 @@ footer {
         background: white;
         flex-direction: column;
         padding: 2rem 1.5rem;
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
         transition: left 0.3s ease;
         gap: 1.5rem;
-        z-index: 9999;
+        z-index: 10001;
         overflow-y: auto;
     }
 
@@ -837,18 +852,6 @@ footer {
     .mobile-menu-logo .logo-text {
         font-size: 1.5rem;
         font-weight: 700;
-    }
-
-    /* Mobile Menu Overlay */
-    body.menu-open::after {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        z-index: 9998;
     }
 
     .navbar-nav {
