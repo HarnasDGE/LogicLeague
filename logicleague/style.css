@@ -370,7 +370,7 @@ footer {
     padding: 0;
     position: sticky;
     top: 0;
-    z-index: 10001;
+    z-index: 99999 !important;
 }
 
 .navbar-content {
@@ -433,7 +433,7 @@ footer {
 }
 
 .nav-link {
-    color: #6b7280;
+    color: #6b7280 !important;
     text-decoration: none;
     font-weight: 500;
     font-size: 0.9375rem;
@@ -453,7 +453,7 @@ footer {
 }
 
 .nav-link:hover {
-    color: #8B5CF6;
+    color: #8B5CF6 !important;
 }
 
 .nav-link:hover::after {
@@ -539,32 +539,32 @@ footer {
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;
-    gap: 5px;
-    background: #f3f4f6;
-    border: 2px solid #e5e7eb;
-    border-radius: 6px;
+    gap: 6px;
+    background: #1f2937 !important;
+    border: none !important;
+    border-radius: 8px;
     cursor: pointer;
-    padding: 10px;
+    padding: 12px;
     position: relative;
-    z-index: 10002;
+    z-index: 99999 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .mobile-menu-toggle span {
-    width: 28px;
+    width: 30px;
     height: 3px;
-    background: #1f2937;
+    background: white !important;
     border-radius: 3px;
     transition: all 0.3s ease;
     display: block;
 }
 
 .mobile-menu-toggle.active {
-    background: #1f2937;
-    border-color: #1f2937;
+    background: #1f2937 !important;
 }
 
 .mobile-menu-toggle.active span {
-    background: white;
+    background: white !important;
 }
 
 .mobile-menu-toggle.active span:nth-child(1) {
@@ -800,7 +800,7 @@ footer {
         display: flex;
     }
 
-    /* Mobile Menu Overlay - MUST be before .navbar-menu in CSS */
+    /* Mobile Menu Overlay */
     body.menu-open::after {
         content: '';
         position: fixed;
@@ -809,8 +809,8 @@ footer {
         right: 0;
         bottom: 0;
         background: rgba(0, 0, 0, 0.5);
-        z-index: 9000;
-        pointer-events: all;
+        z-index: 1000 !important;
+        pointer-events: auto;
     }
 
     .navbar-menu {
@@ -820,13 +820,13 @@ footer {
         width: 85%;
         max-width: 350px;
         height: 100vh;
-        background: white;
+        background: white !important;
         flex-direction: column;
         padding: 2rem 1.5rem;
-        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.2);
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
         transition: left 0.3s ease;
         gap: 1.5rem;
-        z-index: 10001;
+        z-index: 99998 !important;
         overflow-y: auto;
     }
 
