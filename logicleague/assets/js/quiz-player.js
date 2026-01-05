@@ -349,8 +349,71 @@ class QuizPlayer {
         // Calculate score
         this.calculateScore();
 
+        // Save results to user account via AJAX
+        this.saveResults();
+
         // Show results
         this.showResults();
+    }
+
+    saveResults() {
+        // Only save if user is logged in and we have quiz data
+        if (typeof quizPlayerData === 'undefined' || !quizPlayerData.isLoggedIn) {
+            return;
+        }
+
+        // Calculate time taken in seconds
+        const timeTaken = Math.floor((Date.now() - this.startTime) / 1000);
+
+        const data = {
+            action: 'save_quiz_result',
+            nonce: quizPlayerData.nonce,
+            quiz_id: quizPlayerData.quizId,
+            score: this.score,
+            total_questions: this.questions.length,
+            time_taken: timeTaken
+        };
+
+        // Send AJAX request
+        fetch(quizPlayerData.ajaxUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(data)
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                console.log('Quiz results saved!', result.data);
+                // Optionally show points earned notification
+                this.showPointsEarned(result.data);
+            } else {
+                console.error('Failed to save results:', result.data);
+            }
+        })
+        .catch(error => {
+            console.error('Error saving results:', error);
+        });
+    }
+
+    showPointsEarned(data) {
+        // Add points notification to results modal
+        const resultsMessage = document.getElementById('resultsMessage');
+        if (resultsMessage && data.points_earned) {
+            const pointsNotification = document.createElement('div');
+            pointsNotification.className = 'points-notification';
+            pointsNotification.innerHTML = `
+                <div class="points-earned-badge">
+                    <span class="points-icon">🏆</span>
+                    <div class="points-info">
+                        <strong>+${data.points_earned} Points Earned!</strong>
+                        <small>Total: ${data.total_points} | Level ${data.level}</small>
+                    </div>
+                </div>
+            `;
+            resultsMessage.appendChild(pointsNotification);
+        }
     }
 
     calculateScore() {

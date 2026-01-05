@@ -148,6 +148,34 @@ function logicleague_enqueue_scripts() {
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'shareUrl' => get_permalink(),
         ));
+
+        // Pass quiz player data for AJAX (results saving)
+        wp_localize_script('quiz-player', 'quizPlayerData', array(
+            'quizId' => get_the_ID(),
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('quiz_nonce'),
+            'isLoggedIn' => is_user_logged_in(),
+        ));
+    }
+
+    // Profile Page CSS
+    if ( is_page_template('page-profile.php') ) {
+        wp_enqueue_style(
+            'profile',
+            get_template_directory_uri() . '/assets/css/profile.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/profile.css' )
+        );
+    }
+
+    // Rankings Page CSS
+    if ( is_page_template('page-rankings.php') ) {
+        wp_enqueue_style(
+            'rankings',
+            get_template_directory_uri() . '/assets/css/rankings.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/rankings.css' )
+        );
     }
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
@@ -285,3 +313,199 @@ function logicleague_comment_callback($comment, $args, $depth) {
     <?php
 }
 
+
+/**
+ * Quiz Results System
+ * Save quiz results to user meta and calculate points
+ */
+
+// AJAX handler to save quiz results
+function logicleague_save_quiz_result() {
+    // Check nonce for security
+    check_ajax_referer('quiz_nonce', 'nonce');
+
+    // Get user ID (0 for guests)
+    $user_id = get_current_user_id();
+
+    if (!$user_id) {
+        wp_send_json_error('User must be logged in to save results');
+        return;
+    }
+
+    // Get quiz data
+    $quiz_id = isset($_POST['quiz_id']) ? intval($_POST['quiz_id']) : 0;
+    $score = isset($_POST['score']) ? intval($_POST['score']) : 0;
+    $total_questions = isset($_POST['total_questions']) ? intval($_POST['total_questions']) : 0;
+    $time_taken = isset($_POST['time_taken']) ? intval($_POST['time_taken']) : 0; // in seconds
+
+    if (!$quiz_id || !$total_questions) {
+        wp_send_json_error('Invalid quiz data');
+        return;
+    }
+
+    // Calculate points (100 points per correct answer, bonus for speed)
+    $base_points = $score * 100;
+    $speed_bonus = 0;
+
+    // Speed bonus: max 50 points per question if answered in < 10 seconds
+    $avg_time_per_question = $time_taken / $total_questions;
+    if ($avg_time_per_question < 10) {
+        $speed_bonus = intval(($total_questions * 50) * (1 - ($avg_time_per_question / 10)));
+    }
+
+    $total_points = $base_points + $speed_bonus;
+
+    // Create quiz result entry
+    $quiz_result = array(
+        'quiz_id' => $quiz_id,
+        'quiz_title' => get_the_title($quiz_id),
+        'score' => $score,
+        'total_questions' => $total_questions,
+        'percentage' => round(($score / $total_questions) * 100, 2),
+        'time_taken' => $time_taken,
+        'points_earned' => $total_points,
+        'date' => current_time('mysql'),
+        'timestamp' => time()
+    );
+
+    // Get existing quiz history
+    $quiz_history = get_user_meta($user_id, 'quiz_history', true);
+    if (!is_array($quiz_history)) {
+        $quiz_history = array();
+    }
+
+    // Add new result at the beginning of the array
+    array_unshift($quiz_history, $quiz_result);
+
+    // Keep only last 50 results
+    $quiz_history = array_slice($quiz_history, 0, 50);
+
+    // Save updated history
+    update_user_meta($user_id, 'quiz_history', $quiz_history);
+
+    // Update total points
+    $current_total_points = get_user_meta($user_id, 'total_points', true);
+    $current_total_points = $current_total_points ? intval($current_total_points) : 0;
+    $new_total_points = $current_total_points + $total_points;
+    update_user_meta($user_id, 'total_points', $new_total_points);
+
+    // Update quizzes completed count
+    $quizzes_completed = get_user_meta($user_id, 'quizzes_completed', true);
+    $quizzes_completed = $quizzes_completed ? intval($quizzes_completed) : 0;
+    update_user_meta($user_id, 'quizzes_completed', $quizzes_completed + 1);
+
+    // Calculate user level based on total points
+    $level = logicleague_calculate_user_level($new_total_points);
+    update_user_meta($user_id, 'user_level', $level);
+
+    // Return success with updated stats
+    wp_send_json_success(array(
+        'points_earned' => $total_points,
+        'total_points' => $new_total_points,
+        'quizzes_completed' => $quizzes_completed + 1,
+        'level' => $level,
+        'message' => 'Quiz result saved successfully!'
+    ));
+}
+add_action('wp_ajax_save_quiz_result', 'logicleague_save_quiz_result');
+
+// AJAX handler to get user stats
+function logicleague_get_user_stats() {
+    $user_id = get_current_user_id();
+
+    if (!$user_id) {
+        wp_send_json_error('User must be logged in');
+        return;
+    }
+
+    $total_points = get_user_meta($user_id, 'total_points', true);
+    $quizzes_completed = get_user_meta($user_id, 'quizzes_completed', true);
+    $user_level = get_user_meta($user_id, 'user_level', true);
+    $quiz_history = get_user_meta($user_id, 'quiz_history', true);
+
+    wp_send_json_success(array(
+        'total_points' => $total_points ? intval($total_points) : 0,
+        'quizzes_completed' => $quizzes_completed ? intval($quizzes_completed) : 0,
+        'user_level' => $user_level ? intval($user_level) : 1,
+        'quiz_history' => is_array($quiz_history) ? array_slice($quiz_history, 0, 10) : array()
+    ));
+}
+add_action('wp_ajax_get_user_stats', 'logicleague_get_user_stats');
+
+// Calculate user level based on total points
+function logicleague_calculate_user_level($total_points) {
+    // Level progression: 1000 points per level
+    return max(1, floor($total_points / 1000) + 1);
+}
+
+// Get user rank among all users
+function logicleague_get_user_rank($user_id) {
+    global $wpdb;
+
+    $user_points = get_user_meta($user_id, 'total_points', true);
+    $user_points = $user_points ? intval($user_points) : 0;
+
+    // Count users with more points
+    $rank = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(DISTINCT user_id) + 1
+        FROM {$wpdb->usermeta}
+        WHERE meta_key = 'total_points'
+        AND CAST(meta_value AS UNSIGNED) > %d",
+        $user_points
+    ));
+
+    return $rank ? intval($rank) : 1;
+}
+
+// Shortcode to display user stats widget
+function logicleague_user_stats_widget() {
+    if (!is_user_logged_in()) {
+        return '<div class="user-stats-widget"><p>Please log in to view your stats.</p></div>';
+    }
+
+    $user_id = get_current_user_id();
+    $total_points = get_user_meta($user_id, 'total_points', true);
+    $quizzes_completed = get_user_meta($user_id, 'quizzes_completed', true);
+    $user_level = get_user_meta($user_id, 'user_level', true);
+    $user_rank = logicleague_get_user_rank($user_id);
+
+    $total_points = $total_points ? intval($total_points) : 0;
+    $quizzes_completed = $quizzes_completed ? intval($quizzes_completed) : 0;
+    $user_level = $user_level ? intval($user_level) : 1;
+
+    ob_start();
+    ?>
+    <div class="user-stats-widget">
+        <div class="stat-item">
+            <span class="stat-icon">🏆</span>
+            <div class="stat-content">
+                <strong><?php echo number_format($total_points); ?></strong>
+                <span>Total Points</span>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">✅</span>
+            <div class="stat-content">
+                <strong><?php echo $quizzes_completed; ?></strong>
+                <span>Quizzes Completed</span>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">⭐</span>
+            <div class="stat-content">
+                <strong>Level <?php echo $user_level; ?></strong>
+                <span>Current Level</span>
+            </div>
+        </div>
+        <div class="stat-item">
+            <span class="stat-icon">📊</span>
+            <div class="stat-content">
+                <strong>#<?php echo $user_rank; ?></strong>
+                <span>Global Rank</span>
+            </div>
+        </div>
+    </div>
+    <?php
+    return ob_get_clean();
+}
+add_shortcode('user_stats', 'logicleague_user_stats_widget');
