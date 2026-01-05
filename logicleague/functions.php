@@ -58,13 +58,21 @@ function logicleague_enqueue_scripts() {
         filemtime( get_stylesheet_directory() . '/style.css' )
     );
 
-    // Front Page CSS
+    // Front Page CSS & JS
     if ( is_front_page() ) {
         wp_enqueue_style(
-            'front-page',
-            get_template_directory_uri() . '/assets/css/front-page.css',
+            'front-page-new',
+            get_template_directory_uri() . '/assets/css/front-page-new.css',
             array(),
-            filemtime( get_template_directory() . '/assets/css/front-page.css' )
+            filemtime( get_template_directory() . '/assets/css/front-page-new.css' )
+        );
+
+        wp_enqueue_script(
+            'front-page',
+            get_template_directory_uri() . '/assets/js/front-page.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/front-page.js' ),
+            true
         );
     }
 
