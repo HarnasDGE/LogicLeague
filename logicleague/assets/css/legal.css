@@ -467,6 +467,36 @@
     background: #EEF2FF;
 }
 
+.social-link-icon {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: white;
+    border-radius: 0.5rem;
+    border: 2px solid #E5E7EB;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: #4B5563;
+    text-decoration: none;
+}
+
+.social-link-icon:hover {
+    border-color: #6366F1;
+    background: #EEF2FF;
+    color: #6366F1;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(99, 102, 241, 0.15);
+}
+
+.social-link-icon svg {
+    flex-shrink: 0;
+}
+
+.social-link-icon span {
+    font-weight: 500;
+}
+
 .btn-link {
     display: inline-block;
     margin-top: 0.75rem;
