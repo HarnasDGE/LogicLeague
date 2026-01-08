@@ -138,6 +138,19 @@ $page_title = $game_type === 'daily'
 
             <!-- Przyciski akcji -->
             <div class="sudoku-action-buttons">
+                <button class="sudoku-action-button sudoku-undo-button" id="undo-button" disabled>
+                    ↶ Cofnij
+                </button>
+                <button class="sudoku-action-button sudoku-redo-button" id="redo-button" disabled>
+                    ↷ Ponów
+                </button>
+                <button class="sudoku-action-button sudoku-pencil-button" id="pencil-button">
+                    ✏️ Notatki
+                </button>
+            </div>
+
+            <!-- Przyciski dodatkowe -->
+            <div class="sudoku-action-buttons">
                 <button class="sudoku-action-button sudoku-hint-button" id="hint-button">
                     💡 Podpowiedź
                 </button>

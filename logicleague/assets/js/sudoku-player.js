@@ -19,7 +19,12 @@
         difficulty: '',
         timerSeconds: 0,
         timerInterval: null,
-        isComplete: false
+        isComplete: false,
+        pencilMode: false,
+        pencilMarks: {}, // Format: "row,col": [1,2,3...]
+        undoStack: [],
+        redoStack: [],
+        gameId: null
     };
 
     // Inicjalizacja
