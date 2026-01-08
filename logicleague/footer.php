@@ -88,21 +88,5 @@
 
 <?php wp_footer(); ?>
 
-<!-- Mobile Menu Script -->
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
-    const navbarMenu = document.getElementById('navbarMenu');
-
-    if (mobileMenuToggle && navbarMenu) {
-        mobileMenuToggle.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navbarMenu.classList.toggle('active');
-            document.body.classList.toggle('menu-open');
-        });
-    }
-});
-</script>
-
 </body>
 </html>
