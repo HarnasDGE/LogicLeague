@@ -93,8 +93,8 @@
             });
         });
 
-        // Przyciski numeryczne
-        const numberButtons = document.querySelectorAll('.sudoku-number-button');
+        // Number buttons
+        const numberButtons = document.querySelectorAll('.number-btn');
         numberButtons.forEach(button => {
             button.addEventListener('click', function() {
                 if (gameState.isComplete) return;
@@ -138,6 +138,24 @@
         const checkButton = document.getElementById('check-button');
         if (checkButton) {
             checkButton.addEventListener('click', checkSolution);
+        }
+
+        // Przycisk undo
+        const undoButton = document.getElementById('undo-button');
+        if (undoButton) {
+            undoButton.addEventListener('click', undo);
+        }
+
+        // Przycisk redo
+        const redoButton = document.getElementById('redo-button');
+        if (redoButton) {
+            redoButton.addEventListener('click', redo);
+        }
+
+        // Przycisk pencil (notes mode)
+        const pencilButton = document.getElementById('pencil-button');
+        if (pencilButton) {
+            pencilButton.addEventListener('click', togglePencilMode);
         }
 
         // Przycisk nowa gra
@@ -459,6 +477,38 @@
      */
     function updateHints() {
         document.getElementById('hints-used').textContent = gameState.hintsUsed;
+    }
+
+    /**
+     * Undo - cofnij ruch
+     */
+    function undo() {
+        // TODO: Implement undo logic
+        console.log('Undo clicked');
+    }
+
+    /**
+     * Redo - ponów ruch
+     */
+    function redo() {
+        // TODO: Implement redo logic
+        console.log('Redo clicked');
+    }
+
+    /**
+     * Toggle pencil mode - tryb notatek
+     */
+    function togglePencilMode() {
+        gameState.pencilMode = !gameState.pencilMode;
+        const pencilButton = document.getElementById('pencil-button');
+        if (pencilButton) {
+            if (gameState.pencilMode) {
+                pencilButton.classList.add('active');
+            } else {
+                pencilButton.classList.remove('active');
+            }
+        }
+        console.log('Pencil mode:', gameState.pencilMode);
     }
 
 })();
