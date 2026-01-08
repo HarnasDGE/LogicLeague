@@ -6,12 +6,13 @@
  */
 
 /* ========================================
-   Page Container
+   Page Container - FORCE LIGHT THEME
    ======================================== */
 
 .sudoku-play-page {
     padding: 0;
-    background: #ffffff;
+    background: #ffffff !important;
+    color: #1f2937 !important;
 }
 
 /* ========================================
@@ -83,6 +84,7 @@
     padding: 0.75rem 1rem;
     max-width: 600px;
     margin: 0 auto;
+    background: #ffffff;
 }
 
 /* ========================================
@@ -625,74 +627,5 @@
 
     .instructions-grid {
         grid-template-columns: repeat(4, 1fr);
-    }
-}
-
-/* ========================================
-   Dark Mode Support
-   ======================================== */
-
-@media (prefers-color-scheme: dark) {
-    .sudoku-play-page {
-        background: #111827;
-    }
-
-    .sudoku-header-compact {
-        background: #1f2937;
-        border-color: #374151;
-    }
-
-    .sudoku-title-compact {
-        color: #f9fafb;
-    }
-
-    .sudoku-stats-bar {
-        background: #1f2937;
-        border-color: #374151;
-    }
-
-    .stat-value {
-        color: #f9fafb;
-    }
-
-    .action-btn {
-        background: #374151;
-        border-color: #4b5563;
-        color: #f9fafb;
-    }
-
-    .action-btn:hover:not(:disabled) {
-        background: #4b5563;
-    }
-
-    .number-btn {
-        background: #1f2937;
-        border-color: #4b5563;
-        color: #f9fafb;
-    }
-
-    .sudoku-secondary-content {
-        background: #1f2937;
-        border-color: #374151;
-    }
-
-    .sudoku-secondary-content h2 {
-        color: #f9fafb;
-    }
-
-    .instruction-item,
-    .leaderboard-placeholder,
-    .stat-card {
-        background: #111827;
-        border-color: #374151;
-    }
-
-    .instruction-item p,
-    .leaderboard-placeholder p {
-        color: #9ca3af;
-    }
-
-    .stat-label {
-        color: #9ca3af;
     }
 }

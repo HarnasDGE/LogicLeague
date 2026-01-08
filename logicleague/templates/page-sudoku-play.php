@@ -144,7 +144,7 @@ $page_title = $game_type === 'daily'
                     <span class="btn-icon">↷</span>
                 </button>
                 <button class="action-btn" id="pencil-button" title="Notes Mode" aria-label="Toggle notes">
-                    <span class="btn-icon">✏️</span>
+                    <span class="btn-icon" id="pencil-icon">✏️</span>
                 </button>
                 <button class="action-btn" id="hint-button" title="Hint" aria-label="Get hint">
                     <span class="btn-icon">💡</span>
