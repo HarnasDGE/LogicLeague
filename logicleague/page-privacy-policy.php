@@ -8,8 +8,8 @@
 get_header();
 ?>
 
-<div class="legal-page-container">
-    <div class="container legal-content">
+<div class="legal-page">
+    <div class="container">
         <article class="legal-article">
             <header class="legal-header">
                 <h1 class="legal-title">Privacy Policy</h1>

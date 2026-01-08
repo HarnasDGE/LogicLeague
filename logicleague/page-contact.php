@@ -22,8 +22,8 @@ if (isset($_GET['submitted'])) {
 }
 ?>
 
-<div class="legal-page-container contact-page">
-    <div class="container legal-content">
+<div class="legal-page contact-page">
+    <div class="container">
         <article class="legal-article">
             <header class="legal-header">
                 <h1 class="legal-title">Contact Us</h1>
