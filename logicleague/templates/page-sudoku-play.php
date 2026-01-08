@@ -1,22 +1,22 @@
 <?php
 /**
  * Template Name: Sudoku Play
- * Interaktywna plansza do gry w Sudoku
+ * Interactive Sudoku game board - Mobile-optimized
  *
  * @package LogicLeague
  */
 
 get_header();
 
-// Pobierz poziom trudności z URL
+// Get difficulty level from URL
 $difficulty = get_query_var( 'sudoku_level' );
 
-// Fallback dla starych URLi z query parameter
+// Fallback for old URLs with query parameter
 if ( empty( $difficulty ) && isset( $_GET['difficulty'] ) ) {
     $difficulty = sanitize_text_field( $_GET['difficulty'] );
 }
 
-// Domyślnie easy
+// Default to easy
 if ( empty( $difficulty ) ) {
     $difficulty = 'easy';
 }
@@ -26,45 +26,75 @@ if (!in_array($difficulty, $valid_difficulties)) {
     $difficulty = 'easy';
 }
 
-// Pobierz typ gry (regular/daily)
+// Get game type (regular/daily)
 $game_type = get_query_var( 'sudoku_type' );
 if ( empty( $game_type ) ) {
     $game_type = 'regular';
 }
 
-// Generuj puzzle
+// Generate puzzle
 $game_data = Sudoku_Generator::generate($difficulty);
 $puzzle = $game_data['puzzle'];
 $solution = $game_data['solution'];
 $max_hints = $game_data['max_hints'];
 
-// Mapa trudności na polskie nazwy
+// Difficulty names
 $difficulty_names = [
-    'easy' => 'Łatwy',
-    'medium' => 'Średni',
-    'hard' => 'Trudny',
-    'expert' => 'Ekspert'
+    'easy' => 'Easy',
+    'medium' => 'Medium',
+    'hard' => 'Hard',
+    'expert' => 'Expert'
 ];
 
-// Tytuł w zależności od typu gry
+// Title based on game type
 $page_title = $game_type === 'daily'
     ? 'Daily Sudoku - ' . $difficulty_names[$difficulty]
     : 'Sudoku - ' . $difficulty_names[$difficulty];
 ?>
 
-<div class="sudoku-play-container">
-    <div class="sudoku-play-header">
-        <a href="<?php echo home_url('/sudoku'); ?>" class="sudoku-back-button">
-            ← Powrót do wyboru trudności
+<div class="sudoku-play-page">
+    <!-- Compact Header -->
+    <div class="sudoku-header-compact">
+        <a href="<?php echo home_url('/sudoku'); ?>" class="sudoku-back-btn" aria-label="Back">
+            ← Back
         </a>
-        <h1 class="sudoku-play-title">
-            <?php echo $page_title; ?>
-        </h1>
+        <h1 class="sudoku-title-compact"><?php echo $page_title; ?></h1>
     </div>
 
-    <div class="sudoku-game-wrapper">
-        <!-- Lewa kolumna: Plansza -->
-        <div class="sudoku-board-section">
+    <!-- Ad Space (Above Game) -->
+    <div class="sudoku-ad-container">
+        <div class="ad-placeholder">
+            <!-- Google AdSense: Horizontal Banner (728x90 or 320x50 mobile) -->
+            <div class="ad-label">Advertisement</div>
+            <div class="ad-content" style="min-height: 50px; background: #f0f0f0; display: flex; align-items: center; justify-content: center; color: #999; font-size: 12px;">
+                Ad Space 728x90 / 320x50
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Container (No Scroll Zone) -->
+    <div class="sudoku-game-container">
+
+        <!-- Stats Bar (Inline, Compact) -->
+        <div class="sudoku-stats-bar">
+            <div class="stat-item">
+                <span class="stat-icon">⏱️</span>
+                <span class="stat-value" id="timer">00:00</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">❌</span>
+                <span class="stat-value" id="mistakes">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-icon">💡</span>
+                <span class="stat-value" id="hints">
+                    <span id="hints-used">0</span>/<?php echo $max_hints; ?>
+                </span>
+            </div>
+        </div>
+
+        <!-- Sudoku Board -->
+        <div class="sudoku-board-wrapper">
             <div class="sudoku-board" id="sudoku-board"
                  data-difficulty="<?php echo esc_attr($difficulty); ?>"
                  data-solution="<?php echo esc_attr(json_encode($solution)); ?>">
@@ -79,7 +109,7 @@ $page_title = $game_type === 'daily'
                             $cell_classes[] = 'sudoku-cell-initial';
                         }
 
-                        // Dodaj klasy dla grubszych granic (co 3 komórki)
+                        // Add classes for thicker borders (every 3 cells)
                         if ($col % 3 === 2 && $col !== 8) {
                             $cell_classes[] = 'sudoku-cell-border-right';
                         }
@@ -95,116 +125,148 @@ $page_title = $game_type === 'daily'
                             <?php if ($value !== 0): ?>
                                 <span class="sudoku-cell-value"><?php echo $value; ?></span>
                             <?php endif; ?>
+                            <div class="sudoku-cell-notes"></div>
                         </div>
                     <?php endfor; ?>
                 <?php endfor; ?>
             </div>
         </div>
 
-        <!-- Prawa kolumna: Kontrolki -->
-        <div class="sudoku-controls-section">
-            <!-- Statystyki gry -->
-            <div class="sudoku-game-stats">
-                <div class="sudoku-stat">
-                    <div class="sudoku-stat-icon">⏱️</div>
-                    <div class="sudoku-stat-label">Czas</div>
-                    <div class="sudoku-stat-value" id="timer">00:00</div>
-                </div>
-                <div class="sudoku-stat">
-                    <div class="sudoku-stat-icon">❌</div>
-                    <div class="sudoku-stat-label">Błędy</div>
-                    <div class="sudoku-stat-value" id="mistakes">0</div>
-                </div>
-                <div class="sudoku-stat">
-                    <div class="sudoku-stat-icon">💡</div>
-                    <div class="sudoku-stat-label">Podpowiedzi</div>
-                    <div class="sudoku-stat-value" id="hints">
-                        <span id="hints-used">0</span> / <?php echo $max_hints; ?>
-                    </div>
-                </div>
-            </div>
+        <!-- Compact Controls -->
+        <div class="sudoku-controls-compact">
 
-            <!-- Przyciski numeryczne -->
-            <div class="sudoku-number-pad">
-                <div class="sudoku-number-pad-label">Wybierz liczbę:</div>
-                <div class="sudoku-number-buttons">
-                    <?php for ($num = 1; $num <= 9; $num++): ?>
-                        <button class="sudoku-number-button" data-number="<?php echo $num; ?>">
-                            <?php echo $num; ?>
-                        </button>
-                    <?php endfor; ?>
-                </div>
-            </div>
-
-            <!-- Przyciski akcji -->
-            <div class="sudoku-action-buttons">
-                <button class="sudoku-action-button sudoku-undo-button" id="undo-button" disabled>
-                    ↶ Cofnij
+            <!-- Action Buttons (Icons Only) -->
+            <div class="action-buttons-row">
+                <button class="action-btn" id="undo-button" disabled title="Undo" aria-label="Undo">
+                    <span class="btn-icon">↶</span>
                 </button>
-                <button class="sudoku-action-button sudoku-redo-button" id="redo-button" disabled>
-                    ↷ Ponów
+                <button class="action-btn" id="redo-button" disabled title="Redo" aria-label="Redo">
+                    <span class="btn-icon">↷</span>
                 </button>
-                <button class="sudoku-action-button sudoku-pencil-button" id="pencil-button">
-                    ✏️ Notatki
+                <button class="action-btn" id="pencil-button" title="Notes Mode" aria-label="Toggle notes">
+                    <span class="btn-icon">✏️</span>
+                </button>
+                <button class="action-btn" id="hint-button" title="Hint" aria-label="Get hint">
+                    <span class="btn-icon">💡</span>
+                </button>
+                <button class="action-btn" id="clear-button" title="Clear Cell" aria-label="Clear selected cell">
+                    <span class="btn-icon">🗑️</span>
                 </button>
             </div>
 
-            <!-- Przyciski dodatkowe -->
-            <div class="sudoku-action-buttons">
-                <button class="sudoku-action-button sudoku-hint-button" id="hint-button">
-                    💡 Podpowiedź
-                </button>
-                <button class="sudoku-action-button sudoku-clear-button" id="clear-button">
-                    🗑️ Wyczyść
-                </button>
-                <button class="sudoku-action-button sudoku-check-button" id="check-button">
-                    ✓ Sprawdź
-                </button>
+            <!-- Number Pad (Compact Grid) -->
+            <div class="number-pad-compact">
+                <?php for ($num = 1; $num <= 9; $num++): ?>
+                    <button class="number-btn" data-number="<?php echo $num; ?>" aria-label="Number <?php echo $num; ?>">
+                        <?php echo $num; ?>
+                    </button>
+                <?php endfor; ?>
             </div>
 
-            <!-- Przyciski gry -->
-            <div class="sudoku-game-buttons">
-                <button class="sudoku-game-button sudoku-new-game-button" id="new-game-button">
-                    🔄 Nowa gra
+            <!-- Secondary Actions -->
+            <div class="secondary-actions">
+                <button class="secondary-btn" id="check-button" aria-label="Check solution">
+                    ✓ Check
                 </button>
-                <button class="sudoku-game-button sudoku-solve-button" id="solve-button">
-                    🎯 Pokaż rozwiązanie
+                <button class="secondary-btn" id="new-game-button" aria-label="New game">
+                    🔄 New
                 </button>
             </div>
         </div>
     </div>
+
+    <!-- Content Below Game (Scrollable) -->
+    <div class="sudoku-secondary-content">
+
+        <!-- How to Play Section -->
+        <section class="sudoku-instructions">
+            <h2>How to Play</h2>
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <span class="instruction-icon">🎯</span>
+                    <p>Fill each row, column, and 3×3 box with numbers 1-9</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">📝</span>
+                    <p>Use <strong>Notes Mode</strong> (✏️) for pencil marks</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">⌨️</span>
+                    <p>Use keyboard: 1-9 for numbers, arrow keys to navigate</p>
+                </div>
+                <div class="instruction-item">
+                    <span class="instruction-icon">💡</span>
+                    <p>Need help? Use hints, but they're limited!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leaderboard Preview -->
+        <section class="sudoku-leaderboard-preview">
+            <h2>Today's Leaderboard</h2>
+            <div class="leaderboard-placeholder">
+                <p>Complete this puzzle to see your rank!</p>
+                <a href="<?php echo home_url('/sudoku/leaderboard'); ?>" class="view-leaderboard-btn">
+                    View Full Leaderboard →
+                </a>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="sudoku-stats-section">
+            <h2>Your Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Games Played</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">0%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">--:--</div>
+                    <div class="stat-label">Best Time</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">--:--</div>
+                    <div class="stat-label">Avg Time</div>
+                </div>
+            </div>
+        </section>
+    </div>
 </div>
 
-<!-- Modal ukończenia gry -->
+<!-- Completion Modal -->
 <div class="sudoku-completion-modal" id="completion-modal">
     <div class="sudoku-completion-content">
-        <div class="sudoku-completion-emoji">🎉</div>
-        <h2 class="sudoku-completion-title">Gratulacje!</h2>
-        <p class="sudoku-completion-message">Ukończyłeś puzzle Sudoku!</p>
+        <div class="completion-emoji">🎉</div>
+        <h2 class="completion-title">Congratulations!</h2>
+        <p class="completion-message">You completed the puzzle!</p>
 
-        <div class="sudoku-completion-stats">
-            <div class="sudoku-completion-stat">
-                <span class="sudoku-completion-stat-label">Czas:</span>
-                <span class="sudoku-completion-stat-value" id="final-time">00:00</span>
+        <div class="completion-stats">
+            <div class="completion-stat">
+                <span class="completion-label">Time:</span>
+                <span class="completion-value" id="final-time">00:00</span>
             </div>
-            <div class="sudoku-completion-stat">
-                <span class="sudoku-completion-stat-label">Błędy:</span>
-                <span class="sudoku-completion-stat-value" id="final-mistakes">0</span>
+            <div class="completion-stat">
+                <span class="completion-label">Mistakes:</span>
+                <span class="completion-value" id="final-mistakes">0</span>
             </div>
-            <div class="sudoku-completion-stat">
-                <span class="sudoku-completion-stat-label">Poziom:</span>
-                <span class="sudoku-completion-stat-value"><?php echo $difficulty_names[$difficulty]; ?></span>
+            <div class="completion-stat">
+                <span class="completion-label">Level:</span>
+                <span class="completion-value"><?php echo $difficulty_names[$difficulty]; ?></span>
             </div>
         </div>
 
-        <div class="sudoku-completion-buttons">
+        <div class="completion-buttons">
             <a href="<?php echo home_url('/sudoku/' . ( $game_type === 'daily' ? 'daily/' : '' ) . $difficulty); ?>"
-               class="sudoku-completion-button sudoku-completion-button-primary">
-                Zagraj ponownie
+               class="completion-btn completion-btn-primary">
+                Play Again
             </a>
             <a href="<?php echo home_url('/sudoku'); ?>"
-               class="sudoku-completion-button sudoku-completion-button-secondary">
-                Wybierz poziom
+               class="completion-btn completion-btn-secondary">
+                Choose Level
             </a>
         </div>
     </div>
