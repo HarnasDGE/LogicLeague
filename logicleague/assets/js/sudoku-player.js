@@ -238,6 +238,13 @@
 
         const row = parseInt(gameState.selectedCell.dataset.row);
         const col = parseInt(gameState.selectedCell.dataset.col);
+        const cellKey = `${row},${col}`;
+
+        // Jeśli tryb notatek
+        if (gameState.pencilMode) {
+            togglePencilMark(row, col, number);
+            return;
+        }
 
         // Sprawdź czy poprawna
         const correctValue = gameState.solution[row][col];
@@ -245,6 +252,13 @@
 
         // Usuń poprzednie klasy błędu
         gameState.selectedCell.classList.remove('sudoku-cell-error');
+
+        // Usuń notatki z tej komórki
+        delete gameState.pencilMarks[cellKey];
+        const notesDiv = gameState.selectedCell.querySelector('.sudoku-cell-notes');
+        if (notesDiv) {
+            notesDiv.innerHTML = '';
+        }
 
         // Aktualizuj wartość
         gameState.board[row][col] = number;
@@ -286,6 +300,7 @@
 
         const row = parseInt(gameState.selectedCell.dataset.row);
         const col = parseInt(gameState.selectedCell.dataset.col);
+        const cellKey = `${row},${col}`;
 
         gameState.board[row][col] = 0;
         gameState.selectedCell.dataset.value = '0';
@@ -295,7 +310,66 @@
             valueSpan.remove();
         }
 
+        // Wyczyść także notatki
+        delete gameState.pencilMarks[cellKey];
+        const notesDiv = gameState.selectedCell.querySelector('.sudoku-cell-notes');
+        if (notesDiv) {
+            notesDiv.innerHTML = '';
+        }
+
         gameState.selectedCell.classList.remove('sudoku-cell-error');
+    }
+
+    /**
+     * Dodaje/usuwa notatkę w komórce
+     */
+    function togglePencilMark(row, col, number) {
+        const cellKey = `${row},${col}`;
+        const cellElement = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+
+        if (!cellElement) return;
+
+        // Nie dodawaj notatek do komórek z wartościami
+        if (gameState.board[row][col] !== 0) return;
+
+        // Inicjalizuj tablicę notatek dla tej komórki
+        if (!gameState.pencilMarks[cellKey]) {
+            gameState.pencilMarks[cellKey] = [];
+        }
+
+        const marks = gameState.pencilMarks[cellKey];
+        const index = marks.indexOf(number);
+
+        if (index === -1) {
+            // Dodaj notatkę
+            marks.push(number);
+            marks.sort((a, b) => a - b);
+        } else {
+            // Usuń notatkę
+            marks.splice(index, 1);
+        }
+
+        // Renderuj notatki
+        renderPencilMarks(cellElement, marks);
+    }
+
+    /**
+     * Renderuje notatki w komórce
+     */
+    function renderPencilMarks(cellElement, marks) {
+        const notesDiv = cellElement.querySelector('.sudoku-cell-notes');
+        if (!notesDiv) return;
+
+        notesDiv.innerHTML = '';
+
+        // Utwórz siatkę 3x3 dla notatek
+        for (let i = 1; i <= 9; i++) {
+            const noteSpan = document.createElement('span');
+            if (marks.includes(i)) {
+                noteSpan.textContent = i;
+            }
+            notesDiv.appendChild(noteSpan);
+        }
     }
 
     /**
