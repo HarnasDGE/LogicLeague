@@ -28,6 +28,83 @@ require_once get_template_directory() . '/inc/contact-form-handler.php';
 require_once get_template_directory() . '/debug-styles.php';
 
 /**
+ * Force load About & Team CSS inline as fallback
+ */
+add_action('wp_head', function() {
+    // Check if this is About page
+    $is_about = false;
+    $is_team = false;
+
+    // About page detection
+    if (is_page_template('page-about.php')) {
+        $is_about = true;
+    }
+
+    if (is_page(array('about', 'about-us', 'o-nas', 'about-logicleague'))) {
+        $is_about = true;
+    }
+
+    if (isset($_SERVER['REQUEST_URI']) && preg_match('/\/(about|o-nas|about-us)/i', $_SERVER['REQUEST_URI'])) {
+        $is_about = true;
+    }
+
+    if (is_page()) {
+        $title = get_the_title();
+        if (stripos($title, 'about') !== false || stripos($title, 'o nas') !== false) {
+            $is_about = true;
+        }
+    }
+
+    // Team page detection
+    if (is_page_template('page-team.php')) {
+        $is_team = true;
+    }
+
+    if (is_page(array('team', 'our-team', 'zesp', 'zespol', 'the-team'))) {
+        $is_team = true;
+    }
+
+    if (isset($_SERVER['REQUEST_URI']) && preg_match('/\/(team|zespol|zesp)/i', $_SERVER['REQUEST_URI'])) {
+        $is_team = true;
+    }
+
+    if (is_page()) {
+        $title = get_the_title();
+        if (stripos($title, 'team') !== false || stripos($title, 'zespół') !== false || stripos($title, 'zespol') !== false) {
+            $is_team = true;
+        }
+    }
+
+    // Load About CSS
+    if ($is_about) {
+        $css_file = get_template_directory() . '/assets/css/about.css';
+        if (file_exists($css_file)) {
+            echo '<style id="about-inline-css">' . "\n";
+            echo file_get_contents($css_file);
+            echo "\n" . '</style>' . "\n";
+        }
+
+        // Load About JS
+        $js_file = get_template_directory() . '/assets/js/about.js';
+        if (file_exists($js_file)) {
+            echo '<script id="about-inline-js">' . "\n";
+            echo file_get_contents($js_file);
+            echo "\n" . '</script>' . "\n";
+        }
+    }
+
+    // Load Team CSS
+    if ($is_team) {
+        $css_file = get_template_directory() . '/assets/css/team.css';
+        if (file_exists($css_file)) {
+            echo '<style id="team-inline-css">' . "\n";
+            echo file_get_contents($css_file);
+            echo "\n" . '</style>' . "\n";
+        }
+    }
+}, 100);
+
+/**
  * Konfiguracja motywu
  */
 function logicleague_setup() {
