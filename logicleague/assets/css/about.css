@@ -1,0 +1,541 @@
+/**
+ * About Us Page Styling
+ *
+ * @package LogicLeague
+ */
+
+/* ========================================
+   About Page Container
+   ======================================== */
+
+.about-page {
+    background: #ffffff;
+}
+
+/* ========================================
+   Hero Section
+   ======================================== */
+
+.about-hero {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    color: white;
+    padding: 6rem 0 8rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.about-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+    opacity: 0.3;
+}
+
+.about-hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.about-label {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.about-hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.2);
+}
+
+.about-hero-description {
+    font-size: 1.25rem;
+    line-height: 1.7;
+    opacity: 0.95;
+    margin: 0;
+}
+
+.about-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    line-height: 0;
+}
+
+.about-wave svg {
+    display: block;
+    width: 100%;
+    height: 80px;
+}
+
+/* ========================================
+   Section Shared Styles
+   ======================================== */
+
+.about-story,
+.about-mission,
+.about-stats,
+.about-team {
+    padding: 5rem 0;
+}
+
+.section-label {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 100%);
+    color: #6366F1;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 1rem 0;
+    line-height: 1.2;
+}
+
+.section-description {
+    font-size: 1.125rem;
+    color: #6B7280;
+    line-height: 1.7;
+    max-width: 700px;
+}
+
+/* ========================================
+   Story Section
+   ======================================== */
+
+.about-story {
+    background: #F9FAFB;
+}
+
+.about-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.story-text p {
+    font-size: 1.0625rem;
+    line-height: 1.8;
+    color: #4B5563;
+    margin-bottom: 1.5rem;
+}
+
+.story-text p:last-child {
+    margin-bottom: 0;
+}
+
+.about-story-visual {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.story-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.story-icon {
+    width: 120px;
+    height: 120px;
+    background: white;
+    border-radius: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.story-icon:hover {
+    transform: translateY(-10px) scale(1.05);
+    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.15);
+}
+
+/* ========================================
+   Mission Section
+   ======================================== */
+
+.mission-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.mission-header .section-description {
+    margin: 0 auto;
+}
+
+.mission-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.mission-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    border: 2px solid #E5E7EB;
+    transition: all 0.3s;
+}
+
+.mission-card:hover {
+    border-color: #6366F1;
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+    transform: translateY(-5px);
+}
+
+.mission-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.mission-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 1rem 0;
+}
+
+.mission-card p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #6B7280;
+    margin: 0;
+}
+
+/* ========================================
+   Stats Section
+   ======================================== */
+
+.about-stats {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    color: white;
+}
+
+.stats-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.stats-header .section-label {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.stats-header .section-title {
+    color: white;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 2.5rem 1.5rem;
+    border-radius: 1rem;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+}
+
+.stat-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-5px);
+}
+
+.stat-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* ========================================
+   Team Section
+   ======================================== */
+
+.team-header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.team-header .section-description {
+    margin: 0 auto;
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.team-card {
+    background: white;
+    border: 2px solid #E5E7EB;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.team-card:hover {
+    border-color: #6366F1;
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.1);
+    transform: translateY(-5px);
+}
+
+.team-avatar {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, #EEF2FF 0%, #F3E8FF 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.avatar-placeholder {
+    font-size: 3rem;
+}
+
+.team-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 0.5rem 0;
+}
+
+.team-role {
+    font-size: 0.9rem;
+    color: #6366F1;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+.team-bio {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: #6B7280;
+    margin: 0 0 1rem 0;
+}
+
+.team-stats {
+    padding-top: 1rem;
+    border-top: 1px solid #E5E7EB;
+    font-size: 0.875rem;
+    color: #8B5CF6;
+    font-weight: 600;
+}
+
+.team-cta {
+    text-align: center;
+    padding: 3rem 0 0 0;
+}
+
+.team-cta p {
+    font-size: 1.125rem;
+    color: #4B5563;
+    margin: 0 0 1.5rem 0;
+}
+
+/* ========================================
+   CTA Section
+   ======================================== */
+
+.about-cta {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    padding: 5rem 0;
+    color: white;
+}
+
+.about-cta .cta-content {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.about-cta h2 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 1rem 0;
+}
+
+.about-cta p {
+    font-size: 1.25rem;
+    opacity: 0.9;
+    margin: 0 0 2rem 0;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-large {
+    padding: 1rem 2.5rem;
+    font-size: 1.125rem;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: #6366F1;
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .about-story-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .about-story-visual {
+        order: -1;
+    }
+
+    .mission-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 4rem 0 6rem 0;
+    }
+
+    .about-hero-title {
+        font-size: 2rem;
+    }
+
+    .about-hero-description {
+        font-size: 1.0625rem;
+    }
+
+    .section-title {
+        font-size: 2rem;
+    }
+
+    .about-story,
+    .about-mission,
+    .about-stats,
+    .about-team {
+        padding: 3rem 0;
+    }
+
+    .story-icon-grid {
+        gap: 1rem;
+    }
+
+    .story-icon {
+        width: 80px;
+        height: 80px;
+        font-size: 2.5rem;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-cta h2 {
+        font-size: 1.75rem;
+    }
+
+    .about-cta p {
+        font-size: 1rem;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+    }
+
+    .btn-large {
+        width: 100%;
+    }
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.about-hero-content {
+    animation: fadeInUp 0.8s ease-out;
+}

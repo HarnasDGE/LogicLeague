@@ -204,6 +204,44 @@ function logicleague_enqueue_scripts() {
             filemtime( get_template_directory() . '/assets/css/legal.css' )
         );
     }
+
+    // About Us Page CSS & JS
+    if ( is_page_template('page-about.php') ) {
+        wp_enqueue_style(
+            'about',
+            get_template_directory_uri() . '/assets/css/about.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/about.css' )
+        );
+
+        wp_enqueue_script(
+            'about',
+            get_template_directory_uri() . '/assets/js/about.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/about.js' ),
+            true
+        );
+    }
+
+    // Author Archive CSS
+    if ( is_author() ) {
+        wp_enqueue_style(
+            'author',
+            get_template_directory_uri() . '/assets/css/author.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/author.css' )
+        );
+    }
+
+    // Team Page CSS
+    if ( is_page_template('page-team.php') ) {
+        wp_enqueue_style(
+            'team',
+            get_template_directory_uri() . '/assets/css/team.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/team.css' )
+        );
+    }
 }
 add_action( 'wp_enqueue_scripts', 'logicleague_enqueue_scripts' );
 

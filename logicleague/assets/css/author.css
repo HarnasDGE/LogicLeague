@@ -1,0 +1,504 @@
+/**
+ * Author Archive Styling
+ * E-E-A-T optimized author profiles
+ *
+ * @package LogicLeague
+ */
+
+/* ========================================
+   Author Archive Container
+   ======================================== */
+
+.author-archive {
+    background: #ffffff;
+}
+
+/* ========================================
+   Author Hero Section
+   ======================================== */
+
+.author-hero {
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+    padding: 4rem 0 6rem 0;
+    position: relative;
+    overflow: hidden;
+}
+
+.author-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" fill-opacity="0.1"/></svg>') repeat;
+    opacity: 0.3;
+}
+
+.author-hero-content {
+    display: flex;
+    align-items: flex-start;
+    gap: 3rem;
+    position: relative;
+    z-index: 1;
+}
+
+.author-hero-avatar {
+    flex-shrink: 0;
+}
+
+.author-hero-avatar img {
+    border-radius: 50%;
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.author-hero-avatar img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.author-hero-info {
+    flex: 1;
+    color: white;
+}
+
+.author-hero-name {
+    font-size: 3rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+    color: white;
+}
+
+.author-hero-role {
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin: 0 0 1rem 0;
+    opacity: 0.95;
+    color: #E0E7FF;
+}
+
+.author-hero-bio {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 0 0 2rem 0;
+    opacity: 0.9;
+    max-width: 600px;
+}
+
+.author-hero-stats {
+    display: flex;
+    gap: 3rem;
+    margin-bottom: 2rem;
+}
+
+.author-stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.author-stat-item .stat-number {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: white;
+}
+
+.author-stat-item .stat-label {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+.author-hero-social {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.author-social-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.5rem;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.author-social-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.author-social-btn svg {
+    flex-shrink: 0;
+}
+
+.author-wave {
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    z-index: 1;
+}
+
+.author-wave svg {
+    display: block;
+    width: 100%;
+    height: 100px;
+}
+
+/* ========================================
+   Author Details Section
+   ======================================== */
+
+.author-details {
+    padding: 4rem 0;
+    background: #F9FAFB;
+}
+
+.author-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.author-expertise-card,
+.author-activity-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border: 1px solid #E5E7EB;
+}
+
+.author-expertise-card h2,
+.author-activity-card h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 1.5rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #E5E7EB;
+}
+
+.expertise-item,
+.credentials-item {
+    margin-bottom: 1.5rem;
+}
+
+.expertise-item:last-child,
+.credentials-item:last-child {
+    margin-bottom: 0;
+}
+
+.expertise-item h3,
+.credentials-item h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #6366F1;
+    margin: 0 0 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.expertise-item p,
+.credentials-item p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4B5563;
+    margin: 0;
+}
+
+.activity-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.activity-stat {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1rem;
+    background: #F9FAFB;
+    border-radius: 0.75rem;
+    transition: all 0.3s;
+}
+
+.activity-stat:hover {
+    background: #EEF2FF;
+    transform: translateX(5px);
+}
+
+.activity-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.activity-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.activity-number {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #1F2937;
+}
+
+.activity-label {
+    font-size: 0.95rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+/* ========================================
+   Author Content Section
+   ======================================== */
+
+.author-content {
+    padding: 4rem 0 6rem 0;
+    background: #ffffff;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 3rem 0;
+    text-align: center;
+}
+
+.subsection-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin: 0 0 2rem 0;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #E5E7EB;
+    position: relative;
+}
+
+.subsection-title::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 100%);
+}
+
+.author-quizzes,
+.author-posts {
+    margin-bottom: 4rem;
+}
+
+.author-posts:last-child {
+    margin-bottom: 0;
+}
+
+.quiz-grid,
+.post-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.view-more {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.875rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 2px solid #6366F1;
+    color: #6366F1;
+}
+
+.btn-outline:hover {
+    background: #6366F1;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(99, 102, 241, 0.3);
+}
+
+/* ========================================
+   Responsive Design
+   ======================================== */
+
+@media (max-width: 1024px) {
+    .author-hero-content {
+        gap: 2rem;
+    }
+
+    .author-hero-name {
+        font-size: 2.5rem;
+    }
+
+    .author-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quiz-grid,
+    .post-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .author-hero {
+        padding: 3rem 0 5rem 0;
+    }
+
+    .author-hero-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .author-hero-name {
+        font-size: 2rem;
+    }
+
+    .author-hero-role {
+        font-size: 1.1rem;
+    }
+
+    .author-hero-bio {
+        font-size: 1rem;
+        max-width: 100%;
+    }
+
+    .author-hero-stats {
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: center;
+    }
+
+    .author-stat-item .stat-number {
+        font-size: 2rem;
+    }
+
+    .author-hero-social {
+        justify-content: center;
+    }
+
+    .author-details {
+        padding: 3rem 0;
+    }
+
+    .author-content {
+        padding: 3rem 0 4rem 0;
+    }
+
+    .section-title {
+        font-size: 1.75rem;
+    }
+
+    .subsection-title {
+        font-size: 1.25rem;
+    }
+
+    .quiz-grid,
+    .post-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .author-social-btn {
+        padding: 0.625rem 1.25rem;
+        font-size: 0.9rem;
+    }
+
+    .activity-stat {
+        padding: 0.75rem;
+    }
+
+    .activity-icon {
+        font-size: 2rem;
+    }
+
+    .activity-number {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .author-hero-name {
+        font-size: 1.75rem;
+    }
+
+    .author-hero-stats {
+        gap: 1.5rem;
+    }
+
+    .author-stat-item .stat-number {
+        font-size: 1.75rem;
+    }
+
+    .author-stat-item .stat-label {
+        font-size: 0.85rem;
+    }
+}
+
+/* ========================================
+   Print Styles
+   ======================================== */
+
+@media print {
+    .author-hero {
+        background: white;
+        padding: 2rem 0;
+    }
+
+    .author-hero::before,
+    .author-wave {
+        display: none;
+    }
+
+    .author-hero-content {
+        color: black;
+    }
+
+    .author-hero-name,
+    .author-hero-role,
+    .author-hero-bio {
+        color: black;
+    }
+
+    .author-social-btn {
+        display: none;
+    }
+
+    .view-more {
+        display: none;
+    }
+}
