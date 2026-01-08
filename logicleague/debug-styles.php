@@ -43,6 +43,15 @@ if ( isset($_GET['debug_styles']) && $_GET['debug_styles'] == '1' ) {
         echo '3. URL match: ' . (preg_match('/\/(about|o-nas|about-us)/i', $_SERVER['REQUEST_URI']) ? '✓ TRUE' : '✗ FALSE') . '<br>';
         echo '4. Title match: ' . ((stripos(get_the_title(), 'about') !== false || stripos(get_the_title(), 'o nas') !== false) ? '✓ TRUE' : '✗ FALSE') . '<br>';
 
+        echo '<hr style="border-color: lime;">';
+        echo '<strong>Expected Handle:</strong> logicleague-about-page<br>';
+        echo '<strong>Is Loaded:</strong> ';
+        if (in_array('logicleague-about-page', $wp_styles->queue)) {
+            echo '<span style="color: lime; font-weight: bold;">✓ YES!</span><br>';
+        } else {
+            echo '<span style="color: red; font-weight: bold;">✗ NO!</span><br>';
+        }
+
         echo '</div>';
     }, 999);
 }
