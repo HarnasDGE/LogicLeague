@@ -30,13 +30,14 @@
                 </ul>
             </div>
 
-            <!-- Column 3: Account -->
+            <!-- Column 3: Legal -->
             <div class="footer-column-links">
-                <h3 class="footer-heading">Account</h3>
+                <h3 class="footer-heading">Legal</h3>
                 <ul class="footer-menu">
-                    <li><a href="#">Sign In</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="<?php echo home_url('/privacy-policy'); ?>">Privacy Policy</a></li>
+                    <li><a href="<?php echo home_url('/terms-of-service'); ?>">Terms of Service</a></li>
+                    <li><a href="<?php echo home_url('/disclaimer'); ?>">Disclaimer</a></li>
+                    <li><a href="<?php echo home_url('/contact'); ?>">Contact Us</a></li>
                 </ul>
             </div>
 
@@ -73,6 +74,13 @@
             <p class="footer-credits">
                 Made with ❤️ by the LogicLeague Team
                 <span class="footer-icon-extra">🧠</span>
+            </p>
+            <p class="footer-legal-links">
+                <a href="<?php echo home_url('/privacy-policy'); ?>">Privacy</a>
+                <span class="separator">|</span>
+                <a href="<?php echo home_url('/terms-of-service'); ?>">Terms</a>
+                <span class="separator">|</span>
+                <button id="cky-btn-revisit-bottom" class="cookie-settings-link">Cookie Settings</button>
             </p>
         </div>
     </div>

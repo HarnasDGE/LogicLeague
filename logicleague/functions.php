@@ -18,6 +18,11 @@ require_once get_template_directory() . '/inc/sudoku/class-sudoku-solver.php';
 require_once get_template_directory() . '/inc/sudoku/class-sudoku-generator.php';
 
 /**
+ * Ładowanie Contact Form Handler
+ */
+require_once get_template_directory() . '/inc/contact-form-handler.php';
+
+/**
  * Konfiguracja motywu
  */
 function logicleague_setup() {
@@ -184,6 +189,19 @@ function logicleague_enqueue_scripts() {
             get_template_directory_uri() . '/assets/css/rankings.css',
             array(),
             filemtime( get_template_directory() . '/assets/css/rankings.css' )
+        );
+    }
+
+    // Legal Pages CSS (Privacy Policy, Terms, Disclaimer, Contact)
+    if ( is_page_template('page-privacy-policy.php') ||
+         is_page_template('page-terms.php') ||
+         is_page_template('page-disclaimer.php') ||
+         is_page_template('page-contact.php') ) {
+        wp_enqueue_style(
+            'legal',
+            get_template_directory_uri() . '/assets/css/legal.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/legal.css' )
         );
     }
 }
