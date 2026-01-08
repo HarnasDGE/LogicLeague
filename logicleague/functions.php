@@ -206,7 +206,7 @@ function logicleague_enqueue_scripts() {
     }
 
     // About Us Page CSS & JS
-    if ( is_page_template('page-about.php') ) {
+    if ( is_page_template('page-about.php') || is_page(array('about', 'about-us', 'o-nas')) ) {
         wp_enqueue_style(
             'about',
             get_template_directory_uri() . '/assets/css/about.css',
@@ -234,7 +234,7 @@ function logicleague_enqueue_scripts() {
     }
 
     // Team Page CSS
-    if ( is_page_template('page-team.php') ) {
+    if ( is_page_template('page-team.php') || is_page(array('team', 'our-team', 'zesp', 'zespol')) ) {
         wp_enqueue_style(
             'team',
             get_template_directory_uri() . '/assets/css/team.css',
