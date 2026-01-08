@@ -23,6 +23,11 @@ require_once get_template_directory() . '/inc/sudoku/class-sudoku-generator.php'
 require_once get_template_directory() . '/inc/contact-form-handler.php';
 
 /**
+ * Debug Styles Helper (add ?debug_styles=1 to URL)
+ */
+require_once get_template_directory() . '/debug-styles.php';
+
+/**
  * Konfiguracja motywu
  */
 function logicleague_setup() {
