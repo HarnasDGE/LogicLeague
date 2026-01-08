@@ -205,8 +205,33 @@ function logicleague_enqueue_scripts() {
         );
     }
 
-    // About Us Page CSS & JS
-    if ( is_page_template('page-about.php') || is_page(array('about', 'about-us', 'o-nas')) ) {
+    // About Us Page CSS & JS - Multiple detection methods
+    $is_about_page = false;
+
+    // Method 1: Template detection
+    if ( is_page_template('page-about.php') ) {
+        $is_about_page = true;
+    }
+
+    // Method 2: Slug detection
+    if ( is_page(array('about', 'about-us', 'o-nas', 'about-logicleague')) ) {
+        $is_about_page = true;
+    }
+
+    // Method 3: URL path detection
+    if ( isset($_SERVER['REQUEST_URI']) && preg_match('/\/(about|o-nas|about-us)/i', $_SERVER['REQUEST_URI']) ) {
+        $is_about_page = true;
+    }
+
+    // Method 4: Page title detection
+    if ( is_page() ) {
+        $page_title = get_the_title();
+        if ( stripos($page_title, 'about') !== false || stripos($page_title, 'o nas') !== false ) {
+            $is_about_page = true;
+        }
+    }
+
+    if ( $is_about_page ) {
         wp_enqueue_style(
             'about',
             get_template_directory_uri() . '/assets/css/about.css',
@@ -233,8 +258,33 @@ function logicleague_enqueue_scripts() {
         );
     }
 
-    // Team Page CSS
-    if ( is_page_template('page-team.php') || is_page(array('team', 'our-team', 'zesp', 'zespol')) ) {
+    // Team Page CSS - Multiple detection methods
+    $is_team_page = false;
+
+    // Method 1: Template detection
+    if ( is_page_template('page-team.php') ) {
+        $is_team_page = true;
+    }
+
+    // Method 2: Slug detection
+    if ( is_page(array('team', 'our-team', 'zesp', 'zespol', 'the-team')) ) {
+        $is_team_page = true;
+    }
+
+    // Method 3: URL path detection
+    if ( isset($_SERVER['REQUEST_URI']) && preg_match('/\/(team|zespol|zesp)/i', $_SERVER['REQUEST_URI']) ) {
+        $is_team_page = true;
+    }
+
+    // Method 4: Page title detection
+    if ( is_page() ) {
+        $page_title = get_the_title();
+        if ( stripos($page_title, 'team') !== false || stripos($page_title, 'zespół') !== false || stripos($page_title, 'zespol') !== false ) {
+            $is_team_page = true;
+        }
+    }
+
+    if ( $is_team_page ) {
         wp_enqueue_style(
             'team',
             get_template_directory_uri() . '/assets/css/team.css',
