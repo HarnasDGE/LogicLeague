@@ -83,7 +83,7 @@ $page_title = $game_type === 'daily'
             </div>
             <div class="stat-item">
                 <span class="stat-icon">❌</span>
-                <span class="stat-value" id="mistakes">0</span>
+                <span class="stat-value" id="mistakes">0/3</span>
             </div>
             <div class="stat-item">
                 <span class="stat-icon">💡</span>
@@ -264,6 +264,40 @@ $page_title = $game_type === 'daily'
                class="completion-btn completion-btn-primary">
                 Play Again
             </a>
+            <a href="<?php echo home_url('/sudoku'); ?>"
+               class="completion-btn completion-btn-secondary">
+                Choose Level
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Game Over Modal -->
+<div class="sudoku-completion-modal" id="gameover-modal">
+    <div class="sudoku-completion-content">
+        <div class="completion-emoji">😔</div>
+        <h2 class="completion-title">Game Over</h2>
+        <p class="completion-message">You've reached the maximum of 3 mistakes.</p>
+
+        <div class="completion-stats">
+            <div class="completion-stat">
+                <span class="completion-label">Time:</span>
+                <span class="completion-value" id="gameover-time">00:00</span>
+            </div>
+            <div class="completion-stat">
+                <span class="completion-label">Mistakes:</span>
+                <span class="completion-value">3</span>
+            </div>
+            <div class="completion-stat">
+                <span class="completion-label">Level:</span>
+                <span class="completion-value"><?php echo $difficulty_names[$difficulty]; ?></span>
+            </div>
+        </div>
+
+        <div class="completion-buttons">
+            <button onclick="location.reload()" class="completion-btn completion-btn-primary">
+                Try Again
+            </button>
             <a href="<?php echo home_url('/sudoku'); ?>"
                class="completion-btn completion-btn-secondary">
                 Choose Level

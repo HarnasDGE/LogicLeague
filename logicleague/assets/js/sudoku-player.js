@@ -8,6 +8,9 @@
 (function() {
     'use strict';
 
+    // Constants
+    const MAX_MISTAKES = 3;
+
     // Stan gry
     let gameState = {
         board: null,
@@ -172,12 +175,21 @@
             solveButton.addEventListener('click', showSolution);
         }
 
-        // Zamknięcie modala
+        // Zamknięcie modali
         const modal = document.getElementById('completion-modal');
         if (modal) {
             modal.addEventListener('click', function(e) {
                 if (e.target === modal) {
                     modal.style.display = 'none';
+                }
+            });
+        }
+
+        const gameoverModal = document.getElementById('gameover-modal');
+        if (gameoverModal) {
+            gameoverModal.addEventListener('click', function(e) {
+                if (e.target === gameoverModal) {
+                    gameoverModal.style.display = 'none';
                 }
             });
         }
@@ -278,6 +290,14 @@
             gameState.selectedCell.classList.add('sudoku-cell-error');
             gameState.mistakes++;
             updateMistakes();
+
+            // Sprawdź czy osiągnięto limit błędów
+            if (gameState.mistakes >= MAX_MISTAKES) {
+                setTimeout(() => {
+                    gameOver();
+                }, 1000);
+                return;
+            }
 
             // Usuń błąd po 1 sekundzie
             setTimeout(() => {
@@ -516,6 +536,23 @@
     }
 
     /**
+     * Koniec gry (za dużo błędów)
+     */
+    function gameOver() {
+        gameState.isComplete = true;
+        stopTimer();
+
+        // Aktualizuj modal
+        document.getElementById('gameover-time').textContent = document.getElementById('timer').textContent;
+
+        // Pokaż modal
+        const modal = document.getElementById('gameover-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+    }
+
+    /**
      * Timer
      */
     function startTimer() {
@@ -543,7 +580,7 @@
      * Aktualizuj licznik błędów
      */
     function updateMistakes() {
-        document.getElementById('mistakes').textContent = gameState.mistakes;
+        document.getElementById('mistakes').textContent = `${gameState.mistakes}/${MAX_MISTAKES}`;
     }
 
     /**
