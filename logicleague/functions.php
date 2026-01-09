@@ -18,6 +18,16 @@ require_once get_template_directory() . '/inc/sudoku/class-sudoku-solver.php';
 require_once get_template_directory() . '/inc/sudoku/class-sudoku-generator.php';
 
 /**
+ * Sudoku Custom Post Type
+ */
+require_once get_template_directory() . '/inc/sudoku-cpt.php';
+
+/**
+ * Sudoku Leaderboard System
+ */
+require_once get_template_directory() . '/inc/sudoku-leaderboard.php';
+
+/**
  * Ładowanie Contact Form Handler
  */
 require_once get_template_directory() . '/inc/contact-form-handler.php';
