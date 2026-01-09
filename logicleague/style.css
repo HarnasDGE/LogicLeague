@@ -539,6 +539,149 @@ footer {
     box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
 }
 
+/* User Menu Dropdown */
+.user-menu-dropdown {
+    position: relative;
+}
+
+.user-menu-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    background: white;
+    border: 2px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 500;
+    color: #1f2937;
+}
+
+.user-menu-trigger:hover {
+    border-color: #8B5CF6;
+    box-shadow: 0 2px 8px rgba(139, 92, 246, 0.15);
+}
+
+.user-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    font-size: 0.9375rem;
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.user-menu-trigger[aria-expanded="true"] .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.user-menu-content {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    min-width: 280px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.user-menu-dropdown.active .user-menu-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.user-menu-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.user-avatar-large {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.user-display-name {
+    font-weight: 600;
+    color: #1f2937;
+    font-size: 0.9375rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-email {
+    color: #6b7280;
+    font-size: 0.8125rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.user-menu-divider {
+    height: 1px;
+    background: #e5e7eb;
+    margin: 0 0.75rem;
+}
+
+.user-menu-list {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.user-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    color: #1f2937;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    font-size: 0.9375rem;
+}
+
+.user-menu-item:hover {
+    background: #f9fafb;
+    color: #8B5CF6;
+}
+
+.user-menu-item svg {
+    flex-shrink: 0;
+}
+
+.user-menu-logout {
+    color: #dc2626;
+    margin: 0.5rem 0.75rem 0.75rem;
+    border-radius: 8px;
+}
+
+.user-menu-logout:hover {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
 .mobile-menu-toggle {
     display: none;
     flex-direction: column;

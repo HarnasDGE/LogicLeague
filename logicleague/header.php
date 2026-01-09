@@ -86,14 +86,67 @@
 
                     <!-- Actions -->
                     <div class="navbar-actions">
-                        <button class="btn-search" aria-label="Search">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                <circle cx="11" cy="11" r="8"></circle>
-                                <path d="m21 21-4.35-4.35"></path>
-                            </svg>
-                        </button>
-                        <a href="#" class="btn btn-outline-purple">Sign In</a>
-                        <a href="#" class="btn btn-yellow">Join Now!</a>
+                        <?php if ( is_user_logged_in() ) : ?>
+                            <?php
+                                $current_user = wp_get_current_user();
+                                $user_name = $current_user->display_name;
+                                $user_email = $current_user->user_email;
+                                $avatar_url = get_avatar_url( $current_user->ID, array( 'size' => 40 ) );
+                            ?>
+                            <div class="user-menu-dropdown">
+                                <button class="user-menu-trigger" aria-label="User menu" aria-expanded="false">
+                                    <img src="<?php echo esc_url( $avatar_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>" class="user-avatar">
+                                    <span class="user-name"><?php echo esc_html( $user_name ); ?></span>
+                                    <svg class="dropdown-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="6 9 12 15 18 9"></polyline>
+                                    </svg>
+                                </button>
+                                <div class="user-menu-content">
+                                    <div class="user-menu-header">
+                                        <img src="<?php echo esc_url( $avatar_url ); ?>" alt="<?php echo esc_attr( $user_name ); ?>" class="user-avatar-large">
+                                        <div class="user-info">
+                                            <div class="user-display-name"><?php echo esc_html( $user_name ); ?></div>
+                                            <div class="user-email"><?php echo esc_html( $user_email ); ?></div>
+                                        </div>
+                                    </div>
+                                    <div class="user-menu-divider"></div>
+                                    <ul class="user-menu-list">
+                                        <li><a href="<?php echo esc_url( home_url( '/profile' ) ); ?>" class="user-menu-item">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="12" cy="7" r="4"></circle>
+                                            </svg>
+                                            My Profile
+                                        </a></li>
+                                        <li><a href="<?php echo esc_url( home_url( '/rankings' ) ); ?>" class="user-menu-item">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <path d="M16 16v6m-4-6v6m-4-6v6M3 3h18v8H3z"></path>
+                                                <path d="M3 11h18"></path>
+                                            </svg>
+                                            My Rankings
+                                        </a></li>
+                                        <li><a href="<?php echo esc_url( home_url( '/settings' ) ); ?>" class="user-menu-item">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <circle cx="12" cy="12" r="3"></circle>
+                                                <path d="M12 1v6m0 6v6M5.64 5.64l4.24 4.24m4.24 4.24l4.24 4.24M1 12h6m6 0h6M5.64 18.36l4.24-4.24m4.24-4.24l4.24-4.24"></path>
+                                            </svg>
+                                            Settings
+                                        </a></li>
+                                    </ul>
+                                    <div class="user-menu-divider"></div>
+                                    <a href="<?php echo esc_url( wp_logout_url( home_url() ) ); ?>" class="user-menu-item user-menu-logout">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                            <polyline points="16 17 21 12 16 7"></polyline>
+                                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                                        </svg>
+                                        Log Out
+                                    </a>
+                                </div>
+                            </div>
+                        <?php else : ?>
+                            <a href="<?php echo esc_url( wp_login_url( home_url() ) ); ?>" class="btn btn-yellow">Join Now!</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
