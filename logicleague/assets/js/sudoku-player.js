@@ -137,12 +137,6 @@
             hintButton.addEventListener('click', giveHint);
         }
 
-        // Przycisk sprawdź
-        const checkButton = document.getElementById('check-button');
-        if (checkButton) {
-            checkButton.addEventListener('click', checkSolution);
-        }
-
         // Przycisk undo
         const undoButton = document.getElementById('undo-button');
         if (undoButton) {
@@ -474,17 +468,6 @@
             }
         }
         return true;
-    }
-
-    /**
-     * Sprawdza rozwiązanie
-     */
-    function checkSolution() {
-        if (isBoardComplete()) {
-            completeGame();
-        } else {
-            alert('Puzzle nie jest jeszcze ukończone lub zawiera błędy.');
-        }
     }
 
     /**

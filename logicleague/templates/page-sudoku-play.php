@@ -152,6 +152,9 @@ $page_title = $game_type === 'daily'
                 <button class="action-btn" id="clear-button" title="Clear Cell" aria-label="Clear selected cell">
                     <span class="btn-icon">🗑️</span>
                 </button>
+                <button class="action-btn" id="new-game-button" title="New Game" aria-label="New game">
+                    <span class="btn-icon">🔄</span>
+                </button>
             </div>
 
             <!-- Number Pad (Compact Grid) -->
@@ -161,16 +164,6 @@ $page_title = $game_type === 'daily'
                         <?php echo $num; ?>
                     </button>
                 <?php endfor; ?>
-            </div>
-
-            <!-- Secondary Actions -->
-            <div class="secondary-actions">
-                <button class="secondary-btn" id="check-button" aria-label="Check solution">
-                    ✓ Check
-                </button>
-                <button class="secondary-btn" id="new-game-button" aria-label="New game">
-                    🔄 New
-                </button>
             </div>
         </div>
     </div>
