@@ -422,6 +422,7 @@ footer {
     display: flex;
     align-items: center;
     gap: 3rem;
+    margin-left: auto;
 }
 
 .navbar-nav {
