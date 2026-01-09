@@ -135,7 +135,7 @@ function logicleague_enqueue_scripts() {
     }
 
     // Sudoku Play CSS & JS
-    if ( get_query_var( 'sudoku_play' ) || is_page( 'sudoku-play' ) ) {
+    if ( get_query_var( 'sudoku_play' ) || is_page( 'sudoku-play' ) || is_singular( 'sudoku' ) ) {
         wp_enqueue_style(
             'sudoku-play',
             get_template_directory_uri() . '/assets/css/sudoku-play.css',
