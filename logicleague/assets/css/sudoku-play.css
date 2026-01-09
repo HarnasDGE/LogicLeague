@@ -592,6 +592,22 @@
 }
 
 @media (min-width: 1024px) {
+    .sudoku-play-page {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .sudoku-header-compact {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0.5rem 1rem;
+    }
+
+    .sudoku-ad-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
     .sudoku-game-container {
         max-width: 800px;
     }

@@ -439,6 +439,7 @@ footer {
     font-size: 0.9375rem;
     transition: all 0.3s ease;
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-link::after {
@@ -487,12 +488,13 @@ footer {
     background: transparent;
     color: #8B5CF6;
     border: 2px solid #8B5CF6;
-    padding: 0.625rem 1.5rem;
+    padding: 0.75rem 2rem;
     border-radius: 50px;
     font-weight: 600;
     text-decoration: none;
     transition: all 0.3s ease;
     font-size: 0.95rem;
+    white-space: nowrap;
 }
 
 .btn-outline-purple:hover {
@@ -504,9 +506,10 @@ footer {
 .btn-yellow {
     background: #FBBF24;
     color: #1f2937;
-    padding: 0.625rem 1.5rem;
+    padding: 0.75rem 2rem;
     border-radius: 50px;
     font-weight: 700;
+    white-space: nowrap;
     text-decoration: none;
     transition: all 0.3s ease;
     box-shadow: 0 4px 14px rgba(251, 191, 36, 0.4);
@@ -1112,6 +1115,17 @@ footer {
 @media (max-width: 1024px) {
     .footer-content-new {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Desktop Navigation Improvements */
+@media (min-width: 1024px) {
+    .navbar-nav {
+        gap: 2.5rem;
+    }
+
+    .navbar-menu {
+        gap: 3.5rem;
     }
 }
 
