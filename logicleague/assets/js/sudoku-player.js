@@ -15,6 +15,7 @@
     let gameState = {
         board: null,
         solution: null,
+        initialPuzzle: null, // Zapisana początkowa plansza do resetowania
         selectedCell: null,
         mistakes: 0,
         hintsUsed: 0,
@@ -56,12 +57,15 @@
             }
         }
 
-        // Inicjalizuj stan planszy
+        // Inicjalizuj stan planszy i zapisz początkową planszę
         gameState.board = [];
+        gameState.initialPuzzle = [];
         for (let i = 0; i < 9; i++) {
             gameState.board[i] = [];
+            gameState.initialPuzzle[i] = [];
             for (let j = 0; j < 9; j++) {
                 gameState.board[i][j] = 0;
+                gameState.initialPuzzle[i][j] = 0;
             }
         }
 
@@ -73,6 +77,7 @@
             const value = parseInt(cell.dataset.value);
             if (value !== 0) {
                 gameState.board[row][col] = value;
+                gameState.initialPuzzle[row][col] = value; // Zapisz również w initialPuzzle
             }
         });
 
@@ -186,6 +191,12 @@
                     gameoverModal.style.display = 'none';
                 }
             });
+        }
+
+        // Przycisk "Try Again" w gameover modal
+        const tryAgainButton = document.getElementById('try-again-button');
+        if (tryAgainButton) {
+            tryAgainButton.addEventListener('click', resetGame);
         }
     }
 
@@ -533,6 +544,76 @@
         if (modal) {
             modal.style.display = 'flex';
         }
+    }
+
+    /**
+     * Resetuje grę do stanu początkowego (ta sama plansza)
+     */
+    function resetGame() {
+        // Zatrzymaj timer
+        stopTimer();
+
+        // Zresetuj stan gry
+        gameState.mistakes = 0;
+        gameState.hintsUsed = 0;
+        gameState.timerSeconds = 0;
+        gameState.isComplete = false;
+        gameState.pencilMode = false;
+        gameState.pencilMarks = {};
+        gameState.selectedCell = null;
+        gameState.undoStack = [];
+        gameState.redoStack = [];
+
+        // Skopiuj początkową planszę do board
+        for (let i = 0; i < 9; i++) {
+            for (let j = 0; j < 9; j++) {
+                gameState.board[i][j] = gameState.initialPuzzle[i][j];
+            }
+        }
+
+        // Wyczyść wszystkie komórki na planszy
+        const cells = document.querySelectorAll('.sudoku-cell');
+        cells.forEach(cell => {
+            const row = parseInt(cell.dataset.row);
+            const col = parseInt(cell.dataset.col);
+            const isInitial = cell.dataset.initial === '1';
+
+            // Wyczyść komórki edytowalne
+            if (!isInitial) {
+                cell.dataset.value = '0';
+                const valueSpan = cell.querySelector('.sudoku-cell-value');
+                if (valueSpan) {
+                    valueSpan.remove();
+                }
+                const notesDiv = cell.querySelector('.sudoku-cell-notes');
+                if (notesDiv) {
+                    notesDiv.innerHTML = '';
+                }
+            }
+
+            // Usuń wszystkie klasy
+            cell.classList.remove('sudoku-cell-selected', 'sudoku-cell-highlighted', 'sudoku-cell-error');
+        });
+
+        // Zaktualizuj interfejs
+        updateMistakes();
+        updateHints();
+        updateTimerDisplay();
+
+        // Wyłącz pencil mode jeśli aktywny
+        const pencilButton = document.getElementById('pencil-button');
+        if (pencilButton) {
+            pencilButton.classList.remove('active');
+        }
+
+        // Zamknij modal
+        const modal = document.getElementById('gameover-modal');
+        if (modal) {
+            modal.style.display = 'none';
+        }
+
+        // Uruchom timer od nowa
+        startTimer();
     }
 
     /**

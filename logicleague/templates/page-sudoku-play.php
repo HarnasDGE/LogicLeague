@@ -288,7 +288,7 @@ $page_title = $game_type === 'daily'
         </div>
 
         <div class="completion-buttons">
-            <button onclick="location.reload()" class="completion-btn completion-btn-primary">
+            <button id="try-again-button" class="completion-btn completion-btn-primary">
                 Try Again
             </button>
             <a href="<?php echo home_url('/sudoku'); ?>"
