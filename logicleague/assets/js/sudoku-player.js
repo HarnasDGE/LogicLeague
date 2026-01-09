@@ -198,6 +198,16 @@
         if (tryAgainButton) {
             tryAgainButton.addEventListener('click', resetGame);
         }
+
+        // Przycisk "Try Again" w completion modal
+        const tryAgainCompletionBtn = document.getElementById('try-again-completion');
+        if (tryAgainCompletionBtn) {
+            tryAgainCompletionBtn.addEventListener('click', function() {
+                const modal = document.getElementById('completion-modal');
+                if (modal) modal.style.display = 'none';
+                resetGame();
+            });
+        }
     }
 
     /**
@@ -519,14 +529,108 @@
         stopTimer();
 
         // Aktualizuj modal
-        document.getElementById('final-time').textContent = document.getElementById('timer').textContent;
-        document.getElementById('final-mistakes').textContent = gameState.mistakes;
+        const finalTimeEl = document.getElementById('final-time');
+        const finalMistakesEl = document.getElementById('final-mistakes');
+        const finalHintsEl = document.getElementById('final-hints');
 
-        // Pokaż modal
+        if (finalTimeEl) finalTimeEl.textContent = document.getElementById('timer').textContent;
+        if (finalMistakesEl) finalMistakesEl.textContent = gameState.mistakes;
+        if (finalHintsEl) finalHintsEl.textContent = gameState.hintsUsed;
+
+        // Wyślij wynik na serwer
+        saveResultToLeaderboard();
+    }
+
+    /**
+     * Zapisz wynik do leaderboard
+     */
+    function saveResultToLeaderboard() {
+        // Sprawdź czy mamy dane z PHP
+        if (typeof window.sudokuData === 'undefined') {
+            // Nie jesteśmy w single-sudoku.php, pokaż zwykły modal
+            showCompletionModal();
+            return;
+        }
+
+        const data = new FormData();
+        data.append('action', 'save_sudoku_result');
+        data.append('nonce', window.sudokuData.nonce);
+        data.append('sudoku_id', window.sudokuData.sudokuId);
+        data.append('time_seconds', gameState.timerSeconds);
+        data.append('mistakes', gameState.mistakes);
+        data.append('hints_used', gameState.hintsUsed);
+
+        fetch(window.sudokuData.ajaxUrl, {
+            method: 'POST',
+            body: data
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (result.success) {
+                // Dla zalogowanych - pokaż wynik
+                if (window.sudokuData.isLoggedIn) {
+                    const messageEl = document.getElementById('completion-result-message');
+                    if (messageEl) {
+                        messageEl.className = 'result-message success';
+                        messageEl.textContent = `🎉 Your result saved! Rank: #${result.data.rank} | Best time: ${formatTime(result.data.best_time)}`;
+                    }
+                    showCompletionModal();
+                } else {
+                    // Dla gości - pokaż modal rejestracji
+                    showGuestRegisterModal();
+                }
+            } else {
+                console.error('Save failed:', result.data.message);
+                showCompletionModal();
+            }
+        })
+        .catch(error => {
+            console.error('AJAX error:', error);
+            showCompletionModal();
+        });
+    }
+
+    /**
+     * Pokaż completion modal
+     */
+    function showCompletionModal() {
         const modal = document.getElementById('completion-modal');
         if (modal) {
             modal.style.display = 'flex';
         }
+    }
+
+    /**
+     * Pokaż guest register modal
+     */
+    function showGuestRegisterModal() {
+        const guestTimeEl = document.getElementById('guest-final-time');
+        if (guestTimeEl) {
+            guestTimeEl.textContent = document.getElementById('timer').textContent;
+        }
+
+        const modal = document.getElementById('guest-register-modal');
+        if (modal) {
+            modal.style.display = 'flex';
+        }
+
+        // Przycisk "Skip register" - pokaż zwykły modal
+        const skipBtn = document.getElementById('skip-register');
+        if (skipBtn) {
+            skipBtn.addEventListener('click', function() {
+                if (modal) modal.style.display = 'none';
+                showCompletionModal();
+            });
+        }
+    }
+
+    /**
+     * Format czasu (sekundy → MM:SS)
+     */
+    function formatTime(seconds) {
+        const minutes = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
     }
 
     /**
