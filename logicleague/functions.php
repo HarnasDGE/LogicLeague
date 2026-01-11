@@ -240,7 +240,7 @@ function logicleague_create_quiz_leaderboard_table() {
     $table_name = $wpdb->prefix . 'quiz_leaderboard';
     $charset_collate = $wpdb->get_charset_collate();
 
-    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+    $sql = "CREATE TABLE $table_name (
         id bigint(20) NOT NULL AUTO_INCREMENT,
         quiz_id bigint(20) NOT NULL,
         user_id bigint(20) NOT NULL,
@@ -259,11 +259,29 @@ function logicleague_create_quiz_leaderboard_table() {
 
     require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
     dbDelta( $sql );
-}
-register_activation_hook( __FILE__, 'logicleague_create_quiz_leaderboard_table' );
 
-// Also run on theme activation
+    // Store database version
+    update_option( 'logicleague_db_version', '1.0' );
+}
+
+// Check and create table if needed
+function logicleague_check_database() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'quiz_leaderboard';
+
+    // Check if table exists
+    $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
+
+    if (!$table_exists) {
+        logicleague_create_quiz_leaderboard_table();
+    }
+}
+
+// Run on theme activation
 add_action( 'after_switch_theme', 'logicleague_create_quiz_leaderboard_table' );
+
+// Also check on admin init (will create table if it doesn't exist)
+add_action( 'admin_init', 'logicleague_check_database' );
 
 /**
  * Quiz Results System
@@ -353,7 +371,13 @@ function logicleague_save_quiz_result() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'quiz_leaderboard';
 
-    $wpdb->insert(
+    // Check if table exists, if not create it
+    $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
+    if (!$table_exists) {
+        logicleague_create_quiz_leaderboard_table();
+    }
+
+    $insert_result = $wpdb->insert(
         $table_name,
         array(
             'quiz_id' => $quiz_id,
@@ -367,6 +391,11 @@ function logicleague_save_quiz_result() {
         ),
         array('%d', '%d', '%d', '%d', '%f', '%d', '%d', '%s')
     );
+
+    // Log error if insert failed
+    if ($insert_result === false) {
+        error_log('LogicLeague: Failed to insert quiz result to leaderboard. Error: ' . $wpdb->last_error);
+    }
 
     // Get user's rank for this quiz (based on score, then time as tiebreaker)
     $quiz_rank = $wpdb->get_var($wpdb->prepare(

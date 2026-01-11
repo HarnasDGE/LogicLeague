@@ -11,30 +11,43 @@
             $table_name = $wpdb->prefix . 'quiz_leaderboard';
             $quiz_id = get_the_ID();
 
-            $leaderboard = $wpdb->get_results($wpdb->prepare(
-                "SELECT
-                    ql.user_id,
-                    ql.score,
-                    ql.total_questions,
-                    ql.percentage,
-                    ql.time_taken,
-                    u.display_name
-                FROM (
-                    SELECT user_id, MAX(score) as max_score, MIN(time_taken) as best_time
-                    FROM $table_name
-                    WHERE quiz_id = %d
-                    GROUP BY user_id
-                ) as best_scores
-                INNER JOIN $table_name ql ON ql.user_id = best_scores.user_id
-                    AND ql.score = best_scores.max_score
-                    AND ql.time_taken = best_scores.best_time
-                    AND ql.quiz_id = %d
-                LEFT JOIN {$wpdb->users} u ON ql.user_id = u.ID
-                ORDER BY ql.score DESC, ql.time_taken ASC
-                LIMIT 10",
-                $quiz_id,
-                $quiz_id
-            ));
+            // Check if table exists
+            $table_exists = $wpdb->get_var("SHOW TABLES LIKE '$table_name'") === $table_name;
+
+            if ($table_exists) {
+                $leaderboard = $wpdb->get_results($wpdb->prepare(
+                    "SELECT
+                        ql.user_id,
+                        ql.score,
+                        ql.total_questions,
+                        ql.percentage,
+                        ql.time_taken,
+                        u.display_name
+                    FROM (
+                        SELECT user_id, MAX(score) as max_score, MIN(time_taken) as best_time
+                        FROM $table_name
+                        WHERE quiz_id = %d
+                        GROUP BY user_id
+                    ) as best_scores
+                    INNER JOIN $table_name ql ON ql.user_id = best_scores.user_id
+                        AND ql.score = best_scores.max_score
+                        AND ql.time_taken = best_scores.best_time
+                        AND ql.quiz_id = %d
+                    LEFT JOIN {$wpdb->users} u ON ql.user_id = u.ID
+                    ORDER BY ql.score DESC, ql.time_taken ASC
+                    LIMIT 10",
+                    $quiz_id,
+                    $quiz_id
+                ));
+
+                // Log SQL error if any
+                if ($wpdb->last_error) {
+                    error_log('LogicLeague Leaderboard SQL Error: ' . $wpdb->last_error);
+                }
+            } else {
+                $leaderboard = array();
+                error_log('LogicLeague: Quiz leaderboard table does not exist');
+            }
 
             if (!empty($leaderboard)):
                 $current_user_id = get_current_user_id();
