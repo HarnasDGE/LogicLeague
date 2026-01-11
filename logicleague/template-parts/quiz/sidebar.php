@@ -88,16 +88,6 @@
         </div>
     </div>
 
-    <!-- CTA Box -->
-    <div class="sidebar-widget sidebar-cta">
-        <div class="cta-box cta-box-gradient">
-            <div class="cta-box-icon">🎯</div>
-            <h3>Try Sudoku</h3>
-            <p>Challenge your logic with number puzzles!</p>
-            <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-white">Play Now</a>
-        </div>
-    </div>
-
     <!-- Progress Tracker (if user is logged in) -->
     <?php if (is_user_logged_in()): ?>
     <div class="sidebar-widget user-progress">

@@ -252,19 +252,6 @@ while (have_posts()): the_post();
 <!-- Blog Posts Carousel -->
 <?php get_template_part('template-parts/blog/posts-carousel'); ?>
 
-<!-- CTA Section -->
-<section class="quiz-cta-section">
-    <div class="container">
-        <div class="quiz-cta-box">
-            <h2>Love Brain Teasers?</h2>
-            <p>Try our Sudoku puzzles for more logic challenges!</p>
-            <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-white">
-                Play Sudoku Now
-            </a>
-        </div>
-    </div>
-</section>
-
 <!-- Newsletter -->
 <section class="newsletter-cta-section">
     <div class="container">

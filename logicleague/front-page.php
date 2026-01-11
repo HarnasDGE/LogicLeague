@@ -17,11 +17,10 @@ get_header();
             <div class="hero-content-new">
                 <h1 class="hero-title-new">Test Your Knowledge,<br>Master Every Quiz!</h1>
                 <p class="hero-description-new">
-                    Join LogicLeague - the ultimate destination for trivia lovers and puzzle enthusiasts!
+                    Join LogicLeague - the ultimate destination for trivia lovers and quiz enthusiasts!
                     Challenge yourself with thousands of engaging quizzes across Movies, Geography, History,
                     Science, Sports and more. Compete with players worldwide, earn points, level up, and prove
-                    you're the ultimate quiz master. From Sudoku puzzles to brain-teasing trivia - your next
-                    challenge awaits!
+                    you're the ultimate quiz master. Brain-teasing trivia awaits - test your knowledge today!
                 </p>
 
                 <!-- Colorful CTAs -->
@@ -31,9 +30,6 @@ get_header();
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M5 12h14M12 5l7 7-7 7"/>
                         </svg>
-                    </a>
-                    <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-secondary-hero">
-                        <span>Try Sudoku</span>
                     </a>
                 </div>
 

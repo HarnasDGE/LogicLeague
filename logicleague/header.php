@@ -57,16 +57,6 @@
                             </ul>
                         </li>
 
-                        <!-- Games Dropdown -->
-                        <li class="nav-item nav-item-dropdown">
-                            <a href="#" class="nav-link">
-                                🎮 Games <span class="dropdown-arrow">▼</span>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="<?php echo home_url('/sudoku'); ?>">🎲 Sudoku</a></li>
-                            </ul>
-                        </li>
-
                         <li class="nav-item">
                             <a href="#" class="nav-link">🏆 Rankings</a>
                         </li>

@@ -1,16 +1,6 @@
 <!-- Blog Sidebar -->
 <aside class="blog-sidebar">
 
-    <!-- CTA Box -->
-    <div class="sidebar-widget sidebar-cta">
-        <div class="cta-box">
-            <div class="cta-box-icon">🎯</div>
-            <h3 class="cta-box-title">Ready to Challenge Your Brain?</h3>
-            <p class="cta-box-text">Start playing Sudoku now and improve your logical thinking!</p>
-            <a href="<?php echo home_url('/sudoku'); ?>" class="btn btn-sidebar-cta">Play Now</a>
-        </div>
-    </div>
-
     <!-- Table of Contents -->
     <?php if (is_single()): ?>
     <div class="sidebar-widget sidebar-toc">
@@ -51,34 +41,6 @@
             <?php endwhile; wp_reset_postdata(); ?>
         </ul>
         <?php endif; ?>
-    </div>
-
-    <!-- Suggested Games -->
-    <div class="sidebar-widget sidebar-games">
-        <h3 class="sidebar-widget-title">Try Our Games</h3>
-        <div class="suggested-games">
-            <a href="<?php echo home_url('/sudoku/easy'); ?>" class="game-card">
-                <span class="game-icon">🎲</span>
-                <div class="game-info">
-                    <h4>Easy Sudoku</h4>
-                    <p>Perfect for beginners</p>
-                </div>
-            </a>
-            <a href="<?php echo home_url('/sudoku/medium'); ?>" class="game-card">
-                <span class="game-icon">🎯</span>
-                <div class="game-info">
-                    <h4>Medium Sudoku</h4>
-                    <p>Balanced challenge</p>
-                </div>
-            </a>
-            <a href="<?php echo home_url('/sudoku/expert'); ?>" class="game-card">
-                <span class="game-icon">🔥</span>
-                <div class="game-info">
-                    <h4>Expert Sudoku</h4>
-                    <p>Ultimate challenge</p>
-                </div>
-            </a>
-        </div>
     </div>
 
     <!-- Final CTA -->

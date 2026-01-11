@@ -128,9 +128,6 @@ get_header();
 <!-- Related Posts Carousel -->
 <?php get_template_part('template-parts/blog/posts-carousel'); ?>
 
-<!-- Games Carousel -->
-<?php get_template_part('template-parts/blog/games-carousel'); ?>
-
 <!-- Newsletter CTA -->
 <section class="newsletter-cta-section">
     <div class="container">
