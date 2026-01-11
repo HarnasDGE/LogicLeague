@@ -218,6 +218,39 @@ function logicleague_comment_callback($comment, $args, $depth) {
 
 
 /**
+ * Create database table for quiz leaderboards on activation
+ */
+function logicleague_create_quiz_leaderboard_table() {
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'quiz_leaderboard';
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE IF NOT EXISTS $table_name (
+        id bigint(20) NOT NULL AUTO_INCREMENT,
+        quiz_id bigint(20) NOT NULL,
+        user_id bigint(20) NOT NULL,
+        score int(11) NOT NULL,
+        total_questions int(11) NOT NULL,
+        percentage decimal(5,2) NOT NULL,
+        time_taken int(11) NOT NULL,
+        points_earned int(11) NOT NULL DEFAULT 0,
+        completed_at datetime DEFAULT CURRENT_TIMESTAMP,
+        PRIMARY KEY  (id),
+        KEY quiz_id (quiz_id),
+        KEY user_id (user_id),
+        KEY score (score),
+        KEY percentage (percentage)
+    ) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+}
+register_activation_hook( __FILE__, 'logicleague_create_quiz_leaderboard_table' );
+
+// Also run on theme activation
+add_action( 'after_switch_theme', 'logicleague_create_quiz_leaderboard_table' );
+
+/**
  * Quiz Results System
  * Save quiz results to user meta and calculate points
  */
@@ -301,12 +334,61 @@ function logicleague_save_quiz_result() {
     $level = logicleague_calculate_user_level($new_total_points);
     update_user_meta($user_id, 'user_level', $level);
 
+    // Save to quiz leaderboard table
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'quiz_leaderboard';
+
+    $wpdb->insert(
+        $table_name,
+        array(
+            'quiz_id' => $quiz_id,
+            'user_id' => $user_id,
+            'score' => $score,
+            'total_questions' => $total_questions,
+            'percentage' => $quiz_result['percentage'],
+            'time_taken' => $time_taken,
+            'points_earned' => $total_points,
+            'completed_at' => current_time('mysql')
+        ),
+        array('%d', '%d', '%d', '%d', '%f', '%d', '%d', '%s')
+    );
+
+    // Get user's rank for this quiz (based on score, then time as tiebreaker)
+    $quiz_rank = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(DISTINCT user_id) + 1
+        FROM (
+            SELECT user_id, MAX(score) as best_score, MIN(time_taken) as best_time
+            FROM $table_name
+            WHERE quiz_id = %d
+            GROUP BY user_id
+        ) as best_scores
+        WHERE best_score > %d OR (best_score = %d AND best_time < %d)",
+        $quiz_id,
+        $score,
+        $score,
+        $time_taken
+    ));
+
+    // Get global rank
+    $global_rank = logicleague_get_user_rank($user_id);
+
+    // Get total players for this quiz
+    $total_players = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(DISTINCT user_id) FROM $table_name WHERE quiz_id = %d",
+        $quiz_id
+    ));
+
     // Return success with updated stats
     wp_send_json_success(array(
         'points_earned' => $total_points,
         'total_points' => $new_total_points,
         'quizzes_completed' => $quizzes_completed + 1,
         'level' => $level,
+        'quiz_rank' => $quiz_rank,
+        'total_players' => $total_players,
+        'global_rank' => $global_rank,
+        'score' => $score,
+        'percentage' => $quiz_result['percentage'],
         'message' => 'Quiz result saved successfully!'
     ));
 }

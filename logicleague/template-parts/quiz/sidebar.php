@@ -6,13 +6,42 @@
         <h3 class="sidebar-widget-title">🏆 Top Scorers</h3>
         <div class="leaderboard-list">
             <?php
-            // Get top 5 quiz scores
-            $leaderboard = get_option('quiz_leaderboard_' . get_the_ID(), array());
+            // Get top 10 scores from database
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'quiz_leaderboard';
+            $quiz_id = get_the_ID();
+
+            $leaderboard = $wpdb->get_results($wpdb->prepare(
+                "SELECT
+                    ql.user_id,
+                    ql.score,
+                    ql.total_questions,
+                    ql.percentage,
+                    ql.time_taken,
+                    u.display_name
+                FROM (
+                    SELECT user_id, MAX(score) as max_score, MIN(time_taken) as best_time
+                    FROM $table_name
+                    WHERE quiz_id = %d
+                    GROUP BY user_id
+                ) as best_scores
+                INNER JOIN $table_name ql ON ql.user_id = best_scores.user_id
+                    AND ql.score = best_scores.max_score
+                    AND ql.time_taken = best_scores.best_time
+                    AND ql.quiz_id = %d
+                LEFT JOIN {$wpdb->users} u ON ql.user_id = u.ID
+                ORDER BY ql.score DESC, ql.time_taken ASC
+                LIMIT 10",
+                $quiz_id,
+                $quiz_id
+            ));
+
             if (!empty($leaderboard)):
-                $top_scores = array_slice($leaderboard, 0, 5);
-                foreach ($top_scores as $index => $entry):
+                $current_user_id = get_current_user_id();
+                foreach ($leaderboard as $index => $entry):
+                    $is_current_user = $current_user_id && $entry->user_id == $current_user_id;
             ?>
-            <div class="leaderboard-item">
+            <div class="leaderboard-item <?php echo $is_current_user ? 'leaderboard-item-current' : ''; ?>">
                 <span class="leaderboard-rank">
                     <?php
                     if ($index === 0) echo '🥇';
@@ -22,10 +51,18 @@
                     ?>
                 </span>
                 <div class="leaderboard-info">
-                    <span class="leaderboard-name"><?php echo esc_html($entry['name']); ?></span>
-                    <span class="leaderboard-time"><?php echo esc_html($entry['time']); ?></span>
+                    <span class="leaderboard-name">
+                        <?php echo esc_html($entry->display_name ?: 'Anonymous'); ?>
+                        <?php if ($is_current_user): ?>
+                            <span class="you-badge">You</span>
+                        <?php endif; ?>
+                    </span>
+                    <span class="leaderboard-meta">
+                        <?php echo sprintf('%d/%d', $entry->score, $entry->total_questions); ?>
+                        (<?php echo number_format($entry->percentage, 0); ?>%)
+                    </span>
                 </div>
-                <span class="leaderboard-score"><?php echo esc_html($entry['score']); ?>pts</span>
+                <span class="leaderboard-score"><?php echo $entry->score; ?>pts</span>
             </div>
             <?php endforeach; ?>
             <?php else: ?>

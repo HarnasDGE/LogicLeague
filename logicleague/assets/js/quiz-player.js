@@ -411,6 +411,18 @@ class QuizPlayer {
                         <small>Total: ${data.total_points} | Level ${data.level}</small>
                     </div>
                 </div>
+                ${data.quiz_rank ? `
+                <div class="quiz-rank-info">
+                    <div class="rank-item">
+                        <span class="rank-label">Quiz Rank:</span>
+                        <span class="rank-value">#${data.quiz_rank} of ${data.total_players}</span>
+                    </div>
+                    <div class="rank-item">
+                        <span class="rank-label">Global Rank:</span>
+                        <span class="rank-value">#${data.global_rank}</span>
+                    </div>
+                </div>
+                ` : ''}
             `;
             resultsMessage.appendChild(pointsNotification);
         }

@@ -670,6 +670,27 @@
     color: #8B5CF6;
 }
 
+.leaderboard-item-current {
+    background: #FEF3C7;
+    font-weight: 600;
+}
+
+.leaderboard-item-current:hover {
+    background: #FDE68A;
+}
+
+.you-badge {
+    display: inline-block;
+    background: #FBBF24;
+    color: #78350F;
+    padding: 0.125rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.625rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+}
+
 .no-scores {
     text-align: center;
     color: #6b7280;
