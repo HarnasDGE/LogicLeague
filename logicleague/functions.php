@@ -129,6 +129,15 @@ function logicleague_enqueue_scripts() {
             true
         );
 
+        // Auth JS for login/register modals
+        wp_enqueue_script(
+            'auth',
+            get_template_directory_uri() . '/assets/js/auth.js',
+            array(),
+            filemtime( get_template_directory() . '/assets/js/auth.js' ),
+            true
+        );
+
         // Pass quiz data to JavaScript
         $questions = get_post_meta(get_the_ID(), 'quiz_questions', true);
         wp_localize_script('quiz-player', 'quizData', array(
@@ -144,6 +153,12 @@ function logicleague_enqueue_scripts() {
             'ajaxUrl' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('quiz_nonce'),
             'isLoggedIn' => is_user_logged_in(),
+        ));
+
+        // Pass auth data for login/register
+        wp_localize_script('auth', 'authData', array(
+            'ajaxUrl' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('auth_nonce'),
         ));
     }
 
@@ -538,3 +553,111 @@ function logicleague_user_stats_widget() {
     return ob_get_clean();
 }
 add_shortcode('user_stats', 'logicleague_user_stats_widget');
+
+/**
+ * AJAX Handler for Login
+ */
+function logicleague_ajax_login() {
+    check_ajax_referer('auth_nonce', 'nonce');
+
+    $email = sanitize_email($_POST['user_email']);
+    $password = $_POST['user_password'];
+    $remember = isset($_POST['remember_me']);
+
+    if (empty($email) || empty($password)) {
+        wp_send_json_error('Please fill in all fields.');
+        return;
+    }
+
+    // Get user by email
+    $user = get_user_by('email', $email);
+
+    if (!$user) {
+        wp_send_json_error('Invalid email or password.');
+        return;
+    }
+
+    // Check password
+    $creds = array(
+        'user_login'    => $user->user_login,
+        'user_password' => $password,
+        'remember'      => $remember
+    );
+
+    $user_signon = wp_signon($creds, is_ssl());
+
+    if (is_wp_error($user_signon)) {
+        wp_send_json_error('Invalid email or password.');
+    } else {
+        wp_send_json_success('Login successful!');
+    }
+}
+add_action('wp_ajax_nopriv_logicleague_login', 'logicleague_ajax_login');
+add_action('wp_ajax_logicleague_login', 'logicleague_ajax_login');
+
+/**
+ * AJAX Handler for Registration
+ */
+function logicleague_ajax_register() {
+    check_ajax_referer('auth_nonce', 'nonce');
+
+    $username = sanitize_user($_POST['user_login']);
+    $email = sanitize_email($_POST['user_email']);
+    $password = $_POST['user_password'];
+
+    // Validation
+    if (empty($username) || empty($email) || empty($password)) {
+        wp_send_json_error('Please fill in all fields.');
+        return;
+    }
+
+    if (!is_email($email)) {
+        wp_send_json_error('Please enter a valid email address.');
+        return;
+    }
+
+    if (strlen($password) < 8) {
+        wp_send_json_error('Password must be at least 8 characters long.');
+        return;
+    }
+
+    if (username_exists($username)) {
+        wp_send_json_error('Username already exists. Please choose another one.');
+        return;
+    }
+
+    if (email_exists($email)) {
+        wp_send_json_error('Email already registered. Please login or use another email.');
+        return;
+    }
+
+    // Create user
+    $user_id = wp_create_user($username, $password, $email);
+
+    if (is_wp_error($user_id)) {
+        wp_send_json_error($user_id->get_error_message());
+        return;
+    }
+
+    // Initialize user meta
+    update_user_meta($user_id, 'total_points', 0);
+    update_user_meta($user_id, 'quizzes_completed', 0);
+    update_user_meta($user_id, 'user_level', 1);
+
+    // Auto login after registration
+    $creds = array(
+        'user_login'    => $username,
+        'user_password' => $password,
+        'remember'      => true
+    );
+
+    $user = wp_signon($creds, is_ssl());
+
+    if (is_wp_error($user)) {
+        wp_send_json_success('Account created! Please login.');
+    } else {
+        wp_send_json_success('Account created and logged in!');
+    }
+}
+add_action('wp_ajax_nopriv_logicleague_register', 'logicleague_ajax_register');
+add_action('wp_ajax_logicleague_register', 'logicleague_ajax_register');
