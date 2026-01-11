@@ -357,21 +357,28 @@ class QuizPlayer {
     }
 
     saveResults() {
-        // Only save if user is logged in and we have quiz data
-        if (typeof quizPlayerData === 'undefined' || !quizPlayerData.isLoggedIn) {
-            return;
-        }
-
         // Calculate time taken in seconds
         const timeTaken = Math.floor((Date.now() - this.startTime) / 1000);
 
-        const data = {
-            action: 'save_quiz_result',
-            nonce: quizPlayerData.nonce,
-            quiz_id: quizPlayerData.quizId,
+        const resultData = {
+            quiz_id: typeof quizPlayerData !== 'undefined' ? quizPlayerData.quizId : 0,
             score: this.score,
             total_questions: this.questions.length,
             time_taken: timeTaken
+        };
+
+        // Always save to sessionStorage for guests who might login
+        if (typeof quizPlayerData === 'undefined' || !quizPlayerData.isLoggedIn) {
+            sessionStorage.setItem('pendingQuizResult', JSON.stringify(resultData));
+            console.log('Quiz results saved to sessionStorage for later submission');
+            return;
+        }
+
+        // If logged in, submit immediately
+        const data = {
+            action: 'save_quiz_result',
+            nonce: quizPlayerData.nonce,
+            ...resultData
         };
 
         // Send AJAX request

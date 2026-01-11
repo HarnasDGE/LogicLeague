@@ -240,6 +240,7 @@ while (have_posts()): the_post();
                     </div>
                     <div class="form-group-compact">
                         <input type="password" name="user_password" id="quizLoginPassword" placeholder="Password" required>
+                        <a href="<?php echo wp_lostpassword_url(); ?>" class="forgot-password-compact">Forgot password?</a>
                     </div>
                     <button type="submit" class="btn-login-submit">
                         <span class="btn-text">Login</span>

@@ -106,8 +106,8 @@ function handleLogin(form, errorElementId) {
         submitBtn.disabled = false;
 
         if (data.success) {
-            // Success - reload page
-            window.location.reload();
+            // Success - check if there are pending quiz results to submit
+            submitPendingQuizResults();
         } else {
             // Show error
             errorElement.textContent = data.data || 'Login failed. Please try again.';
@@ -159,9 +159,9 @@ function handleRegister(form) {
             successElement.style.display = 'block';
             form.reset();
 
-            // Redirect after 2 seconds
+            // Submit pending quiz results after 2 seconds
             setTimeout(() => {
-                window.location.reload();
+                submitPendingQuizResults();
             }, 2000);
         } else {
             // Show error
@@ -176,6 +176,55 @@ function handleRegister(form) {
         errorElement.textContent = 'An error occurred. Please try again.';
         errorElement.style.display = 'block';
         console.error('Register error:', error);
+    });
+}
+
+// Submit Pending Quiz Results After Login
+function submitPendingQuizResults() {
+    const pendingResult = sessionStorage.getItem('pendingQuizResult');
+
+    if (!pendingResult) {
+        // No pending results, just reload the page
+        window.location.reload();
+        return;
+    }
+
+    // Parse the stored result data
+    const resultData = JSON.parse(pendingResult);
+
+    // Prepare form data for submission
+    const formData = new FormData();
+    formData.append('action', 'save_quiz_result');
+    formData.append('quiz_id', resultData.quiz_id);
+    formData.append('score', resultData.score);
+    formData.append('total_questions', resultData.total_questions);
+    formData.append('time_taken', resultData.time_taken);
+    formData.append('nonce', authData.nonce);
+
+    // Submit the quiz results
+    fetch(authData.ajaxUrl, {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Clear the pending result from sessionStorage
+        sessionStorage.removeItem('pendingQuizResult');
+
+        if (data.success) {
+            console.log('Quiz results saved successfully!');
+        } else {
+            console.error('Failed to save quiz results:', data.data);
+        }
+
+        // Reload the page to show updated leaderboard
+        window.location.reload();
+    })
+    .catch(error => {
+        console.error('Error submitting quiz results:', error);
+        // Clear sessionStorage and reload anyway
+        sessionStorage.removeItem('pendingQuizResult');
+        window.location.reload();
     });
 }
 
