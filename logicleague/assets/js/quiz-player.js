@@ -398,33 +398,23 @@ class QuizPlayer {
     }
 
     showPointsEarned(data) {
-        // Add points notification to results modal
-        const resultsMessage = document.getElementById('resultsMessage');
-        if (resultsMessage && data.points_earned) {
-            const pointsNotification = document.createElement('div');
-            pointsNotification.className = 'points-notification';
-            pointsNotification.innerHTML = `
-                <div class="points-earned-badge">
-                    <span class="points-icon">🏆</span>
-                    <div class="points-info">
-                        <strong>+${data.points_earned} Points Earned!</strong>
-                        <small>Total: ${data.total_points} | Level ${data.level}</small>
-                    </div>
+        // Add points and rank info to compact section
+        const pointsRankInfo = document.getElementById('pointsRankInfo');
+        if (pointsRankInfo && data.points_earned) {
+            pointsRankInfo.innerHTML = `
+                <div class="points-compact">
+                    <span class="points-icon-compact">🏆</span>
+                    <span class="points-text-compact">+${data.points_earned}pts</span>
+                    <span class="points-divider">·</span>
+                    <span class="level-text-compact">Lv.${data.level}</span>
                 </div>
                 ${data.quiz_rank ? `
-                <div class="quiz-rank-info">
-                    <div class="rank-item">
-                        <span class="rank-label">Quiz Rank:</span>
-                        <span class="rank-value">#${data.quiz_rank} of ${data.total_players}</span>
-                    </div>
-                    <div class="rank-item">
-                        <span class="rank-label">Global Rank:</span>
-                        <span class="rank-value">#${data.global_rank}</span>
-                    </div>
+                <div class="rank-compact">
+                    <span class="rank-badge">#${data.quiz_rank}</span>
+                    <span class="rank-text">of ${data.total_players} players</span>
                 </div>
                 ` : ''}
             `;
-            resultsMessage.appendChild(pointsNotification);
         }
     }
 
@@ -445,6 +435,7 @@ class QuizPlayer {
         // Calculate stats
         const totalQuestions = this.questions.length;
         const correctAnswers = this.score;
+        const wrongAnswers = totalQuestions - correctAnswers;
         const accuracy = Math.round((correctAnswers / totalQuestions) * 100);
         const timeTaken = document.getElementById('quizTimer').textContent;
 
@@ -452,6 +443,7 @@ class QuizPlayer {
         document.getElementById('scoreNumber').textContent = correctAnswers;
         document.getElementById('scoreTotal').textContent = totalQuestions;
         document.getElementById('correctAnswers').textContent = correctAnswers;
+        document.getElementById('wrongAnswers').textContent = wrongAnswers;
         document.getElementById('timeTaken').textContent = timeTaken;
         document.getElementById('accuracy').textContent = accuracy + '%';
 
@@ -460,18 +452,33 @@ class QuizPlayer {
         let message = '';
 
         if (percentage === 100) {
-            message = '🎉 Perfect Score! You\'re a genius!';
+            message = 'Perfect Score!';
         } else if (percentage >= 80) {
-            message = '🌟 Excellent! You really know your stuff!';
+            message = 'Excellent Work!';
         } else if (percentage >= 60) {
-            message = '👍 Good job! Keep practicing!';
+            message = 'Good Job!';
         } else if (percentage >= 40) {
-            message = '📚 Not bad! Try reviewing the material.';
+            message = 'Keep Practicing!';
         } else {
-            message = '💪 Keep trying! Practice makes perfect!';
+            message = 'Try Again!';
         }
 
-        document.getElementById('resultsMessage').innerHTML = `<p class="results-message-text">${message}</p>`;
+        document.getElementById('resultsMessage').textContent = message;
+
+        // Show/hide sections based on login status
+        const isLoggedIn = typeof quizPlayerData !== 'undefined' && quizPlayerData.isLoggedIn;
+        const loggedInSection = document.getElementById('resultsLoggedIn');
+        const guestSection = document.getElementById('resultsGuest');
+
+        if (loggedInSection && guestSection) {
+            if (isLoggedIn) {
+                loggedInSection.style.display = 'block';
+                guestSection.style.display = 'none';
+            } else {
+                loggedInSection.style.display = 'none';
+                guestSection.style.display = 'block';
+            }
+        }
 
         // Load suggested quizzes
         this.loadSuggestedQuizzes();
