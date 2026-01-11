@@ -51,6 +51,14 @@ function logicleague_enqueue_scripts() {
         filemtime( get_stylesheet_directory() . '/style.css' )
     );
 
+    // Global styles - header, navigation, footer (loaded on all pages)
+    wp_enqueue_style(
+        'global-styles',
+        get_template_directory_uri() . '/assets/css/global.css',
+        array(),
+        filemtime( get_template_directory() . '/assets/css/global.css' )
+    );
+
     // Navigation JS - loaded on all pages
     wp_enqueue_script(
         'navigation',
