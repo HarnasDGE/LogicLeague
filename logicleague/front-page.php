@@ -212,6 +212,9 @@ get_header();
     </div>
 </section>
 
+<!-- All Quizzes Grid -->
+<?php get_template_part('template-parts/homepage/quiz-grid'); ?>
+
 <!-- Categories Section -->
 <section id="categories" class="categories-section-new">
     <div class="container">

@@ -69,6 +69,13 @@ function logicleague_enqueue_scripts() {
             filemtime( get_template_directory() . '/assets/css/front-page-new.css' )
         );
 
+        wp_enqueue_style(
+            'quiz-grid',
+            get_template_directory_uri() . '/assets/css/quiz-grid.css',
+            array(),
+            filemtime( get_template_directory() . '/assets/css/quiz-grid.css' )
+        );
+
         wp_enqueue_script(
             'front-page',
             get_template_directory_uri() . '/assets/js/front-page.js',
